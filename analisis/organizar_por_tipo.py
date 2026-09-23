@@ -161,6 +161,10 @@ def main():
     if not validacion.exists():
         raise FileNotFoundError("Falta data/procesado/tiempo_validacion.json: correr antes analisis/tiempo_validacion.py")
     agregados["validacion"] = json.loads(validacion.read_text(encoding="utf-8"))
+    completo = RAIZ / "data" / "final" / "resumen.json"
+    if not completo.exists():
+        raise FileNotFoundError("Falta data/final/resumen.json: correr antes analisis/generar_datos.py")
+    agregados["completo"] = json.loads(completo.read_text(encoding="utf-8"))
     datos = json.dumps(agregados, ensure_ascii=False, indent=1)
     SALIDA_JSON.write_text(datos, encoding="utf-8")
     supuestos = (RAIZ / "supuestos" / "supuestos.json").read_text(encoding="utf-8")

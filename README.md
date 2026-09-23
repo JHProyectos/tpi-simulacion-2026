@@ -12,6 +12,7 @@ Estudio de simulación de la fila de validación del Comedor Universitario UNC (
 | `data/real/` | Registros de la organización, **sin modificar** |
 | `data/procesado/` | Datos derivados de los reales con scripts (organizados por tipo, intervalos, etc.) |
 | `data/generado/` | Datos sintéticos generados con IA; cada uno tiene su supuesto en `supuestos/` |
+| `data/final/` | Dataset completo (real + generado) con el origen de cada fila y columna: ver `DICCIONARIO.md` |
 | `analisis/` | Scripts de Python que producen `data/procesado/`, `reporte/` y `supuestos/SUPUESTOS.md` |
 | `supuestos/` | Registro de supuestos: `supuestos.json` es la fuente y `SUPUESTOS.md` se genera a partir de él |
 | `flexsim/` | Modelo de FlexSim y tablas de entrada |
@@ -27,5 +28,6 @@ Requiere Python 3 con `pandas` (`python -m pip install pandas`). Desde la raíz:
 ```bash
 python analisis/tiempo_validacion.py
 python analisis/render_supuestos.py
+python analisis/generar_datos.py
 python analisis/organizar_por_tipo.py
 ```

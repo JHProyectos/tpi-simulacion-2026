@@ -13,7 +13,7 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 - [x] [Claude] Dataset original movido a `data/real/` sin modificar
 - [x] [Claude] Scripts actualizados a las rutas nuevas
 - [x] [Claude] `README.md` y `PLAN.md`
-- [ ] [Grupo] Revisar y mergear la rama `fases-0-2-organizacion-y-supuestos`
+- [x] [Grupo] Revisar y mergear la rama `fases-0-2-organizacion-y-supuestos` (mergeada en `main`)
 
 ## Fase 1 · Relevamiento con el referente
 - [x] [Referente] ¿Dónde se registra `checked_at`? → En el puesto de control (validación)
@@ -28,6 +28,7 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 ## Fase 2 · Registro de supuestos
 - [x] [Claude] `supuestos/supuestos.json` con valor, base, origen y rango de sensibilidad de cada variable
 - [x] [Claude] `analisis/render_supuestos.py`, que genera `SUPUESTOS.md`
+- [x] [Claude] Sección «Qué es real y qué es supuesto» en el reporte
 - [ ] [Grupo] Revisar y aprobar los supuestos propuestos (S08, S09, S11–S15)
 - [ ] [Grupo] Resolver **D01**: cómo compatibilizar la espera de 10 a 15 minutos con el tiempo de servicio real
 - [ ] [Grupo] Resolver **D02**: si el mostrador entra en el alcance

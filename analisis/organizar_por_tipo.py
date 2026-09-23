@@ -156,10 +156,17 @@ def main():
     df = cargar()
     exportar_csvs(df)
     SALIDA_JSON.parent.mkdir(parents=True, exist_ok=True)
-    datos = json.dumps(resumen(df), ensure_ascii=False, indent=1)
+    agregados = resumen(df)
+    validacion = PROCESADO / "tiempo_validacion.json"
+    if not validacion.exists():
+        raise FileNotFoundError("Falta data/procesado/tiempo_validacion.json: correr antes analisis/tiempo_validacion.py")
+    agregados["validacion"] = json.loads(validacion.read_text(encoding="utf-8"))
+    datos = json.dumps(agregados, ensure_ascii=False, indent=1)
     SALIDA_JSON.write_text(datos, encoding="utf-8")
+    supuestos = (RAIZ / "supuestos" / "supuestos.json").read_text(encoding="utf-8")
     plantilla = (SALIDA_JSON.parent / "plantilla.html").read_text(encoding="utf-8")
-    (SALIDA_JSON.parent / "reporte.html").write_text(plantilla.replace("__DATOS__", datos), encoding="utf-8")
+    html = plantilla.replace("__DATOS__", datos).replace("__SUPUESTOS__", supuestos)
+    (SALIDA_JSON.parent / "reporte.html").write_text(html, encoding="utf-8")
     print(f"OK: {len(df)} registros -> data/procesado/, reporte/")
 
 

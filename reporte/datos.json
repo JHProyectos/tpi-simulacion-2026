@@ -651,5 +651,25 @@
   "13": 13929,
   "14": 5409,
   "15": 1
+ },
+ "validacion": {
+  "criterio": "franjas de 10 min con >= 140 validaciones; intervalos < 30 s",
+  "franjas_saturadas": 13,
+  "n_intervalos": 1959,
+  "empirico": {
+   "media_s": 3.9,
+   "mediana_s": 2.93,
+   "desvio_s": 2.98,
+   "p05_s": 1.91,
+   "p95_s": 9.73
+  },
+  "lognormal": {
+   "mu": 1.205,
+   "sigma": 0.494,
+   "mediana_s": 3.34,
+   "media_s": 3.77
+  },
+  "capacidad_1_puesto_por_hora": 924,
+  "maximo_observado_10min": 168
  }
 }

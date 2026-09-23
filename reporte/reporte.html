@@ -120,12 +120,45 @@ td.bar div{height:8px;border-radius:0 3px 3px 0}
 .files div{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);display:flex;flex-direction:column;gap:3px}
 .files code{color:var(--ink)}
 .files span{font-size:13px;color:var(--ink-2)}
+/* origen de los datos */
+:root{--o-registro:#1d6b4f;--o-derivado:#3f8a6c;--o-referente:#5b4bb0;--o-generado:#b0521c;--o-registro-bg:#e3f1ea;--o-derivado-bg:#e8f3ee;--o-referente-bg:#ecebf8;--o-generado-bg:#fbeadf}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-referente-bg:#252240;--o-generado-bg:#3a2415}}
+:root[data-theme="dark"]{--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-referente-bg:#252240;--o-generado-bg:#3a2415}
+.origin-bar{display:flex;height:12px;border-radius:3px;overflow:hidden;gap:2px}
+.origin-bar div{height:100%}
+.origin-keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 22px}
+.origin-keys div{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.origin-keys p{font-size:13px}
+.ob{display:inline-flex;align-items:center;gap:6px;font:500 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:5px 7px;border-radius:3px;white-space:nowrap}
+.ob::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.ob.registro{color:var(--o-registro);background:var(--o-registro-bg)}
+.ob.derivado{color:var(--o-derivado);background:var(--o-derivado-bg)}
+.ob.referente{color:var(--o-referente);background:var(--o-referente-bg)}
+.ob.generado{color:var(--o-generado);background:var(--o-generado-bg)}
+.sups{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.sup{display:grid;grid-template-columns:44px 1fr 140px;gap:6px 16px;padding:16px;border-bottom:1px solid var(--grid)}
+.sup:last-child{border-bottom:0}
+.sup .id{font:500 12px/1.7 var(--mono);color:var(--muted)}
+.sup h3{font-size:15.5px;line-height:1.35}
+.sup .val{color:var(--ink);font-size:14px;max-width:none}
+.sup dl{margin:6px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:13px}
+.sup dt{color:var(--muted);font:500 10.5px/1.9 var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.sup dd{margin:0;color:var(--ink-2)}
+.sup .side{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.st{font:500 11px/1 var(--mono);color:var(--ink-2)}
+.st.pend{color:var(--warn-ink)}
+.sup-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+@media (max-width:640px){.sup{grid-template-columns:1fr}.sup .side{flex-direction:row;flex-wrap:wrap;align-items:center}.sup dl{grid-template-columns:1fr;gap:0 0}.sup dd{margin-bottom:6px}}
+.dec{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.dec > div{padding:14px 16px;border:1px dashed var(--axis);border-radius:6px;background:var(--surface);display:flex;flex-direction:column;gap:6px}
+.dec p{font-size:13.5px}
+.dec b{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--warn-ink)}
 footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
 </style>
 
 <div class="page">
   <header>
-    <span class="eyebrow">TPI Simulación · Análisis exploratorio del dataset</span>
+    <span class="eyebrow">TPI Simulación · Datos del modelo</span>
     <h1>Reservas del comedor, organizadas por tipo de cliente</h1>
     <p id="lead"></p>
     <div class="meta" id="meta"></div>
@@ -172,8 +205,8 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     </div>
     <div class="two">
       <div class="panel">
-        <h3>Tiempo entre llegadas (check-in)</h3>
-        <p style="font-size:13px;margin-top:4px">Franja 12:00–14:00, excluyendo huecos &gt; 10 min.</p>
+        <h3>Tiempo de validación <span class="ob derivado" style="margin-left:6px;vertical-align:2px">Derivado</span></h3>
+        <p style="font-size:13px;margin-top:4px" id="p-val"></p>
         <dl class="stats" id="st-ia"></dl>
       </div>
       <div class="panel">
@@ -192,6 +225,22 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     </div>
   </section>
 
+  <section id="origen">
+    <div class="sec-head">
+      <span class="eyebrow">Fuentes de datos · consigna, punto 7</span>
+      <h2>Qué es real y qué es supuesto</h2>
+      <p>Todos los datos que usa el modelo, con su origen. Lo que el dataset real no trae (ausentismo, cancelaciones, menú, retiro para llevar, tiempo en el mostrador) se completó con <strong>datos generados con IA</strong>. Cada uno declara la base sobre la que se eligió el valor y un rango para el análisis de sensibilidad.</p>
+    </div>
+    <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+      <div class="origin-bar" id="origin-bar" role="img" aria-label="Cantidad de datos por origen"></div>
+      <div class="origin-keys" id="origin-keys"></div>
+    </div>
+    <div class="sups" id="sups"></div>
+    <h3 style="font-size:18px;margin-top:10px">Decisiones abiertas del grupo</h3>
+    <div class="dec" id="decs"></div>
+    <p style="font-size:13px">Fuente única: <code>supuestos/supuestos.json</code> (versión <span id="sup-ver"></span>). La misma información está como tabla en <code>supuestos/SUPUESTOS.md</code>.</p>
+  </section>
+
   <section>
     <div class="sec-head">
       <h2>Calidad de los datos</h2>
@@ -203,12 +252,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <section>
     <div class="sec-head">
       <h2>Archivos generados</h2>
-      <p>Se reconstruyen corriendo <code>python analisis/organizar_por_tipo.py</code> desde la raíz del TPI.</p>
+      <p>Se reconstruyen desde la raíz del TPI corriendo <code>python analisis/tiempo_validacion.py</code> y después <code>python analisis/organizar_por_tipo.py</code>.</p>
     </div>
     <div class="files">
       <div><code>data/procesado/ds_app_organizado.csv</code><span>Dataset completo ordenado por grupo → tipo → fecha → check-in, con columnas <code>grupo</code>, <code>sin_tacc</code> y <code>anticipacion_min</code>.</span></div>
       <div><code>data/procesado/por_tipo/*.csv</code><span>Un archivo por grupo: estudiantes, becas_nutrirse, becas_personal, personal.</span></div>
-      <div><code>reporte/datos.json</code><span>Agregados usados en este reporte.</span></div>
+      <div><code>data/procesado/intervalos_saturados.csv</code><span>Muestra de tiempos de validación para ajustar en ExpertFit.</span></div>
+      <div><code>supuestos/SUPUESTOS.md</code><span>Registro de supuestos y fuentes: el mismo contenido de «Qué es real y qué es supuesto».</span></div>
     </div>
   </section>
 
@@ -869,8 +919,260 @@ const D = {
   "13": 13929,
   "14": 5409,
   "15": 1
+ },
+ "validacion": {
+  "criterio": "franjas de 10 min con >= 140 validaciones; intervalos < 30 s",
+  "franjas_saturadas": 13,
+  "n_intervalos": 1959,
+  "empirico": {
+   "media_s": 3.9,
+   "mediana_s": 2.93,
+   "desvio_s": 2.98,
+   "p05_s": 1.91,
+   "p95_s": 9.73
+  },
+  "lognormal": {
+   "mu": 1.205,
+   "sigma": 0.494,
+   "mediana_s": 3.34,
+   "media_s": 3.77
+  },
+  "capacidad_1_puesto_por_hora": 924,
+  "maximo_observado_10min": 168
  }
 };
+const S = {
+ "version": "0.1",
+ "actualizado": "2026-09-23",
+ "origenes": {
+  "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
+  "derivado": "Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.",
+  "referente": "Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).",
+  "generado": "Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso."
+ },
+ "supuestos": [
+  {
+   "id": "S00",
+   "variable": "Reservas retiradas (dataset base)",
+   "origen": "registro",
+   "valor": "34.509 reservas retiradas entre el 1 de julio y el 1 de septiembre de 2026 (32 días de servicio), con fecha, hora de reserva, hora de check-in y tipo de cliente.",
+   "flexsim": "Fuente de S02, S03, S04, S07 y S08, y referencia para validar el modelo",
+   "base": "Export del sistema de reservas del comedor, sin modificar.",
+   "estado": "confirmado",
+   "nota": "Solo trae status = used, y customer_id es único por fila (no identifica personas).",
+   "usado_en": ["dataset", "modelo", "validacion"]
+  },
+  {
+   "id": "S01",
+   "variable": "Horario de servicio",
+   "origen": "referente",
+   "valor": "Lunes a viernes de 12:00 a 14:30",
+   "flexsim": "Duración de la réplica: 9000 s desde las 12:00 (más el período previo a la apertura, ver S09)",
+   "base": "Operación habitual del comedor. El dataset es consistente: el 99,96 % de los check-ins cae entre las 12:00 y las 14:59.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S02",
+   "variable": "Ventana de reservas (horario límite)",
+   "origen": "derivado",
+   "valor": "8:00 a 11:00. El 99,6 % de las reservas reales cae en esa franja.",
+   "flexsim": "Parámetro de escenario (ver D04)",
+   "base": "Distribución horaria de reserved_at en los registros reales.",
+   "estado": "confirmado",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S03",
+   "variable": "Demanda diaria (reservas retiradas por día)",
+   "origen": "derivado",
+   "valor": "Perfil bajo: 723 por día (mediana de julio, 15 días). Perfil pico: 1.543 por día (mediana desde el 10 de agosto, 12 días, rango 1.485–1.607).",
+   "flexsim": "Global Table Escenarios, columna DemandaDia",
+   "base": "Conteo diario de los registros reales, 32 días de servicio.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S04",
+   "variable": "Composición de la demanda por grupo y tipo",
+   "origen": "derivado",
+   "valor": "Estudiantes 48,8 %, Becas Nutrirse 42,1 %, Becas personal 6,8 %, Personal 2,3 %. Detalle por tipo en reporte/datos.json.",
+   "flexsim": "Global Table MixTipos y Empirical Distribution para la label tipo",
+   "base": "Frecuencias de customer_types en los registros reales.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S05",
+   "variable": "Fila única para todos los tipos",
+   "origen": "referente",
+   "valor": "Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto.",
+   "flexsim": "Una sola cola antes del Resource PuestosValidacion",
+   "base": "Relevamiento con el referente del comedor.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S06",
+   "variable": "Puestos de validación activos",
+   "origen": "referente",
+   "valor": "1 en el escenario base (hay 2 disponibles).",
+   "flexsim": "Resource PuestosValidacion con Count = 1 (base) o 2 (escenario)",
+   "base": "Relevamiento con el referente: habitualmente opera un solo puesto.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S07",
+   "variable": "Tiempo de validación por persona",
+   "origen": "derivado",
+   "valor": "Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s.",
+   "flexsim": "lognormal2(0, 3.34, 0.494, stream). Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.",
+   "base": "El check-in se registra en el puesto de control y opera un solo puesto (S05, S06). En las 13 franjas de 10 minutos con 140 o más validaciones, el puesto está ocupado todo el tiempo, así que el intervalo entre check-ins es el tiempo de servicio (1.959 intervalos). Script: analisis/tiempo_validacion.py.",
+   "estado": "confirmado",
+   "sensibilidad": "3 a 5 s de media",
+   "usado_en": ["modelo"],
+   "nota": "Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto."
+  },
+  {
+   "id": "S08",
+   "variable": "Tasa de llegadas a la fila por franja de 10 minutos",
+   "origen": "derivado",
+   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).",
+   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual",
+   "base": "Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.",
+   "estado": "propuesto",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S09",
+   "variable": "Cola formada antes de la apertura",
+   "origen": "generado",
+   "valor": "Llegadas uniformes entre las 11:40 y las 12:00. Cantidad inicial: 65 personas en el perfil pico y 30 en el perfil bajo.",
+   "flexsim": "Source adicional en el período previo; el Resource habilita la atención a las 12:00",
+   "base": "Estimación del referente: una cola de 60 a 70 personas en el pico. En los datos reales, la primera franja (12:00 a 12:10) valida una mediana de 92 personas, cerca de la capacidad del puesto: eso indica que ya hay cola al abrir.",
+   "estado": "propuesto",
+   "sensibilidad": "30 a 150 personas",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S10",
+   "variable": "Objetivo de validación del modelo (cola y espera observadas)",
+   "origen": "referente",
+   "valor": "Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico.",
+   "flexsim": "Se compara contra la longitud máxima de la cola y la espera promedio en el pico",
+   "base": "Observación directa del referente en un día normal.",
+   "estado": "a revisar",
+   "usado_en": ["validacion"],
+   "nota": "No es compatible con el tiempo de servicio real (ver D01): con 3,9 s por persona, una cola de 65 se vacía en unos 4 minutos."
+  },
+  {
+   "id": "S11",
+   "variable": "Ausentismo (reservas no retiradas)",
+   "origen": "generado",
+   "valor": "Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas.",
+   "flexsim": "No entran a la fila: se descuentan de las reservas. Salida: reservas no utilizadas.",
+   "base": "El export real solo trae reservas retiradas (status = used), así que no hay dato. Se supone un valor mayor para estudiantes porque la reserva no tiene penalidad por no asistir, y menor para las becas porque el beneficio está asociado a la persona. Pendiente de pedirle una estimación al referente.",
+   "estado": "propuesto",
+   "sensibilidad": "3 % a 15 %",
+   "generacion": "Filas nuevas con status = no_show. La cantidad por día y grupo es retiradas × p / (1 − p). reserved_at se muestrea de las reservas reales del mismo día y grupo. checked_at queda vacío.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S12",
+   "variable": "Cancelaciones definitivas",
+   "origen": "generado",
+   "valor": "3 % del total de reservas.",
+   "flexsim": "No entran a la fila. Solo cambian el conteo de reservas.",
+   "base": "El export real no trae cancelaciones definitivas. Los 313 casos reales de cancelar y volver a reservar (0,9 %) muestran que la función se usa. Se supone un valor bajo porque la ventana de reserva es corta (3 horas).",
+   "estado": "propuesto",
+   "sensibilidad": "1 % a 6 %",
+   "generacion": "Filas nuevas con status = canceled y canceled_at uniforme entre reserved_at y las 11:00.",
+   "usado_en": ["dataset"]
+  },
+  {
+   "id": "S13",
+   "variable": "Menú vegetariano / no vegetariano",
+   "origen": "generado",
+   "valor": "12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real.",
+   "flexsim": "Label menu, usada para la línea del mostrador (si entra en el alcance, D02)",
+   "base": "El dataset no distingue menú. Supuesto del grupo, pendiente de una estimación del referente.",
+   "estado": "propuesto",
+   "sensibilidad": "5 % a 25 %",
+   "generacion": "Atributo menu_gen asignado a cada reserva, real o generada, con una Bernoulli de p = 0,12.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S14",
+   "variable": "Consumo en el salón o para llevar",
+   "origen": "generado",
+   "valor": "Becas Nutrirse Vianda: 100 % para llevar. Resto de los tipos: 15 % para llevar.",
+   "flexsim": "Label para_llevar, que decide si la persona sale o va a una mesa (si entra en el alcance, D02)",
+   "base": "Vianda es comida para llevar por definición del beneficio. Para el resto, supuesto del grupo, pendiente de una estimación del referente.",
+   "estado": "propuesto",
+   "sensibilidad": "5 % a 30 % en el resto",
+   "generacion": "Atributo para_llevar_gen asignado a cada reserva retirada.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S15",
+   "variable": "Tiempo de entrega en el mostrador",
+   "origen": "generado",
+   "valor": "Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana).",
+   "flexsim": "Delay en cada línea del mostrador (si entra en el alcance, D02)",
+   "base": "No se va a medir. La cola observada se forma antes de la validación y no en el mostrador, así que el mostrador tiene que atender al menos al ritmo del puesto (3,9 s). Se elige un valor apenas menor.",
+   "estado": "propuesto",
+   "usado_en": ["modelo"]
+  }
+ ],
+ "decisiones_abiertas": [
+  {
+   "id": "D01",
+   "tema": "Cómo compatibilizar la espera de 10 a 15 minutos con el tiempo de servicio real",
+   "detalle": "Con 3,9 s por persona, una cola de 65 se vacía en unos 4 minutos. Para esperar de 10 a 15 minutos haría falta una cola de 150 a 230 personas, o que la gente llegue antes de la apertura.",
+   "opciones": [
+    "A) Las personas llegan antes de las 12:00 y la espera incluye el tiempo hasta la apertura (S09). Se puede comprobar en el modelo.",
+    "B) Los 10 a 15 minutos son una percepción: se toma como objetivo la cola de 60 a 70 personas y se reporta la diferencia.",
+    "C) La cola real en el pico es más larga que 60 a 70 personas."
+   ],
+   "recomendacion": "A combinada con B: modelar la llegada previa a la apertura y validar contra la curva real de validaciones por franja, que es el dato más fuerte. La espera de 10 a 15 minutos se reporta como observación del referente.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D02",
+   "tema": "¿El mostrador de entrega entra en el alcance?",
+   "detalle": "La sección 4 de la Entrega 1 termina el sistema en la validación, pero las secciones 5, 8 y 9 hablan del mostrador y de su ocupación.",
+   "opciones": [
+    "A) El sistema termina en la validación. El mostrador y las mesas quedan solo en la animación 3D.",
+    "B) Incluir el mostrador con dos líneas (S13, S15)."
+   ],
+   "recomendacion": "A, porque la cola y la pregunta de estudio están en la validación. Menú y para llevar se generan igual (cuestan poco) y quedan como labels en la animación.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D03",
+   "tema": "Perfiles de demanda a simular",
+   "opciones": [
+    "Perfil bajo: 723 por día (julio)",
+    "Perfil pico: 1.543 por día (agosto)"
+   ],
+   "recomendacion": "Correr los dos. El pico es el caso que responde la pregunta de estudio.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D04",
+   "tema": "Escenario del horario límite de reserva",
+   "detalle": "En los datos reales, la hora de reserva casi no predice la hora de llegada (correlación de 0,13). Quien reserva a las 8:00 valida en una mediana de 13:02, y quien reserva después de las 10 valida en una mediana de 13:17.",
+   "opciones": [
+    "A) Modelarlo como un cambio en la cantidad de reservas del día, no en la hora de llegada.",
+    "B) Sacarlo de los escenarios y justificarlo con este dato."
+   ],
+   "recomendacion": "A, con un supuesto explícito sobre cuánta demanda se gana o se pierde al mover el corte.",
+   "estado": "abierta"
+  }
+ ]
+}
+;
 const G = ["Estudiantes","Becas Nutrirse","Becas personal","Personal"];
 const COL = {"Estudiantes":"var(--s1)","Becas Nutrirse":"var(--s2)","Becas personal":"var(--s3)","Personal":"var(--s4)"};
 const nf = new Intl.NumberFormat("es-AR");
@@ -892,7 +1194,7 @@ const figs = [
   [nf.format(Math.round(T.prom_dia)), "retiros promedio por día"],
   [D.grupos.length, `grupos (a partir de ${T.tipos} tipos)`],
   [nf.format(T.sin_tacc), `raciones sin TACC (${f1(pct(T.sin_tacc))} %)`],
-  [nf.format(Math.round(3600/D.entre_llegadas.pico_12_14.media)), "llegadas por hora en el pico"],
+  [nf.format(D.validacion.capacidad_1_puesto_por_hora), "validaciones por hora con 1 puesto"],
 ];
 document.getElementById("figs").innerHTML = figs.map(([v,l])=>`<div class="fig"><span class="v num">${v}</span><span class="l">${l}</span></div>`).join("");
 
@@ -985,7 +1287,9 @@ stacked(document.getElementById("ch-franja"), pf, {
 // estadísticas
 const ia=D.entre_llegadas.pico_12_14, an=D.anticipacion;
 const dl=(el,items)=>document.getElementById(el).innerHTML=items.map(([k,v,u])=>`<div><dt>${k}</dt><dd class="num">${v}<small>${u}</small></dd></div>`).join("");
-dl("st-ia",[["Media",f1(ia.media),"s"],["Mediana",f1(ia.mediana),"s"],["Desvío",f1(ia.desvio),"s"],["Coef. var.",f1(ia.cv),""],["P90",f1(ia.p90),"s"],["Llegadas/h",nf.format(Math.round(3600/ia.media)),""]]);
+const V=D.validacion, VE=V.empirico, VL=V.lognormal;
+document.getElementById("p-val").textContent=`Intervalo entre check-ins en las ${V.franjas_saturadas} franjas de 10 min con el único puesto saturado (${nf.format(V.n_intervalos)} intervalos). Ajuste lognormal: μ = ${String(VL.mu).replace(".",",")}, σ = ${String(VL.sigma).replace(".",",")}.`;
+dl("st-ia",[["Media",f1(VE.media_s),"s"],["Mediana",f1(VE.mediana_s),"s"],["P5",f1(VE.p05_s),"s"],["P95",f1(VE.p95_s),"s"],["Capacidad",nf.format(V.capacidad_1_puesto_por_hora),"/h"],["Máx. en 10 min",V.maximo_observado_10min,""]]);
 dl("st-ant",[["Media",nf.format(Math.round(an.media)),"min"],["Mediana",nf.format(Math.round(an.mediana)),"min"],["Desvío",nf.format(Math.round(an.desvio)),"min"],["P90",nf.format(Math.round(an.p90)),"min"]]);
 
 function simpleBars(host,data,{W=440,H=200,label,fmt=v=>nf.format(v)}){
@@ -1000,10 +1304,25 @@ function simpleBars(host,data,{W=440,H=200,label,fmt=v=>nf.format(v)}){
 simpleBars(document.getElementById("ch-dow"), D.por_dow.map(d=>({k:d.dia.slice(0,3).toLowerCase(),v:d.prom})), {label:"Retiros promedio por día de la semana"});
 simpleBars(document.getElementById("ch-hres"), Object.entries(D.hora_reserva).map(([h,v])=>({k:`${h}h`,v})), {label:"Reservas por hora del día"});
 
+// origen de los datos
+const ORIG={registro:["Registro","Datos de la organización, sin modificar."],derivado:["Derivado","Calculado a partir del registro real con un script reproducible."],referente:["Referente","Estimación del integrante que trabaja en el comedor."],generado:["Generado (IA)","Supuesto generado con apoyo de IA, con la base declarada."]};
+const OK=Object.keys(ORIG);
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const cnt=Object.fromEntries(OK.map(k=>[k,S.supuestos.filter(s=>s.origen===k).length]));
+document.getElementById("origin-bar").innerHTML=OK.filter(k=>cnt[k]).map(k=>`<div style="flex:${cnt[k]};background:var(--o-${k})" title="${ORIG[k][0]}: ${cnt[k]}"></div>`).join("");
+document.getElementById("origin-keys").innerHTML=OK.map(k=>`<div><span class="ob ${k}">${ORIG[k][0]} · ${cnt[k]}</span><p>${ORIG[k][1]}</p></div>`).join("");
+const orden=s=>OK.indexOf(s.origen);
+document.getElementById("sups").innerHTML=[...S.supuestos].sort((a,b)=>orden(a)-orden(b)||a.id.localeCompare(b.id)).map(s=>{
+  const extra=[["Base",s.base],["Cómo se genera",s.generacion],["Sensibilidad",s.sensibilidad],["En FlexSim",s.flexsim],["Nota",s.nota]].filter(([,v])=>v);
+  const conf=s.estado==="confirmado";
+  return `<div class="sup"><span class="id">${s.id}</span><div class="sup-body"><h3>${esc(s.variable)}</h3><p class="val">${esc(s.valor)}</p><dl>${extra.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div><div class="side"><span class="ob ${s.origen}">${ORIG[s.origen][0]}</span><span class="st ${conf?"":"pend"}">${conf?"✓ confirmado":"● "+esc(s.estado)}</span></div></div>`;}).join("");
+document.getElementById("decs").innerHTML=S.decisiones_abiertas.map(d=>`<div><b>${d.id} · ${d.estado}</b><h3>${esc(d.tema)}</h3>${d.detalle?`<p>${esc(d.detalle)}</p>`:""}<p><strong>Recomendación:</strong> ${esc(d.recomendacion)}</p></div>`).join("");
+document.getElementById("sup-ver").textContent=`${S.version}, ${S.actualizado}`;
+
 // observaciones de calidad
 const r0=D.por_tipo.reduce((a,r)=>a+r.re_reservas,0);
 const obs=[
-  ["ATENCIÓN",`<strong>Todos los registros tienen <code>status = used</code>.</strong> El dataset solo contiene reservas efectivamente retiradas: no hay no-shows ni cancelaciones definitivas, así que no permite estimar la tasa de ausentismo.`],
+  ["ATENCIÓN",`<strong>Todos los registros tienen <code>status = used</code>.</strong> El dataset solo contiene reservas efectivamente retiradas: no hay no-shows ni cancelaciones definitivas, así que no permite estimar la tasa de ausentismo. Se completó con datos generados (S11, S12).`],
   ["ATENCIÓN",`<strong><code>customer_id</code> es único por fila</strong> (${nf.format(T.ids_unicos)} valores para ${nf.format(T.registros)} registros). Funciona como id de registro, no de persona: no se puede medir frecuencia de uso por cliente.`],
   ["INFO",`<strong>${r0} registros tienen <code>canceled_at</code> cargado</strong> pero terminaron retirados. En todos, la cancelación es <em>anterior</em> a <code>reserved_at</code> (mediana: segundos antes): corresponden a cancelar y volver a reservar. ${Math.round(D.por_tipo.find(r=>r.tipo==="Becas Nutrirse Vianda").re_reservas/r0*100)} % son de Becas Nutrirse Vianda.`],
   ["INFO",`<strong>Reserva y retiro ocurren siempre el mismo día</strong> que <code>event_date</code>. El ${f1((D.hora_reserva[8]+D.hora_reserva[9]+D.hora_reserva[10])/T.registros*100)} % reserva entre las 8 y las 11; ${nf.format(Object.entries(D.hora_reserva).filter(([h])=>+h>=11).reduce((a,[,v])=>a+v,0))} reservas se hicieron a partir de las 11.`],

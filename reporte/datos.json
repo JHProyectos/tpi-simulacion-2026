@@ -1,0 +1,655 @@
+{
+ "totales": {
+  "registros": 34509,
+  "dias": 32,
+  "desde": "2026-07-01",
+  "hasta": "2026-09-01",
+  "tipos": 14,
+  "sin_tacc": 360,
+  "re_reservas": 313,
+  "status": {
+   "used": 34509
+  },
+  "ids_unicos": 34509,
+  "prom_dia": 1078.4,
+  "max_dia": "2026-08-21"
+ },
+ "grupos": [
+  {
+   "grupo": "Estudiantes",
+   "n": 16851,
+   "tipos": 5
+  },
+  {
+   "grupo": "Becas Nutrirse",
+   "n": 14512,
+   "tipos": 2
+  },
+  {
+   "grupo": "Becas personal",
+   "n": 2345,
+   "tipos": 3
+  },
+  {
+   "grupo": "Personal",
+   "n": 801,
+   "tipos": 4
+  }
+ ],
+ "por_tipo": [
+  {
+   "tipo": "Estudiante de Grado",
+   "grupo": "Estudiantes",
+   "sin_tacc": false,
+   "n": 16629,
+   "dias_con_uso": 32,
+   "prom_dia": 519.7,
+   "reserva_mediana": 504.5,
+   "checkin_mediana": 779.9,
+   "anticipacion_media": 255.9,
+   "re_reservas": 80
+  },
+  {
+   "tipo": "Estudiante de Grado sin TACC",
+   "grupo": "Estudiantes",
+   "sin_tacc": true,
+   "n": 183,
+   "dias_con_uso": 31,
+   "prom_dia": 5.7,
+   "reserva_mediana": 542.4,
+   "checkin_mediana": 765.2,
+   "anticipacion_media": 221.8,
+   "re_reservas": 3
+  },
+  {
+   "tipo": "Estudiante Preuniversitario Monserrat",
+   "grupo": "Estudiantes",
+   "sin_tacc": false,
+   "n": 24,
+   "dias_con_uso": 11,
+   "prom_dia": 0.8,
+   "reserva_mediana": 541.8,
+   "checkin_mediana": 751.6,
+   "anticipacion_media": 201.7,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Usuario de Postgrado",
+   "grupo": "Estudiantes",
+   "sin_tacc": false,
+   "n": 14,
+   "dias_con_uso": 12,
+   "prom_dia": 0.4,
+   "reserva_mediana": 594.2,
+   "checkin_mediana": 804.0,
+   "anticipacion_media": 210.3,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Estudiante de Grado Centro sin TACC",
+   "grupo": "Estudiantes",
+   "sin_tacc": true,
+   "n": 1,
+   "dias_con_uso": 1,
+   "prom_dia": 0.0,
+   "reserva_mediana": 613.7,
+   "checkin_mediana": 760.2,
+   "anticipacion_media": 146.5,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Becas Nutrirse Vianda",
+   "grupo": "Becas Nutrirse",
+   "sin_tacc": false,
+   "n": 14375,
+   "dias_con_uso": 32,
+   "prom_dia": 449.2,
+   "reserva_mediana": 542.4,
+   "checkin_mediana": 796.8,
+   "anticipacion_media": 246.2,
+   "re_reservas": 226
+  },
+  {
+   "tipo": "Becas Nutrirse Vianda sin TACC",
+   "grupo": "Becas Nutrirse",
+   "sin_tacc": true,
+   "n": 137,
+   "dias_con_uso": 31,
+   "prom_dia": 4.3,
+   "reserva_mediana": 531.4,
+   "checkin_mediana": 779.6,
+   "anticipacion_media": 235.2,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Becas Nodocentes",
+   "grupo": "Becas personal",
+   "sin_tacc": false,
+   "n": 1870,
+   "dias_con_uso": 32,
+   "prom_dia": 58.4,
+   "reserva_mediana": 536.8,
+   "checkin_mediana": 799.3,
+   "anticipacion_media": 249.3,
+   "re_reservas": 2
+  },
+  {
+   "tipo": "Becas Docentes",
+   "grupo": "Becas personal",
+   "sin_tacc": false,
+   "n": 446,
+   "dias_con_uso": 32,
+   "prom_dia": 13.9,
+   "reserva_mediana": 546.1,
+   "checkin_mediana": 771.8,
+   "anticipacion_media": 232.1,
+   "re_reservas": 1
+  },
+  {
+   "tipo": "Becas Nodocentes sin TACC",
+   "grupo": "Becas personal",
+   "sin_tacc": true,
+   "n": 29,
+   "dias_con_uso": 29,
+   "prom_dia": 0.9,
+   "reserva_mediana": 507.6,
+   "checkin_mediana": 732.5,
+   "anticipacion_media": 212.6,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Nodocente",
+   "grupo": "Personal",
+   "sin_tacc": false,
+   "n": 487,
+   "dias_con_uso": 32,
+   "prom_dia": 15.2,
+   "reserva_mediana": 583.2,
+   "checkin_mediana": 794.4,
+   "anticipacion_media": 215.8,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Docente",
+   "grupo": "Personal",
+   "sin_tacc": false,
+   "n": 304,
+   "dias_con_uso": 31,
+   "prom_dia": 9.5,
+   "reserva_mediana": 573.3,
+   "checkin_mediana": 790.2,
+   "anticipacion_media": 225.5,
+   "re_reservas": 1
+  },
+  {
+   "tipo": "Nodocente sin TACC",
+   "grupo": "Personal",
+   "sin_tacc": true,
+   "n": 8,
+   "dias_con_uso": 8,
+   "prom_dia": 0.2,
+   "reserva_mediana": 602.2,
+   "checkin_mediana": 781.3,
+   "anticipacion_media": 183.4,
+   "re_reservas": 0
+  },
+  {
+   "tipo": "Docente sin TACC",
+   "grupo": "Personal",
+   "sin_tacc": true,
+   "n": 2,
+   "dias_con_uso": 2,
+   "prom_dia": 0.1,
+   "reserva_mediana": 560.1,
+   "checkin_mediana": 784.3,
+   "anticipacion_media": 224.2,
+   "re_reservas": 0
+  }
+ ],
+ "por_dia": [
+  {
+   "fecha": "2026-07-01",
+   "Estudiantes": 551,
+   "Becas Nutrirse": 517,
+   "Becas personal": 76,
+   "Personal": 31
+  },
+  {
+   "fecha": "2026-07-02",
+   "Estudiantes": 354,
+   "Becas Nutrirse": 339,
+   "Becas personal": 73,
+   "Personal": 20
+  },
+  {
+   "fecha": "2026-07-03",
+   "Estudiantes": 430,
+   "Becas Nutrirse": 410,
+   "Becas personal": 71,
+   "Personal": 17
+  },
+  {
+   "fecha": "2026-07-07",
+   "Estudiantes": 61,
+   "Becas Nutrirse": 152,
+   "Becas personal": 31,
+   "Personal": 4
+  },
+  {
+   "fecha": "2026-07-08",
+   "Estudiantes": 106,
+   "Becas Nutrirse": 193,
+   "Becas personal": 45,
+   "Personal": 11
+  },
+  {
+   "fecha": "2026-07-20",
+   "Estudiantes": 156,
+   "Becas Nutrirse": 192,
+   "Becas personal": 81,
+   "Personal": 21
+  },
+  {
+   "fecha": "2026-07-21",
+   "Estudiantes": 203,
+   "Becas Nutrirse": 256,
+   "Becas personal": 75,
+   "Personal": 17
+  },
+  {
+   "fecha": "2026-07-22",
+   "Estudiantes": 286,
+   "Becas Nutrirse": 322,
+   "Becas personal": 75,
+   "Personal": 30
+  },
+  {
+   "fecha": "2026-07-23",
+   "Estudiantes": 311,
+   "Becas Nutrirse": 269,
+   "Becas personal": 73,
+   "Personal": 29
+  },
+  {
+   "fecha": "2026-07-24",
+   "Estudiantes": 184,
+   "Becas Nutrirse": 213,
+   "Becas personal": 64,
+   "Personal": 15
+  },
+  {
+   "fecha": "2026-07-27",
+   "Estudiantes": 292,
+   "Becas Nutrirse": 314,
+   "Becas personal": 88,
+   "Personal": 29
+  },
+  {
+   "fecha": "2026-07-28",
+   "Estudiantes": 368,
+   "Becas Nutrirse": 343,
+   "Becas personal": 80,
+   "Personal": 33
+  },
+  {
+   "fecha": "2026-07-29",
+   "Estudiantes": 316,
+   "Becas Nutrirse": 327,
+   "Becas personal": 79,
+   "Personal": 23
+  },
+  {
+   "fecha": "2026-07-30",
+   "Estudiantes": 371,
+   "Becas Nutrirse": 360,
+   "Becas personal": 74,
+   "Personal": 35
+  },
+  {
+   "fecha": "2026-07-31",
+   "Estudiantes": 402,
+   "Becas Nutrirse": 375,
+   "Becas personal": 70,
+   "Personal": 40
+  },
+  {
+   "fecha": "2026-08-03",
+   "Estudiantes": 453,
+   "Becas Nutrirse": 452,
+   "Becas personal": 75,
+   "Personal": 25
+  },
+  {
+   "fecha": "2026-08-04",
+   "Estudiantes": 463,
+   "Becas Nutrirse": 575,
+   "Becas personal": 77,
+   "Personal": 28
+  },
+  {
+   "fecha": "2026-08-05",
+   "Estudiantes": 409,
+   "Becas Nutrirse": 577,
+   "Becas personal": 78,
+   "Personal": 24
+  },
+  {
+   "fecha": "2026-08-06",
+   "Estudiantes": 513,
+   "Becas Nutrirse": 573,
+   "Becas personal": 79,
+   "Personal": 34
+  },
+  {
+   "fecha": "2026-08-07",
+   "Estudiantes": 539,
+   "Becas Nutrirse": 550,
+   "Becas personal": 68,
+   "Personal": 21
+  },
+  {
+   "fecha": "2026-08-10",
+   "Estudiantes": 864,
+   "Becas Nutrirse": 592,
+   "Becas personal": 79,
+   "Personal": 26
+  },
+  {
+   "fecha": "2026-08-11",
+   "Estudiantes": 866,
+   "Becas Nutrirse": 602,
+   "Becas personal": 79,
+   "Personal": 22
+  },
+  {
+   "fecha": "2026-08-13",
+   "Estudiantes": 864,
+   "Becas Nutrirse": 537,
+   "Becas personal": 73,
+   "Personal": 24
+  },
+  {
+   "fecha": "2026-08-14",
+   "Estudiantes": 858,
+   "Becas Nutrirse": 544,
+   "Becas personal": 77,
+   "Personal": 30
+  },
+  {
+   "fecha": "2026-08-18",
+   "Estudiantes": 819,
+   "Becas Nutrirse": 589,
+   "Becas personal": 76,
+   "Personal": 24
+  },
+  {
+   "fecha": "2026-08-20",
+   "Estudiantes": 812,
+   "Becas Nutrirse": 612,
+   "Becas personal": 71,
+   "Personal": 32
+  },
+  {
+   "fecha": "2026-08-21",
+   "Estudiantes": 879,
+   "Becas Nutrirse": 625,
+   "Becas personal": 75,
+   "Personal": 28
+  },
+  {
+   "fecha": "2026-08-24",
+   "Estudiantes": 801,
+   "Becas Nutrirse": 607,
+   "Becas personal": 82,
+   "Personal": 29
+  },
+  {
+   "fecha": "2026-08-25",
+   "Estudiantes": 852,
+   "Becas Nutrirse": 600,
+   "Becas personal": 77,
+   "Personal": 30
+  },
+  {
+   "fecha": "2026-08-26",
+   "Estudiantes": 849,
+   "Becas Nutrirse": 644,
+   "Becas personal": 80,
+   "Personal": 30
+  },
+  {
+   "fecha": "2026-08-31",
+   "Estudiantes": 815,
+   "Becas Nutrirse": 647,
+   "Becas personal": 78,
+   "Personal": 28
+  },
+  {
+   "fecha": "2026-09-01",
+   "Estudiantes": 804,
+   "Becas Nutrirse": 604,
+   "Becas personal": 66,
+   "Personal": 11
+  }
+ ],
+ "por_franja": [
+  {
+   "min": 710,
+   "Estudiantes": 0.19,
+   "Becas Nutrirse": 0.09,
+   "Becas personal": 0.12,
+   "Personal": 0.0
+  },
+  {
+   "min": 720,
+   "Estudiantes": 49.31,
+   "Becas Nutrirse": 32.03,
+   "Becas personal": 4.0,
+   "Personal": 0.28
+  },
+  {
+   "min": 730,
+   "Estudiantes": 49.97,
+   "Becas Nutrirse": 34.16,
+   "Becas personal": 3.22,
+   "Personal": 0.66
+  },
+  {
+   "min": 740,
+   "Estudiantes": 45.09,
+   "Becas Nutrirse": 28.62,
+   "Becas personal": 3.31,
+   "Personal": 1.25
+  },
+  {
+   "min": 750,
+   "Estudiantes": 42.88,
+   "Becas Nutrirse": 27.66,
+   "Becas personal": 4.22,
+   "Personal": 1.75
+  },
+  {
+   "min": 760,
+   "Estudiantes": 39.5,
+   "Becas Nutrirse": 26.53,
+   "Becas personal": 5.62,
+   "Personal": 2.09
+  },
+  {
+   "min": 770,
+   "Estudiantes": 37.19,
+   "Becas Nutrirse": 26.41,
+   "Becas personal": 5.34,
+   "Personal": 2.56
+  },
+  {
+   "min": 780,
+   "Estudiantes": 43.34,
+   "Becas Nutrirse": 29.09,
+   "Becas personal": 6.31,
+   "Personal": 3.41
+  },
+  {
+   "min": 790,
+   "Estudiantes": 44.34,
+   "Becas Nutrirse": 32.19,
+   "Becas personal": 8.5,
+   "Personal": 2.28
+  },
+  {
+   "min": 800,
+   "Estudiantes": 38.53,
+   "Becas Nutrirse": 29.53,
+   "Becas personal": 8.66,
+   "Personal": 2.34
+  },
+  {
+   "min": 810,
+   "Estudiantes": 31.38,
+   "Becas Nutrirse": 30.12,
+   "Becas personal": 6.34,
+   "Personal": 1.59
+  },
+  {
+   "min": 820,
+   "Estudiantes": 25.03,
+   "Becas Nutrirse": 28.59,
+   "Becas personal": 4.56,
+   "Personal": 1.88
+  },
+  {
+   "min": 830,
+   "Estudiantes": 22.94,
+   "Becas Nutrirse": 28.94,
+   "Becas personal": 3.84,
+   "Personal": 1.53
+  },
+  {
+   "min": 840,
+   "Estudiantes": 22.47,
+   "Becas Nutrirse": 26.94,
+   "Becas personal": 2.56,
+   "Personal": 1.19
+  },
+  {
+   "min": 850,
+   "Estudiantes": 19.0,
+   "Becas Nutrirse": 34.81,
+   "Becas personal": 4.25,
+   "Personal": 1.72
+  },
+  {
+   "min": 860,
+   "Estudiantes": 13.53,
+   "Becas Nutrirse": 33.09,
+   "Becas personal": 2.28,
+   "Personal": 0.5
+  },
+  {
+   "min": 870,
+   "Estudiantes": 1.91,
+   "Becas Nutrirse": 4.59,
+   "Becas personal": 0.12,
+   "Personal": 0.0
+  },
+  {
+   "min": 880,
+   "Estudiantes": 0.0,
+   "Becas Nutrirse": 0.06,
+   "Becas personal": 0.0,
+   "Personal": 0.0
+  },
+  {
+   "min": 890,
+   "Estudiantes": 0.0,
+   "Becas Nutrirse": 0.0,
+   "Becas personal": 0.0,
+   "Personal": 0.0
+  },
+  {
+   "min": 900,
+   "Estudiantes": 0.0,
+   "Becas Nutrirse": 0.03,
+   "Becas personal": 0.0,
+   "Personal": 0.0
+  }
+ ],
+ "por_dow": [
+  {
+   "dia": "Lunes",
+   "total": 6826,
+   "dias": 6,
+   "prom": 1137.7
+  },
+  {
+   "dia": "Martes",
+   "total": 8887,
+   "dias": 8,
+   "prom": 1110.9
+  },
+  {
+   "dia": "Miércoles",
+   "total": 5679,
+   "dias": 6,
+   "prom": 946.5
+  },
+  {
+   "dia": "Jueves",
+   "total": 6532,
+   "dias": 6,
+   "prom": 1088.7
+  },
+  {
+   "dia": "Viernes",
+   "total": 6585,
+   "dias": 6,
+   "prom": 1097.5
+  }
+ ],
+ "entre_llegadas": {
+  "total": {
+   "n": 34477,
+   "media": 8.51,
+   "mediana": 3.81,
+   "desvio": 18.26,
+   "cv": 2.15,
+   "p90": 18.96,
+   "max": 1753.3
+  },
+  "pico_12_14": {
+   "n": 29053,
+   "media": 7.73,
+   "mediana": 3.68,
+   "desvio": 12.5,
+   "cv": 1.62,
+   "p90": 17.0,
+   "max": 408.1
+  }
+ },
+ "anticipacion": {
+  "n": 34509,
+  "media": 249.99,
+  "mediana": 252.89,
+  "desvio": 64.21,
+  "cv": 0.26,
+  "p90": 331.2,
+  "max": 393.9
+ },
+ "hora_reserva": {
+  "8": 20383,
+  "9": 7866,
+  "10": 6128,
+  "11": 52,
+  "12": 41,
+  "13": 28,
+  "14": 10,
+  "15": 1
+ },
+ "hora_checkin": {
+  "11": 13,
+  "12": 15157,
+  "13": 13929,
+  "14": 5409,
+  "15": 1
+ }
+}

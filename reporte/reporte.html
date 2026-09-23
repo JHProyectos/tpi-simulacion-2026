@@ -982,15 +982,15 @@ const D = {
   },
   "cancelacion": 0.0306,
   "vegetariano": 0.1227,
-  "para_llevar": 0.2972,
+  "para_llevar": 0.4656,
   "comen_en_salon_por_dia": {
-   "pico": 1106.5
+   "pico": 867.5
   },
   "huella_csv_real": "64513f03788b5855c64654eb21a08e5e296d8a44e69c9bb7d911ba371fdcb9d8"
  }
 };
 const S = {
- "version": "0.3",
+ "version": "0.4",
  "actualizado": "2026-09-23",
  "origenes": {
   "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
@@ -1206,18 +1206,18 @@ const S = {
    "id": "S14",
    "variable": "Consumo en el salón o para llevar",
    "origen": "generado",
-   "valor": "Becas Nutrirse Vianda: 50 % para llevar. Resto de los tipos: 15 % para llevar. En total, cerca del 30 % de las retiradas.",
+   "valor": "Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar.",
    "flexsim": "Label para_llevar: después del mostrador, sale del comedor o busca asiento (S16–S18)",
-   "base": "Criterio del grupo: el retiro para llevar no supera el 30 % del total. Como las viandas son el 42 % de las retiradas (dato real), no pueden llevarse todas: se supone que la mitad come en el salón. Para el resto, supuesto del grupo. Pendiente de confirmar con el referente qué hacen las viandas. Es la variable que más pesa en la ocupación del salón.",
+   "base": "Criterio del grupo: la gran mayoría de las viandas se retira para llevar (el nombre del beneficio lo indica), pero una parte come en el salón. Las viandas son el 42 % de las retiradas (dato real), así que el total para llevar queda cerca del 46 %. Para el resto de los tipos, supuesto del grupo. Pendiente de confirmar con el referente. Es la variable que más pesa en la ocupación del salón.",
    "estado": "propuesto",
-   "sensibilidad": "20 % a 40 % del total",
+   "sensibilidad": "Viandas 70 % a 100 %; resto 5 % a 30 %",
    "generacion": "Atributo para_llevar_gen asignado a cada reserva retirada.",
    "usado_en": [
     "dataset",
     "modelo"
    ],
    "parametros": {
-    "p_llevar_vianda": 0.5,
+    "p_llevar_vianda": 0.9,
     "p_llevar_resto": 0.15,
     "tipos_vianda": [
      "Becas Nutrirse Vianda",

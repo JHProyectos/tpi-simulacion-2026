@@ -20,7 +20,7 @@ Hay dos niveles de origen:
 | `checked_at` | **Real** | Vacío | Hora de validación en el puesto de control. Las no retiradas no la tienen |
 | `re_reserva` | Derivado | `False` | `True` en las 313 reservas reales con `canceled_at` anterior a la reserva |
 | `menu_gen` | Generado (S13) | Generado (S13) | `vegetariano` (12 %) o `no_vegetariano`. Define la línea del mostrador |
-| `para_llevar_gen` | Generado (S14) | Vacío | Solo en las retiradas: viandas 50 % para llevar, resto 15 % (≈30 % del total) |
+| `para_llevar_gen` | Generado (S14) | Vacío | Solo en las retiradas: viandas 90 % para llevar, resto 15 % |
 | `customer_id` | **Real** | Vacío | Id del registro original (único por fila, no identifica personas) |
 
 ## Controles que hace el script

@@ -1,6 +1,6 @@
 # Registro de supuestos y fuentes de datos
 
-> Generado desde `supuestos/supuestos.json` (v0.3, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
+> Generado desde `supuestos/supuestos.json` (v0.4, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
 
 ## Orígenes
 
@@ -27,7 +27,7 @@
 | S11 | Ausentismo (reservas no retiradas) | Generado (IA) | Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas. | propuesto |
 | S12 | Cancelaciones definitivas | Generado (IA) | 3 % del total de reservas. | propuesto |
 | S13 | Menú vegetariano / no vegetariano | Generado (IA) | 12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real. | propuesto |
-| S14 | Consumo en el salón o para llevar | Generado (IA) | Becas Nutrirse Vianda: 50 % para llevar. Resto de los tipos: 15 % para llevar. En total, cerca del 30 % de las retiradas. | propuesto |
+| S14 | Consumo en el salón o para llevar | Generado (IA) | Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar. | propuesto |
 | S15 | Tiempo de entrega en el mostrador | Generado (IA) | Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana). | propuesto |
 | S16 | Capacidad de asientos del salón | Estimación del referente | Pendiente: conteo de mesas y sillas del layout modelado en 3D. | pendiente |
 | S17 | Tiempo de consumo en el salón | Generado (IA) | Lognormal con una mediana de 20 min y sigma de 0,35 (media de unos 21 min). | propuesto |
@@ -163,9 +163,9 @@
 ### S14 · Consumo en el salón o para llevar
 
 - **Origen:** Generado (IA)
-- **Valor:** Becas Nutrirse Vianda: 50 % para llevar. Resto de los tipos: 15 % para llevar. En total, cerca del 30 % de las retiradas.
-- **Base:** Criterio del grupo: el retiro para llevar no supera el 30 % del total. Como las viandas son el 42 % de las retiradas (dato real), no pueden llevarse todas: se supone que la mitad come en el salón. Para el resto, supuesto del grupo. Pendiente de confirmar con el referente qué hacen las viandas. Es la variable que más pesa en la ocupación del salón.
-- **Rango de sensibilidad:** 20 % a 40 % del total
+- **Valor:** Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar.
+- **Base:** Criterio del grupo: la gran mayoría de las viandas se retira para llevar (el nombre del beneficio lo indica), pero una parte come en el salón. Las viandas son el 42 % de las retiradas (dato real), así que el total para llevar queda cerca del 46 %. Para el resto de los tipos, supuesto del grupo. Pendiente de confirmar con el referente. Es la variable que más pesa en la ocupación del salón.
+- **Rango de sensibilidad:** Viandas 70 % a 100 %; resto 5 % a 30 %
 - **Cómo se genera:** Atributo para_llevar_gen asignado a cada reserva retirada.
 - **En FlexSim:** Label para_llevar: después del mostrador, sale del comedor o busca asiento (S16–S18)
 - **Usado en:** dataset, modelo · **Estado:** propuesto

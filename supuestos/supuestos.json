@@ -1,0 +1,231 @@
+{
+ "version": "0.1",
+ "actualizado": "2026-09-23",
+ "origenes": {
+  "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
+  "derivado": "Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.",
+  "referente": "Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).",
+  "generado": "Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso."
+ },
+ "supuestos": [
+  {
+   "id": "S00",
+   "variable": "Reservas retiradas (dataset base)",
+   "origen": "registro",
+   "valor": "34.509 reservas retiradas entre el 1 de julio y el 1 de septiembre de 2026 (32 días de servicio), con fecha, hora de reserva, hora de check-in y tipo de cliente.",
+   "flexsim": "Fuente de S02, S03, S04, S07 y S08, y referencia para validar el modelo",
+   "base": "Export del sistema de reservas del comedor, sin modificar.",
+   "estado": "confirmado",
+   "nota": "Solo trae status = used, y customer_id es único por fila (no identifica personas).",
+   "usado_en": ["dataset", "modelo", "validacion"]
+  },
+  {
+   "id": "S01",
+   "variable": "Horario de servicio",
+   "origen": "referente",
+   "valor": "Lunes a viernes de 12:00 a 14:30",
+   "flexsim": "Duración de la réplica: 9000 s desde las 12:00 (más el período previo a la apertura, ver S09)",
+   "base": "Operación habitual del comedor. El dataset es consistente: el 99,96 % de los check-ins cae entre las 12:00 y las 14:59.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S02",
+   "variable": "Ventana de reservas (horario límite)",
+   "origen": "derivado",
+   "valor": "8:00 a 11:00. El 99,6 % de las reservas reales cae en esa franja.",
+   "flexsim": "Parámetro de escenario (ver D04)",
+   "base": "Distribución horaria de reserved_at en los registros reales.",
+   "estado": "confirmado",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S03",
+   "variable": "Demanda diaria (reservas retiradas por día)",
+   "origen": "derivado",
+   "valor": "Perfil bajo: 723 por día (mediana de julio, 15 días). Perfil pico: 1.543 por día (mediana desde el 10 de agosto, 12 días, rango 1.485–1.607).",
+   "flexsim": "Global Table Escenarios, columna DemandaDia",
+   "base": "Conteo diario de los registros reales, 32 días de servicio.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S04",
+   "variable": "Composición de la demanda por grupo y tipo",
+   "origen": "derivado",
+   "valor": "Estudiantes 48,8 %, Becas Nutrirse 42,1 %, Becas personal 6,8 %, Personal 2,3 %. Detalle por tipo en reporte/datos.json.",
+   "flexsim": "Global Table MixTipos y Empirical Distribution para la label tipo",
+   "base": "Frecuencias de customer_types en los registros reales.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S05",
+   "variable": "Fila única para todos los tipos",
+   "origen": "referente",
+   "valor": "Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto.",
+   "flexsim": "Una sola cola antes del Resource PuestosValidacion",
+   "base": "Relevamiento con el referente del comedor.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S06",
+   "variable": "Puestos de validación activos",
+   "origen": "referente",
+   "valor": "1 en el escenario base (hay 2 disponibles).",
+   "flexsim": "Resource PuestosValidacion con Count = 1 (base) o 2 (escenario)",
+   "base": "Relevamiento con el referente: habitualmente opera un solo puesto.",
+   "estado": "confirmado",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S07",
+   "variable": "Tiempo de validación por persona",
+   "origen": "derivado",
+   "valor": "Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s.",
+   "flexsim": "lognormal2(0, 3.34, 0.494, stream). Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.",
+   "base": "El check-in se registra en el puesto de control y opera un solo puesto (S05, S06). En las 13 franjas de 10 minutos con 140 o más validaciones, el puesto está ocupado todo el tiempo, así que el intervalo entre check-ins es el tiempo de servicio (1.959 intervalos). Script: analisis/tiempo_validacion.py.",
+   "estado": "confirmado",
+   "sensibilidad": "3 a 5 s de media",
+   "usado_en": ["modelo"],
+   "nota": "Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto."
+  },
+  {
+   "id": "S08",
+   "variable": "Tasa de llegadas a la fila por franja de 10 minutos",
+   "origen": "derivado",
+   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).",
+   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual",
+   "base": "Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.",
+   "estado": "propuesto",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S09",
+   "variable": "Cola formada antes de la apertura",
+   "origen": "generado",
+   "valor": "Llegadas uniformes entre las 11:40 y las 12:00. Cantidad inicial: 65 personas en el perfil pico y 30 en el perfil bajo.",
+   "flexsim": "Source adicional en el período previo; el Resource habilita la atención a las 12:00",
+   "base": "Estimación del referente: una cola de 60 a 70 personas en el pico. En los datos reales, la primera franja (12:00 a 12:10) valida una mediana de 92 personas, cerca de la capacidad del puesto: eso indica que ya hay cola al abrir.",
+   "estado": "propuesto",
+   "sensibilidad": "30 a 150 personas",
+   "usado_en": ["modelo"]
+  },
+  {
+   "id": "S10",
+   "variable": "Objetivo de validación del modelo (cola y espera observadas)",
+   "origen": "referente",
+   "valor": "Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico.",
+   "flexsim": "Se compara contra la longitud máxima de la cola y la espera promedio en el pico",
+   "base": "Observación directa del referente en un día normal.",
+   "estado": "a revisar",
+   "usado_en": ["validacion"],
+   "nota": "No es compatible con el tiempo de servicio real (ver D01): con 3,9 s por persona, una cola de 65 se vacía en unos 4 minutos."
+  },
+  {
+   "id": "S11",
+   "variable": "Ausentismo (reservas no retiradas)",
+   "origen": "generado",
+   "valor": "Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas.",
+   "flexsim": "No entran a la fila: se descuentan de las reservas. Salida: reservas no utilizadas.",
+   "base": "El export real solo trae reservas retiradas (status = used), así que no hay dato. Se supone un valor mayor para estudiantes porque la reserva no tiene penalidad por no asistir, y menor para las becas porque el beneficio está asociado a la persona. Pendiente de pedirle una estimación al referente.",
+   "estado": "propuesto",
+   "sensibilidad": "3 % a 15 %",
+   "generacion": "Filas nuevas con status = no_show. La cantidad por día y grupo es retiradas × p / (1 − p). reserved_at se muestrea de las reservas reales del mismo día y grupo. checked_at queda vacío.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S12",
+   "variable": "Cancelaciones definitivas",
+   "origen": "generado",
+   "valor": "3 % del total de reservas.",
+   "flexsim": "No entran a la fila. Solo cambian el conteo de reservas.",
+   "base": "El export real no trae cancelaciones definitivas. Los 313 casos reales de cancelar y volver a reservar (0,9 %) muestran que la función se usa. Se supone un valor bajo porque la ventana de reserva es corta (3 horas).",
+   "estado": "propuesto",
+   "sensibilidad": "1 % a 6 %",
+   "generacion": "Filas nuevas con status = canceled y canceled_at uniforme entre reserved_at y las 11:00.",
+   "usado_en": ["dataset"]
+  },
+  {
+   "id": "S13",
+   "variable": "Menú vegetariano / no vegetariano",
+   "origen": "generado",
+   "valor": "12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real.",
+   "flexsim": "Label menu, usada para la línea del mostrador (si entra en el alcance, D02)",
+   "base": "El dataset no distingue menú. Supuesto del grupo, pendiente de una estimación del referente.",
+   "estado": "propuesto",
+   "sensibilidad": "5 % a 25 %",
+   "generacion": "Atributo menu_gen asignado a cada reserva, real o generada, con una Bernoulli de p = 0,12.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S14",
+   "variable": "Consumo en el salón o para llevar",
+   "origen": "generado",
+   "valor": "Becas Nutrirse Vianda: 100 % para llevar. Resto de los tipos: 15 % para llevar.",
+   "flexsim": "Label para_llevar, que decide si la persona sale o va a una mesa (si entra en el alcance, D02)",
+   "base": "Vianda es comida para llevar por definición del beneficio. Para el resto, supuesto del grupo, pendiente de una estimación del referente.",
+   "estado": "propuesto",
+   "sensibilidad": "5 % a 30 % en el resto",
+   "generacion": "Atributo para_llevar_gen asignado a cada reserva retirada.",
+   "usado_en": ["dataset", "modelo"]
+  },
+  {
+   "id": "S15",
+   "variable": "Tiempo de entrega en el mostrador",
+   "origen": "generado",
+   "valor": "Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana).",
+   "flexsim": "Delay en cada línea del mostrador (si entra en el alcance, D02)",
+   "base": "No se va a medir. La cola observada se forma antes de la validación y no en el mostrador, así que el mostrador tiene que atender al menos al ritmo del puesto (3,9 s). Se elige un valor apenas menor.",
+   "estado": "propuesto",
+   "usado_en": ["modelo"]
+  }
+ ],
+ "decisiones_abiertas": [
+  {
+   "id": "D01",
+   "tema": "Cómo compatibilizar la espera de 10 a 15 minutos con el tiempo de servicio real",
+   "detalle": "Con 3,9 s por persona, una cola de 65 se vacía en unos 4 minutos. Para esperar de 10 a 15 minutos haría falta una cola de 150 a 230 personas, o que la gente llegue antes de la apertura.",
+   "opciones": [
+    "A) Las personas llegan antes de las 12:00 y la espera incluye el tiempo hasta la apertura (S09). Se puede comprobar en el modelo.",
+    "B) Los 10 a 15 minutos son una percepción: se toma como objetivo la cola de 60 a 70 personas y se reporta la diferencia.",
+    "C) La cola real en el pico es más larga que 60 a 70 personas."
+   ],
+   "recomendacion": "A combinada con B: modelar la llegada previa a la apertura y validar contra la curva real de validaciones por franja, que es el dato más fuerte. La espera de 10 a 15 minutos se reporta como observación del referente.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D02",
+   "tema": "¿El mostrador de entrega entra en el alcance?",
+   "detalle": "La sección 4 de la Entrega 1 termina el sistema en la validación, pero las secciones 5, 8 y 9 hablan del mostrador y de su ocupación.",
+   "opciones": [
+    "A) El sistema termina en la validación. El mostrador y las mesas quedan solo en la animación 3D.",
+    "B) Incluir el mostrador con dos líneas (S13, S15)."
+   ],
+   "recomendacion": "A, porque la cola y la pregunta de estudio están en la validación. Menú y para llevar se generan igual (cuestan poco) y quedan como labels en la animación.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D03",
+   "tema": "Perfiles de demanda a simular",
+   "opciones": [
+    "Perfil bajo: 723 por día (julio)",
+    "Perfil pico: 1.543 por día (agosto)"
+   ],
+   "recomendacion": "Correr los dos. El pico es el caso que responde la pregunta de estudio.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D04",
+   "tema": "Escenario del horario límite de reserva",
+   "detalle": "En los datos reales, la hora de reserva casi no predice la hora de llegada (correlación de 0,13). Quien reserva a las 8:00 valida en una mediana de 13:02, y quien reserva después de las 10 valida en una mediana de 13:17.",
+   "opciones": [
+    "A) Modelarlo como un cambio en la cantidad de reservas del día, no en la hora de llegada.",
+    "B) Sacarlo de los escenarios y justificarlo con este dato."
+   ],
+   "recomendacion": "A, con un supuesto explícito sobre cuánta demanda se gana o se pierde al mover el corte.",
+   "estado": "abierta"
+  }
+ ]
+}

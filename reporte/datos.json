@@ -696,11 +696,6 @@
    "Personal": 0.0729
   },
   "cancelacion": 0.0306,
-  "vegetariano": 0.1227,
-  "para_llevar": 0.4656,
-  "comen_en_salon_por_dia": {
-   "pico": 867.5
-  },
   "huella_csv_real": "64513f03788b5855c64654eb21a08e5e296d8a44e69c9bb7d911ba371fdcb9d8"
  }
 }

@@ -1,4 +1,11 @@
-<title>Comedor por tipo de cliente</title>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fila del comedor UNC</title>
+<meta name="description" content="TPI Simulación 2026: datos, alcance y supuestos del modelo de la fila de validación y del servicio de comida del Comedor Universitario UNC.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='9' width='3' height='6' rx='1' fill='%232a78d6'/%3E%3Crect x='6.5' y='5' width='3' height='10' rx='1' fill='%232a78d6'/%3E%3Crect x='12' y='1' width='3' height='14' rx='1' fill='%23eb6834'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -164,17 +171,94 @@ td.bar div{height:8px;border-radius:0 3px 3px 0}
 .dec p{font-size:13.5px}
 .dec b{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--warn-ink)}
 footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+/* alcance */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.flow .step{flex:1 1 110px;min-width:0;display:flex;flex-direction:column;gap:4px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.flow .step b{font:600 15px/1.25 var(--cond)}
+.flow .step span{font-size:12.5px;color:var(--ink-2)}
+.flow .step.key{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.flow .step.out{background:transparent;border-style:dashed;border-color:var(--axis)}
+.flow .step.out b,.flow .step.out span{color:var(--muted)}
+.flow .arr{flex:0 0 26px;display:flex;align-items:center;justify-content:center;color:var(--muted);font:13px var(--mono)}
+.flow .cut{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 10px;color:var(--warn-ink);font:500 10.5px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;text-align:center}
+.flow .cut::before,.flow .cut::after{content:"";width:1px;flex:1;min-height:10px;border-left:1px dashed var(--warn-ink)}
+.flow .step.srv{border-color:var(--s2);box-shadow:inset 0 0 0 1px var(--s2)}
+.flow .arr{flex-basis:20px}
+/* cuello de botella */
+.cap{display:flex;flex-direction:column;gap:16px}
+.cap-row{display:grid;grid-template-columns:170px 1fr;gap:6px 16px;align-items:center}
+.cap-row .name b{display:block;font:500 12px var(--mono);color:var(--accent)}
+.cap-row .name span{font-size:13px;color:var(--ink-2)}
+.cap-bars{position:relative;display:flex;flex-direction:column;gap:4px}
+.cap-bar{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:10px;align-items:center;font-size:12.5px}
+.cap-bar .t{height:12px;background:var(--grid);border-radius:0 3px 3px 0;overflow:hidden}
+.cap-bar .t div{height:100%;border-radius:0 3px 3px 0}
+.cap-bar .v{font-family:var(--mono);color:var(--ink-2);white-space:nowrap}
+.cap-bar.min .v{color:var(--ink);font-weight:500}
+.cap-bar.min .v::after{content:" ◀ cuello";color:var(--warn-ink)}
+@media (max-width:560px){.cap-row{grid-template-columns:1fr}.cap-bar{grid-template-columns:minmax(0,1fr) 180px;font-size:11.5px}}
+@media (max-width:900px){.flow{flex-direction:column}.flow .step{flex:none}.flow .arr{flex:none;height:22px;transform:rotate(90deg)}.flow .cut{flex-direction:row;padding:8px 0}.flow .cut::before,.flow .cut::after{width:auto;height:1px;min-height:0;border-left:0;border-top:1px dashed var(--warn-ink)}}
+.esc{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.esc div{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.esc div.new{border-color:var(--accent)}
+.esc b{font:500 12px var(--mono);color:var(--accent)}
+.esc span{font-size:13px;color:var(--ink-2)}
+.split{display:flex;height:26px;gap:2px}
+.split div{display:flex;align-items:center;padding-left:8px;font:500 11px var(--mono);color:#fff;white-space:nowrap;overflow:hidden;min-width:0}
+.split div:first-child{border-radius:3px 0 0 3px}
+.split div:last-child{border-radius:0 3px 3px 0}
+.fuera{margin:0;padding:0;display:flex;flex-direction:column;border:1px dashed var(--axis);border-radius:6px}
+.fuera li{list-style:none;display:grid;grid-template-columns:44px 1fr;gap:6px 16px;padding:12px 16px;border-bottom:1px dashed var(--grid);font-size:13.5px;color:var(--ink-2)}
+.fuera li:last-child{border-bottom:0}
+.fuera .id{font:500 12px/1.7 var(--mono);color:var(--muted)}
+.fuera b{color:var(--ink);font-weight:600}
 </style>
+</head>
+<body>
 
 <div class="page">
   <header>
-    <span class="eyebrow">TPI Simulación · Datos del modelo</span>
-    <h1>Reservas del comedor, organizadas por tipo de cliente</h1>
+    <span class="eyebrow">TPI Simulación 2026 · Comedor Universitario UNC</span>
+    <h1>De la fila al mostrador: el comedor con datos reales</h1>
     <p id="lead"></p>
     <div class="meta" id="meta"></div>
   </header>
 
   <div class="figs" id="figs"></div>
+
+  <section id="alcance">
+    <div class="sec-head">
+      <span class="eyebrow">Alcance del estudio</span>
+      <h2>De la fila hasta retirar la bandeja</h2>
+      <p>Se estudia desde que la persona llega a la fila hasta que retira su comida en el mostrador. En la caja presenta el DNI de cada reserva que retira (puede retirar las de otras personas), y ahí queda definido su tipo de cliente. Después de la caja hay una segunda fila, la del servicio de comida. El salón y el retiro para llevar quedan fuera del estudio: se mencionan, pero no se modelan.</p>
+    </div>
+    <div class="flow" role="img" aria-label="Flujo del sistema: llegada, fila, caja, fila de servicio y mostrador dentro del alcance; salón fuera">
+      <div class="step"><b>Llegada</b><span>Tipo y raciones asignados en el origen; desde las 11:40</span></div>
+      <div class="arr">→</div>
+      <div class="step"><b>Fila de caja</b><span>Única; se forma antes de abrir</span></div>
+      <div class="arr">→</div>
+      <div class="step key"><b>Caja (validación)</b><span>Un DNI por ración · <span id="flow-val"></span></span></div>
+      <div class="arr">→</div>
+      <div class="step"><b>Fila de servicio</b><span>Entre la caja y el mostrador</span></div>
+      <div class="arr">→</div>
+      <div class="step srv"><b>Mostrador</b><span>Menú con o sin TACC · <span id="flow-srv"></span></span></div>
+      <div class="cut">fin del<br>sistema</div>
+      <div class="step out"><b>Salón o para llevar</b><span>Fuera del estudio</span></div>
+    </div>
+    <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+      <h3>¿Dónde está el cuello de botella?</h3>
+      <p style="font-size:13.5px" id="p-cap"></p>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Caja (validación)</span><span><i style="background:var(--s2)"></i>Servicio de comida</span></div>
+      <div class="cap" id="cap" role="img" aria-label="Capacidad de la caja y del servicio en raciones por hora, por escenario"></div>
+      <p style="font-size:12.5px" id="p-cap-nota"></p>
+    </div>
+    <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+      <h3>Caso de estudio: dos filas según el tipo de cliente</h3>
+      <p style="font-size:13.5px" id="p-split"></p>
+      <div class="split" id="split" role="img" aria-label="Reparto de las retiradas entre la fila de viandas y la fila general"></div>
+    </div>
+    <div class="esc" id="esc"></div>
+  </section>
 
   <section>
     <div class="sec-head">
@@ -239,7 +323,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     <div class="sec-head">
       <span class="eyebrow">Fuentes de datos · consigna, punto 7</span>
       <h2>Qué es real y qué es supuesto</h2>
-      <p>Todos los datos que usa el modelo, con su origen. Lo que el dataset real no trae (ausentismo, cancelaciones, menú, retiro para llevar, tiempo en el mostrador) se completó con <strong>datos generados con IA</strong>. Cada uno declara la base sobre la que se eligió el valor y un rango para el análisis de sensibilidad.</p>
+      <p>Todos los datos que usa el modelo, con su origen. Lo que el dataset real no trae (ausentismo, cancelaciones, la cola que se forma antes de abrir, el retiro de varias raciones por persona y el servicio en el mostrador) se completó con <strong>datos generados con IA</strong>. Cada uno declara la base sobre la que se eligió el valor y un rango para el análisis de sensibilidad.</p>
     </div>
     <div class="panel" style="display:flex;flex-direction:column;gap:16px">
       <div class="origin-bar" id="origin-bar" role="img" aria-label="Cantidad de datos por origen"></div>
@@ -247,12 +331,15 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     </div>
     <div class="panel full">
       <h3>Dataset completo <code style="font-size:12px;color:var(--muted)">data/final/reservas_completo.csv</code></h3>
-      <p style="font-size:13px">Las reservas retiradas son las reales; las no retiradas y las canceladas se generaron por día y grupo según S11 y S12. Menú y retiro para llevar se asignaron a cada reserva según S13 y S14. El detalle columna por columna está en <code>data/final/DICCIONARIO.md</code>.</p>
+      <p style="font-size:13px">Las reservas retiradas son las reales; las no retiradas y las canceladas se generaron por día y grupo según S11 y S12. El detalle columna por columna está en <code>data/final/DICCIONARIO.md</code>.</p>
       <div class="full-bar" id="full-bar" role="img" aria-label="Reservas por estado y origen"></div>
       <div class="full-stats" id="full-stats"></div>
     </div>
     <div class="sups" id="sups"></div>
-    <h3 style="font-size:18px;margin-top:10px">Decisiones abiertas del grupo</h3>
+    <h3 style="font-size:18px;margin-top:10px">Fuera del alcance</h3>
+    <p style="font-size:13px">Variables que se habían propuesto para el salón y el retiro para llevar. No entran al modelo porque el sistema termina al retirar la bandeja (D02); quedan como referencia para el informe.</p>
+    <ul class="fuera" id="fuera"></ul>
+    <h3 style="font-size:18px;margin-top:10px">Decisiones del grupo</h3>
     <div class="dec" id="decs"></div>
     <p style="font-size:13px">Fuente única: <code>supuestos/supuestos.json</code> (versión <span id="sup-ver"></span>). La misma información está como tabla en <code>supuestos/SUPUESTOS.md</code>.</p>
   </section>
@@ -268,7 +355,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <section>
     <div class="sec-head">
       <h2>Archivos generados</h2>
-      <p>Se reconstruyen desde la raíz del TPI corriendo, en orden, <code>tiempo_validacion.py</code>, <code>render_supuestos.py</code>, <code>generar_datos.py</code> y <code>organizar_por_tipo.py</code> (en <code>analisis/</code>).</p>
+      <p>Se reconstruyen desde la raíz del TPI corriendo, en orden, <code>tiempo_validacion.py</code>, <code>render_supuestos.py</code>, <code>generar_datos.py</code> y <code>organizar_por_tipo.py</code> (en <code>analisis/</code>). El último arma esta página en <code>web/index.html</code>.</p>
     </div>
     <div class="files">
       <div><code>data/procesado/ds_app_organizado.csv</code><span>Dataset completo ordenado por grupo → tipo → fecha → check-in, con columnas <code>grupo</code>, <code>sin_tacc</code> y <code>anticipacion_min</code>.</span></div>
@@ -279,7 +366,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     </div>
   </section>
 
-  <footer>Fuente: <code>data/real/TP-SIM - ds_app.csv</code> (registros de la organización). Zona horaria: America/Argentina/Cordoba (UTC−3).</footer>
+  <footer>Fuente: <code>data/real/TP-SIM - ds_app.csv</code> (registros de la organización). Zona horaria: America/Argentina/Cordoba (UTC−3). Supuestos v<span id="foot-ver"></span>.</footer>
 </div>
 
 <script>
@@ -981,16 +1068,11 @@ const D = {
    "Personal": 0.0729
   },
   "cancelacion": 0.0306,
-  "vegetariano": 0.1227,
-  "para_llevar": 0.4656,
-  "comen_en_salon_por_dia": {
-   "pico": 867.5
-  },
   "huella_csv_real": "64513f03788b5855c64654eb21a08e5e296d8a44e69c9bb7d911ba371fdcb9d8"
  }
 };
 const S = {
- "version": "0.4",
+ "version": "0.6",
  "actualizado": "2026-09-23",
  "origenes": {
   "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
@@ -1070,6 +1152,7 @@ const S = {
    "flexsim": "Una sola cola antes del Resource PuestosValidacion",
    "base": "Relevamiento con el referente del comedor.",
    "estado": "confirmado",
+   "nota": "Es la situación actual (escenario base). Después de la caja hay una segunda fila, la del servicio de comida (S15, S22). Como caso de estudio se propone separar dos filas según el tipo de cliente (E4, D06).",
    "usado_en": [
     "modelo"
    ]
@@ -1079,7 +1162,7 @@ const S = {
    "variable": "Puestos de validación activos",
    "origen": "referente",
    "valor": "1 en el escenario base (hay 2 disponibles).",
-   "flexsim": "Resource PuestosValidacion con Count = 1 (base) o 2 (escenario)",
+   "flexsim": "Resource PuestosValidacion con Count = 1 (base) o 2 (escenarios E1, E2, E4 y E5)",
    "base": "Relevamiento con el referente: habitualmente opera un solo puesto.",
    "estado": "confirmado",
    "usado_en": [
@@ -1088,24 +1171,24 @@ const S = {
   },
   {
    "id": "S07",
-   "variable": "Tiempo de validación por persona",
+   "variable": "Tiempo de validación por ración (por DNI)",
    "origen": "derivado",
    "valor": "Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s.",
-   "flexsim": "lognormal2(0, 3.34, 0.494, stream). Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.",
+   "flexsim": "lognormal2(0, 3.34, 0.494, stream) por cada ración de la persona (label raciones, S21): quien retira 2 raciones suma 2 muestras. Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.",
    "base": "El check-in se registra en el puesto de control y opera un solo puesto (S05, S06). En las 13 franjas de 10 minutos con 140 o más validaciones, el puesto está ocupado todo el tiempo, así que el intervalo entre check-ins es el tiempo de servicio (1.959 intervalos). Script: analisis/tiempo_validacion.py.",
    "estado": "confirmado",
    "sensibilidad": "3 a 5 s de media",
    "usado_en": [
     "modelo"
    ],
-   "nota": "Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto."
+   "nota": "Es un tiempo por DNI, no por persona: en los datos casi no hay check-ins a menos de 1,5 s del anterior (0,2 %), así que cada DNI se valida por separado aunque lo presente la misma persona (S21). Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto."
   },
   {
    "id": "S08",
    "variable": "Tasa de llegadas a la fila por franja de 10 minutos",
    "origen": "derivado",
-   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).",
-   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual",
+   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01).",
+   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_personas, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual. El Source asigna las labels grupo, tipo, sin_tacc y raciones desde el origen.",
    "base": "Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.",
    "estado": "propuesto",
    "usado_en": [
@@ -1134,7 +1217,7 @@ const S = {
    "id": "S10",
    "variable": "Objetivo de validación del modelo (cola y espera observadas)",
    "origen": "referente",
-   "valor": "Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico.",
+   "valor": "Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. Hoy la cola se forma antes de la caja y no en el mostrador.",
    "flexsim": "Se compara contra la longitud máxima de la cola y la espera promedio en el pico",
    "base": "Observación directa del referente en un día normal.",
    "estado": "confirmado",
@@ -1148,7 +1231,7 @@ const S = {
    "variable": "Ausentismo (reservas no retiradas)",
    "origen": "generado",
    "valor": "Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas.",
-   "flexsim": "No entran a la fila: las llegadas del día son las reservas menos los ausentes. Salida: raciones preparadas que no se retiran (D04).",
+   "flexsim": "No entran a la fila: las llegadas del día son las reservas menos los ausentes. Se reporta como raciones reservadas que no se retiran (D04).",
    "base": "El export real solo trae reservas retiradas (status = used), así que no hay dato. Se supone un valor mayor para estudiantes porque la reserva no tiene penalidad por no asistir, y menor para las becas porque el beneficio está asociado a la persona. Pendiente de pedirle una estimación al referente.",
    "estado": "propuesto",
    "sensibilidad": "3 % a 15 %",
@@ -1186,36 +1269,26 @@ const S = {
   },
   {
    "id": "S13",
-   "variable": "Menú vegetariano / no vegetariano",
-   "origen": "generado",
-   "valor": "12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real.",
-   "flexsim": "Label menu: define la línea del mostrador (vegetariana o no vegetariana)",
-   "base": "El dataset no distingue menú. Supuesto del grupo, pendiente de una estimación del referente.",
-   "estado": "propuesto",
-   "sensibilidad": "5 % a 25 %",
-   "generacion": "Atributo menu_gen asignado a cada reserva, real o generada, con una Bernoulli de p = 0,12.",
+   "variable": "Menú: con o sin TACC",
+   "origen": "derivado",
+   "valor": "El menú solo se distingue por ser con o sin TACC, y eso viene del tipo de cliente (dato real): 1 % de las raciones es sin TACC. No hay menú vegetariano.",
+   "flexsim": "Label sin_tacc asignada en el Source junto con el tipo. Es informativa: no cambia la fila ni el tiempo de servicio.",
+   "base": "Relevamiento con el grupo. Reemplaza la propuesta anterior de un 12 % de menú vegetariano, que se descarta.",
+   "estado": "confirmado",
    "usado_en": [
-    "dataset",
     "modelo"
-   ],
-   "parametros": {
-    "p_vegetariano": 0.12
-   }
+   ]
   },
   {
    "id": "S14",
    "variable": "Consumo en el salón o para llevar",
    "origen": "generado",
-   "valor": "Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar.",
-   "flexsim": "Label para_llevar: después del mostrador, sale del comedor o busca asiento (S16–S18)",
-   "base": "Criterio del grupo: la gran mayoría de las viandas se retira para llevar (el nombre del beneficio lo indica), pero una parte come en el salón. Las viandas son el 42 % de las retiradas (dato real), así que el total para llevar queda cerca del 46 %. Para el resto de los tipos, supuesto del grupo. Pendiente de confirmar con el referente. Es la variable que más pesa en la ocupación del salón.",
-   "estado": "propuesto",
-   "sensibilidad": "Viandas 70 % a 100 %; resto 5 % a 30 %",
-   "generacion": "Atributo para_llevar_gen asignado a cada reserva retirada.",
-   "usado_en": [
-    "dataset",
-    "modelo"
-   ],
+   "alcance": "fuera",
+   "valor": "Propuesta anterior: Becas Nutrirse Vianda 90 % para llevar; resto de los tipos 15 %.",
+   "flexsim": "No se modela.",
+   "base": "Lo que hace la persona después de retirar la bandeja queda fuera del sistema (D02).",
+   "estado": "fuera de alcance",
+   "usado_en": [],
    "parametros": {
     "p_llevar_vianda": 0.9,
     "p_llevar_resto": 0.15,
@@ -1227,40 +1300,42 @@ const S = {
   },
   {
    "id": "S15",
-   "variable": "Tiempo de entrega en el mostrador",
+   "variable": "Tiempo de servicio en el mostrador por ración",
    "origen": "generado",
-   "valor": "Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana).",
-   "flexsim": "Delay en cada línea del mostrador (vegetariana y no vegetariana), 1 servidor por línea",
-   "base": "No se puede medir. La cola observada se forma antes de la validación y no en el mostrador, así que el mostrador tiene que atender al menos al ritmo del puesto (3,9 s). Con el 88 % del flujo en la línea no vegetariana, se elige un valor menor.",
+   "valor": "Lognormal con una mediana de 5 s y sigma de 0,4 (media de unos 5,4 s) por ración y por persona que sirve. Quien retira varias raciones suma una muestra por ración.",
+   "flexsim": "lognormal2(0, 5, 0.4, stream) por cada ración, en el Resource ServicioComida (S22)",
+   "base": "No se puede medir. Hoy la cola se forma antes de la caja y no en el mostrador (S10), así que la capacidad del servicio tiene que superar el ritmo máximo observado en la caja: 168 raciones en 10 minutos (1.008 por hora). Con 2 personas sirviendo, eso pide menos de 7,1 s por ración. Con 5 s de mediana la capacidad es de unas 1.330 raciones por hora: alcanza con 1 puesto de validación (924 por hora) pero no con 2 (1.848 por hora). Es el caso que pide estudiar la cátedra: si se mejora la caja, la cola puede pasar al mostrador. Pendiente de una estimación del referente.",
    "estado": "propuesto",
+   "sensibilidad": "3 a 8 s de mediana",
    "usado_en": [
     "modelo"
-   ]
+   ],
+   "parametros": {
+    "mediana_s": 5,
+    "sigma": 0.4
+   }
   },
   {
    "id": "S16",
    "variable": "Capacidad de asientos del salón",
    "origen": "referente",
-   "valor": "Pendiente: conteo de mesas y sillas del layout modelado en 3D.",
-   "flexsim": "Cantidad de asientos (objetos o Resource) en el salón",
-   "base": "Relevamiento del layout real del comedor, modelado por el grupo.",
-   "estado": "pendiente",
-   "usado_en": [
-    "modelo"
-   ]
+   "alcance": "fuera",
+   "valor": "No se releva.",
+   "flexsim": "No se modela.",
+   "base": "El salón queda fuera del sistema (D02). Se puede mencionar como línea de trabajo futura.",
+   "estado": "fuera de alcance",
+   "usado_en": []
   },
   {
    "id": "S17",
    "variable": "Tiempo de consumo en el salón",
    "origen": "generado",
-   "valor": "Lognormal con una mediana de 20 min y sigma de 0,35 (media de unos 21 min).",
-   "flexsim": "lognormal2(0, 1200, 0.35, stream) en segundos, desde que se sienta hasta que libera el asiento",
-   "base": "No se puede medir. Supuesto del grupo para un almuerzo en un comedor universitario con bandeja servida, pendiente de una estimación del referente.",
-   "estado": "propuesto",
-   "sensibilidad": "12 a 35 min de mediana",
-   "usado_en": [
-    "modelo"
-   ],
+   "alcance": "fuera",
+   "valor": "Propuesta anterior: lognormal con una mediana de 20 min y sigma de 0,35.",
+   "flexsim": "No se modela.",
+   "base": "El salón queda fuera del sistema (D02).",
+   "estado": "fuera de alcance",
+   "usado_en": [],
    "parametros": {
     "mediana_min": 20,
     "sigma": 0.35
@@ -1270,35 +1345,89 @@ const S = {
    "id": "S18",
    "variable": "Regla de elección de asiento",
    "origen": "generado",
-   "valor": "Toma el asiento libre más cercano al mostrador. Si no hay asientos libres, espera de pie hasta que se libere uno.",
-   "flexsim": "Asignación del asiento libre más cercano; espera registrada como indicador (tiempo sin asiento)",
-   "base": "Supuesto de comportamiento del grupo. Es la regla más simple de justificar y permite medir si falta capacidad.",
-   "estado": "propuesto",
-   "usado_en": [
-    "modelo"
-   ]
+   "alcance": "fuera",
+   "valor": "Propuesta anterior: asiento libre más cercano al mostrador; si no hay, espera de pie.",
+   "flexsim": "No se modela.",
+   "base": "El salón queda fuera del sistema (D02).",
+   "estado": "fuera de alcance",
+   "usado_en": []
   },
   {
    "id": "S19",
-   "variable": "Velocidad de caminata",
+   "variable": "Velocidad de caminata en el salón",
    "origen": "generado",
-   "valor": "1,2 m/s dentro del salón.",
-   "flexsim": "Velocidad de las personas; los tiempos de traslado salen de las distancias del layout",
-   "base": "Velocidad de marcha habitual de un peatón adulto, reducida por la circulación entre mesas.",
-   "estado": "propuesto",
-   "sensibilidad": "0,8 a 1,4 m/s",
-   "usado_en": [
-    "modelo"
-   ]
+   "alcance": "fuera",
+   "valor": "Propuesta anterior: 1,2 m/s.",
+   "flexsim": "No se modela.",
+   "base": "El salón queda fuera del sistema (D02).",
+   "estado": "fuera de alcance",
+   "usado_en": []
   },
   {
    "id": "S20",
    "variable": "Capacidad de la cocina",
    "origen": "referente",
    "valor": "No es restrictiva: la capacidad de preparación supera ampliamente la demanda.",
-   "flexsim": "No se modela la cocina; el mostrador siempre tiene bandejas disponibles",
+   "flexsim": "No se modela la cocina: el mostrador siempre tiene bandejas disponibles, y la velocidad del servicio depende solo de quienes sirven (S15, S22).",
    "base": "Relevamiento con el referente del comedor.",
    "estado": "confirmado",
+   "usado_en": [
+    "modelo"
+   ]
+  },
+  {
+   "id": "S21",
+   "variable": "Retiro de más de una ración por persona",
+   "origen": "generado",
+   "valor": "Becas Nutrirse Vianda: 80 % retira 1 ración, 15 % retira 2 y 5 % retira 3 (1,25 raciones por persona). Resto de los tipos: 95 % retira 1 y 5 % retira 2 (1,05 por persona).",
+   "flexsim": "Label raciones asignada en el Source con una Empirical Distribution según el grupo. Multiplica el tiempo de validación (S07) y el de servicio (S15). La tasa de llegadas de personas es la de raciones dividida por la media (S08).",
+   "base": "Una persona puede retirar las raciones de otras si presenta sus DNI. En los datos no se distingue: casi no hay check-ins a menos de 1,5 s del anterior (0,2 %), así que cada DNI se valida por separado y un retiro de 2 raciones se ve igual que 2 personas. Se supone más frecuente en las viandas porque se retiran para llevar. Pendiente de una estimación del referente (frecuencia y máximo de DNI por persona).",
+   "estado": "propuesto",
+   "sensibilidad": "Viandas de 1,0 a 1,5 raciones por persona; resto de 1,0 a 1,15",
+   "usado_en": [
+    "modelo"
+   ],
+   "parametros": {
+    "raciones_vianda": {
+     "1": 0.8,
+     "2": 0.15,
+     "3": 0.05
+    },
+    "raciones_resto": {
+     "1": 0.95,
+     "2": 0.05
+    },
+    "tipos_vianda": [
+     "Becas Nutrirse Vianda",
+     "Becas Nutrirse Vianda sin TACC"
+    ]
+   }
+  },
+  {
+   "id": "S22",
+   "variable": "Personas sirviendo en el mostrador",
+   "origen": "generado",
+   "valor": "2 en el escenario base. Se prueba con 3 (E5).",
+   "flexsim": "Resource ServicioComida con Count = 2 (base) o 3 (E5), con una fila única delante",
+   "base": "Supuesto del grupo, pendiente de confirmar con el referente. Junto con S15 define la capacidad del servicio.",
+   "estado": "propuesto",
+   "sensibilidad": "1 a 4 personas",
+   "usado_en": [
+    "modelo"
+   ],
+   "parametros": {
+    "servidores_base": 2,
+    "servidores_extra": 3
+   }
+  },
+  {
+   "id": "S23",
+   "variable": "Espacio de la fila entre la caja y el mostrador",
+   "origen": "referente",
+   "valor": "Pendiente: cuántas personas entran entre la caja y el mostrador.",
+   "flexsim": "Capacidad máxima de la cola FilaServicio. Si se llena, la caja no deja pasar a nadie más (bloqueo) y la cola vuelve a crecer antes de la caja.",
+   "base": "Relevamiento del layout real. Sirve para ver si una cola en el servicio termina frenando la validación.",
+   "estado": "pendiente",
    "usado_en": [
     "modelo"
    ]
@@ -1319,15 +1448,15 @@ const S = {
   },
   {
    "id": "D02",
-   "tema": "¿El mostrador de entrega entra en el alcance?",
-   "detalle": "La sección 4 de la Entrega 1 termina el sistema en la validación, pero las secciones 5, 8 y 9 hablan del mostrador y de su ocupación.",
+   "tema": "¿Dónde termina el sistema?",
+   "detalle": "Primero se incluyeron el mostrador y el salón (C). Después se recortó hasta la caja (A). La cátedra pidió incluir el servicio de comida: si se mejora la validación, la cola puede pasar al mostrador, y hay que ver si agregar gente en el servicio acelera el proceso completo en lugar de solo mover el cuello de botella.",
    "opciones": [
-    "A) El sistema termina en la validación. El mostrador y las mesas quedan solo en la animación 3D.",
-    "B) Incluir el mostrador con dos líneas (S13, S15).",
+    "A) El sistema termina en la caja (puesto de validación).",
+    "B) Hasta el servicio de comida: fila, caja, fila de servicio y mostrador. El salón queda fuera.",
     "C) Incluir el mostrador y el salón: dónde se sienta la gente y cuánto tiempo ocupa el asiento."
    ],
-   "recomendacion": "Decidido: C. El flujo completo entra en el alcance: fila, validación, mostrador (2 líneas), salón o salida. Agrega los supuestos S16 a S19. Ojo: si se habilita un segundo puesto, el cuello de botella puede pasar a los asientos.",
-   "estado": "resuelta"
+   "recomendacion": "Decidido: B. Sistema = llegadas + fila + caja + fila de servicio + mostrador. El salón y el retiro para llevar (S14, S16 a S19) quedan fuera y se mencionan en el informe.",
+   "estado": "resuelta (revisada)"
   },
   {
    "id": "D03",
@@ -1354,17 +1483,28 @@ const S = {
   {
    "id": "D05",
    "tema": "Reformular la pregunta de estudio (sección 3)",
-   "detalle": "La pregunta de la Entrega 1 incluye el horario límite de reserva, que según D04 no afecta la cola. Además, con D02 el salón pasa a ser parte del sistema.",
+   "detalle": "La pregunta de la Entrega 1 incluye el horario límite de reserva, que según D04 no afecta la cola. Con D02 revisada, el sistema llega hasta el mostrador.",
    "opciones": [
-    "Propuesta: ¿cuántos puestos de validación deben operar en simultáneo para que la espera en la fila no supere un valor aceptable en el pico, y alcanza la capacidad del salón para absorber el flujo resultante?"
+    "Propuesta: ¿qué combinación de puestos de validación, organización de la fila y personas en el servicio de comida reduce el tiempo total desde la llegada hasta retirar la bandeja en el pico, sin que mejorar la caja solo traslade la cola al mostrador?"
    ],
    "recomendacion": "Ajustar la pregunta y el alcance (sección 4) en la próxima entrega.",
+   "estado": "abierta"
+  },
+  {
+   "id": "D06",
+   "tema": "Caso de estudio: dos filas según el tipo de cliente",
+   "detalle": "Con 2 puestos, en lugar de una fila única, cada puesto atiende su propia fila según el tipo de cliente. El tipo es un dato real del registro. Becas Nutrirse Vianda es el 42 % de las retiradas y su check-in mediano es unos 17 minutos más tardío que el de los estudiantes de grado.",
+   "opciones": [
+    "A) Fila de viandas (Becas Nutrirse Vianda) y fila general (el resto). Reparto de 42 % y 58 %.",
+    "B) Fila de estudiantes y fila de becas y personal. Reparto de 49 % y 51 %.",
+    "C) Comparar A y B contra 2 puestos con fila única (E1)."
+   ],
+   "recomendacion": "Proponer A, que separa el flujo con un patrón de llegada distinto, y compararla contra 2 puestos con fila única (E1): la fila única suele dar menos espera promedio, así que la separación se justifica solo si reduce la espera de algún grupo.",
    "estado": "abierta"
   }
  ],
  "semilla": 2026
-}
-;
+};
 const G = ["Estudiantes","Becas Nutrirse","Becas personal","Personal"];
 const COL = {"Estudiantes":"var(--s1)","Becas Nutrirse":"var(--s2)","Becas personal":"var(--s3)","Personal":"var(--s4)"};
 const nf = new Intl.NumberFormat("es-AR");
@@ -1500,14 +1640,17 @@ simpleBars(document.getElementById("ch-hres"), Object.entries(D.hora_reserva).ma
 const ORIG={registro:["Registro","Datos de la organización, sin modificar."],derivado:["Derivado","Calculado a partir del registro real con un script reproducible."],referente:["Referente","Estimación del integrante que trabaja en el comedor."],generado:["Generado (IA)","Supuesto generado con apoyo de IA, con la base declarada."]};
 const OK=Object.keys(ORIG);
 const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
-const cnt=Object.fromEntries(OK.map(k=>[k,S.supuestos.filter(s=>s.origen===k).length]));
+// lo que queda fuera del alcance (D02) se lista aparte y no cuenta en los orígenes
+const DENTRO=S.supuestos.filter(s=>s.alcance!=="fuera"), FUERA=S.supuestos.filter(s=>s.alcance==="fuera");
+const cnt=Object.fromEntries(OK.map(k=>[k,DENTRO.filter(s=>s.origen===k).length]));
 document.getElementById("origin-bar").innerHTML=OK.filter(k=>cnt[k]).map(k=>`<div style="flex:${cnt[k]};background:var(--o-${k})" title="${ORIG[k][0]}: ${cnt[k]}"></div>`).join("");
 document.getElementById("origin-keys").innerHTML=OK.map(k=>`<div><span class="ob ${k}">${ORIG[k][0]} · ${cnt[k]}</span><p>${ORIG[k][1]}</p></div>`).join("");
 const orden=s=>OK.indexOf(s.origen);
-document.getElementById("sups").innerHTML=[...S.supuestos].sort((a,b)=>orden(a)-orden(b)||a.id.localeCompare(b.id)).map(s=>{
+document.getElementById("sups").innerHTML=[...DENTRO].sort((a,b)=>orden(a)-orden(b)||a.id.localeCompare(b.id)).map(s=>{
   const extra=[["Base",s.base],["Cómo se genera",s.generacion],["Sensibilidad",s.sensibilidad],["En FlexSim",s.flexsim],["Nota",s.nota]].filter(([,v])=>v);
   const conf=s.estado==="confirmado";
   return `<div class="sup"><span class="id">${s.id}</span><div class="sup-body"><h3>${esc(s.variable)}</h3><p class="val">${esc(s.valor)}</p><dl>${extra.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div><div class="side"><span class="ob ${s.origen}">${ORIG[s.origen][0]}</span><span class="st ${conf?"":"pend"}">${conf?"✓ confirmado":"● "+esc(s.estado)}</span></div></div>`;}).join("");
+document.getElementById("fuera").innerHTML=FUERA.map(s=>`<li><span class="id">${s.id}</span><span><b>${esc(s.variable)}.</b> ${esc(s.base)}</span></li>`).join("");
 document.getElementById("decs").innerHTML=S.decisiones_abiertas.map(d=>`<div><b>${d.id} · ${d.estado}</b><h3>${esc(d.tema)}</h3>${d.detalle?`<p>${esc(d.detalle)}</p>`:""}<p><strong>Recomendación:</strong> ${esc(d.recomendacion)}</p></div>`).join("");
 const C=D.completo, E=C.por_estado;
 const fb=[["used","Retiradas",`var(--o-registro)`,""],["no_show","No retiradas","","gen"],["canceled","Canceladas","","gen"]];
@@ -1518,11 +1661,48 @@ document.getElementById("full-stats").innerHTML=[
   [nf.format(E.used.n),"retiradas","registro","Registro"],
   [nf.format(E.no_show.n),`no retiradas (${pctf(E.no_show.n/(C.total_reservas-E.canceled.n))})`,"generado","Generado (IA)"],
   [nf.format(E.canceled.n),`canceladas (${pctf(C.cancelacion)})`,"generado","Generado (IA)"],
-  [pctf(C.vegetariano),"menú vegetariano","generado","Generado (IA)"],
-  [pctf(C.para_llevar),"retiran para llevar","generado","Generado (IA)"],
-  [nf.format(Math.round(C.comen_en_salon_por_dia.pico)),"comen en el salón por día (pico)","generado","Real + generado"],
 ].map(([v,l,o,t])=>`<div><span class="ob ${o}">${t}</span><b>${v}</b><span>${l}</span></div>`).join("");
 document.getElementById("sup-ver").textContent=`${S.version}, ${S.actualizado}`;
+document.getElementById("foot-ver").textContent=`${S.version} (${S.actualizado})`;
+
+// alcance: caja y caso de estudio de dos filas
+document.getElementById("flow-val").textContent=`${f1(V.empirico.media_s)} s por DNI`;
+const SID=Object.fromEntries(S.supuestos.map(s=>[s.id,s]));
+const SRV=SID.S15.parametros, NS=SID.S22.parametros;
+const srvMedia=SRV.mediana_s*Math.exp(SRV.sigma**2/2);
+document.getElementById("flow-srv").textContent=`${f1(srvMedia)} s por ración`;
+
+// capacidad en raciones por hora: caja = 3600 / tiempo por DNI; servicio = servidores × 3600 / tiempo por ración
+const capCaja=p=>p*V.capacidad_1_puesto_por_hora, capSrv=n=>n*3600/srvMedia;
+const pico=V.maximo_observado_10min*6;
+const CAP=[
+  ["E0","Base: 1 puesto, "+NS.servidores_base+" en el servicio",1,NS.servidores_base],
+  ["E1","2 puestos, "+NS.servidores_base+" en el servicio",2,NS.servidores_base],
+  ["E5","2 puestos, "+NS.servidores_extra+" en el servicio",2,NS.servidores_extra],
+];
+const capMax=Math.max(...CAP.flatMap(([, ,p,n])=>[capCaja(p),capSrv(n)]))*1.05;
+document.getElementById("cap").innerHTML=CAP.map(([k,t,p,n])=>{
+  const c=capCaja(p), s=capSrv(n), cMin=c<=s;
+  const bar=(v,col,min,l)=>`<div class="cap-bar ${min?"min":""}"><div class="t"><div style="width:${v/capMax*100}%;background:${col}"></div></div><span class="v">${nf.format(Math.round(v))}/h ${l}</span></div>`;
+  return `<div class="cap-row"><div class="name"><b>${k}</b><span>${t}</span></div><div class="cap-bars">${bar(c,"var(--accent)",cMin,"caja")}${bar(s,"var(--s2)",!cMin,"servicio")}</div></div>`;
+}).join("");
+document.getElementById("p-cap").innerHTML=`Capacidad de cada etapa en raciones por hora. Hoy la caja (${nf.format(capCaja(1))}/h) es más lenta que el servicio (${nf.format(Math.round(capSrv(NS.servidores_base)))}/h), por eso la cola se forma antes de la caja. <strong>Con un segundo puesto la caja pasa a ${nf.format(capCaja(2))}/h y el cuello de botella se corre al mostrador</strong>: la cola no desaparece, se muda. Para acelerar el proceso completo hay que sumar gente en el servicio (E5).`;
+document.getElementById("p-cap-nota").textContent=`Cálculo estático con los valores medios (S07, S15, S22). El tiempo de servicio y la cantidad de personas que sirven son supuestos a confirmar con el referente; la simulación en FlexSim mide además cuánto crece la fila de servicio y si llega a bloquear la caja (S23). Ritmo máximo observado en la caja: ${V.maximo_observado_10min} raciones en 10 minutos (${nf.format(pico)}/h).`;
+const VIANDA=D.por_tipo.filter(r=>r.tipo.startsWith("Becas Nutrirse Vianda"));
+const nV=VIANDA.reduce((a,r)=>a+r.n,0), pV=nV/T.registros*100;
+const chkV=VIANDA.reduce((a,r)=>a+r.checkin_mediana*r.n,0)/nV;
+const est=D.por_tipo.find(r=>r.tipo==="Estudiante de Grado");
+document.getElementById("p-split").innerHTML=`Hoy hay una sola fila y un solo puesto, aunque hay dos disponibles. Como caso de estudio se propone habilitar los dos puestos con <strong>una fila para cada uno según el tipo de cliente</strong>, y compararlo contra los dos puestos con fila única. La división que se propone es por viandas: Becas Nutrirse Vianda es el ${f1(pV)} % de las retiradas y llega más tarde (check-in mediano ${hhmm(chkV)}, contra ${hhmm(est.checkin_mediana)} de los estudiantes de grado). La división definitiva está abierta (D06).`;
+document.getElementById("split").innerHTML=`<div style="flex:${nV};background:var(--s2)">Fila viandas · ${f1(pV)} %</div><div style="flex:${T.registros-nV};background:var(--s1)">Fila general · ${f1(100-pV)} %</div>`;
+const ESC=[
+  ["E0","Base: 1 puesto, fila única",""],
+  ["E1","2 puestos durante todo el turno, fila única",""],
+  ["E2","2 puestos solo de 12:00 a 13:30",""],
+  ["E3","Validación por QR (menos tiempo por DNI)",""],
+  ["E4","2 puestos, una fila por tipo de cliente","new"],
+  ["E5","2 puestos y una persona más en el servicio","new"],
+];
+document.getElementById("esc").innerHTML=ESC.map(([k,t,c])=>`<div class="${c}"><b>${k}</b><span>${t}</span></div>`).join("");
 
 // observaciones de calidad
 const r0=D.por_tipo.reduce((a,r)=>a+r.re_reservas,0);
@@ -1536,3 +1716,5 @@ const obs=[
 ];
 document.getElementById("obs").innerHTML=obs.map(([k,t])=>`<li><span class="pill ${k==="INFO"?"info":""}">${k}</span><p>${t}</p></li>`).join("");
 </script>
+</body>
+</html>

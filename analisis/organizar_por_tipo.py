@@ -1,5 +1,7 @@
 """Organiza el dataset de reservas del comedor por tipo de cliente y genera
 los datos agregados que consume el reporte (reporte/datos.json).
+Arma además la página web/index.html (plantilla + datos), lista para publicar
+como sitio estático.
 
 Uso: python analisis/organizar_por_tipo.py   (desde la raíz del TPI)
 """
@@ -170,8 +172,10 @@ def main():
     supuestos = (RAIZ / "supuestos" / "supuestos.json").read_text(encoding="utf-8")
     plantilla = (SALIDA_JSON.parent / "plantilla.html").read_text(encoding="utf-8")
     html = plantilla.replace("__DATOS__", datos).replace("__SUPUESTOS__", supuestos)
-    (SALIDA_JSON.parent / "reporte.html").write_text(html, encoding="utf-8")
-    print(f"OK: {len(df)} registros -> data/procesado/, reporte/")
+    web = RAIZ / "web"
+    web.mkdir(exist_ok=True)
+    (web / "index.html").write_text(html, encoding="utf-8")
+    print(f"OK: {len(df)} registros -> data/procesado/, reporte/datos.json, web/index.html")
 
 
 if __name__ == "__main__":

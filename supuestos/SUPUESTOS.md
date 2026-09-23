@@ -1,13 +1,13 @@
 # Registro de supuestos y fuentes de datos
 
-> Generado desde `supuestos/supuestos.json` (v0.4, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
+> Generado desde `supuestos/supuestos.json` (v0.6, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
 
 ## Orígenes
 
 - **Registro de la organización** (`registro`, 1): Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.
-- **Derivado de registros** (`derivado`, 5): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
+- **Derivado de registros** (`derivado`, 6): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
 - **Estimación del referente** (`referente`, 6): Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).
-- **Generado (IA)** (`generado`, 9): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
+- **Generado (IA)** (`generado`, 6): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
 
 ## Resumen
 
@@ -20,20 +20,18 @@
 | S04 | Composición de la demanda por grupo y tipo | Derivado de registros | Estudiantes 48,8 %, Becas Nutrirse 42,1 %, Becas personal 6,8 %, Personal 2,3 %. Detalle por tipo en reporte/datos.json. | confirmado |
 | S05 | Fila única para todos los tipos | Estimación del referente | Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto. | confirmado |
 | S06 | Puestos de validación activos | Estimación del referente | 1 en el escenario base (hay 2 disponibles). | confirmado |
-| S07 | Tiempo de validación por persona | Derivado de registros | Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s. | confirmado |
-| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01). | propuesto |
+| S07 | Tiempo de validación por ración (por DNI) | Derivado de registros | Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s. | confirmado |
+| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01). | propuesto |
 | S09 | Cola formada antes de la apertura | Generado (IA) | Llegadas uniformes entre las 11:40 y las 12:00. Cantidad inicial: 65 personas en el perfil pico y 30 en el perfil bajo. | aceptado (valores a calibrar) |
-| S10 | Objetivo de validación del modelo (cola y espera observadas) | Estimación del referente | Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. | confirmado |
+| S10 | Objetivo de validación del modelo (cola y espera observadas) | Estimación del referente | Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. Hoy la cola se forma antes de la caja y no en el mostrador. | confirmado |
 | S11 | Ausentismo (reservas no retiradas) | Generado (IA) | Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas. | propuesto |
 | S12 | Cancelaciones definitivas | Generado (IA) | 3 % del total de reservas. | propuesto |
-| S13 | Menú vegetariano / no vegetariano | Generado (IA) | 12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real. | propuesto |
-| S14 | Consumo en el salón o para llevar | Generado (IA) | Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar. | propuesto |
-| S15 | Tiempo de entrega en el mostrador | Generado (IA) | Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana). | propuesto |
-| S16 | Capacidad de asientos del salón | Estimación del referente | Pendiente: conteo de mesas y sillas del layout modelado en 3D. | pendiente |
-| S17 | Tiempo de consumo en el salón | Generado (IA) | Lognormal con una mediana de 20 min y sigma de 0,35 (media de unos 21 min). | propuesto |
-| S18 | Regla de elección de asiento | Generado (IA) | Toma el asiento libre más cercano al mostrador. Si no hay asientos libres, espera de pie hasta que se libere uno. | propuesto |
-| S19 | Velocidad de caminata | Generado (IA) | 1,2 m/s dentro del salón. | propuesto |
+| S13 | Menú: con o sin TACC | Derivado de registros | El menú solo se distingue por ser con o sin TACC, y eso viene del tipo de cliente (dato real): 1 % de las raciones es sin TACC. No hay menú vegetariano. | confirmado |
+| S15 | Tiempo de servicio en el mostrador por ración | Generado (IA) | Lognormal con una mediana de 5 s y sigma de 0,4 (media de unos 5,4 s) por ración y por persona que sirve. Quien retira varias raciones suma una muestra por ración. | propuesto |
 | S20 | Capacidad de la cocina | Estimación del referente | No es restrictiva: la capacidad de preparación supera ampliamente la demanda. | confirmado |
+| S21 | Retiro de más de una ración por persona | Generado (IA) | Becas Nutrirse Vianda: 80 % retira 1 ración, 15 % retira 2 y 5 % retira 3 (1,25 raciones por persona). Resto de los tipos: 95 % retira 1 y 5 % retira 2 (1,05 por persona). | propuesto |
+| S22 | Personas sirviendo en el mostrador | Generado (IA) | 2 en el escenario base. Se prueba con 3 (E5). | propuesto |
+| S23 | Espacio de la fila entre la caja y el mostrador | Estimación del referente | Pendiente: cuántas personas entran entre la caja y el mostrador. | pendiente |
 
 ## Detalle
 
@@ -84,6 +82,7 @@
 - **Valor:** Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto.
 - **Base:** Relevamiento con el referente del comedor.
 - **En FlexSim:** Una sola cola antes del Resource PuestosValidacion
+- **Nota:** Es la situación actual (escenario base). Después de la caja hay una segunda fila, la del servicio de comida (S15, S22). Como caso de estudio se propone separar dos filas según el tipo de cliente (E4, D06).
 - **Usado en:** modelo · **Estado:** confirmado
 
 ### S06 · Puestos de validación activos
@@ -91,25 +90,25 @@
 - **Origen:** Estimación del referente
 - **Valor:** 1 en el escenario base (hay 2 disponibles).
 - **Base:** Relevamiento con el referente: habitualmente opera un solo puesto.
-- **En FlexSim:** Resource PuestosValidacion con Count = 1 (base) o 2 (escenario)
+- **En FlexSim:** Resource PuestosValidacion con Count = 1 (base) o 2 (escenarios E1, E2, E4 y E5)
 - **Usado en:** modelo · **Estado:** confirmado
 
-### S07 · Tiempo de validación por persona
+### S07 · Tiempo de validación por ración (por DNI)
 
 - **Origen:** Derivado de registros
 - **Valor:** Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s.
 - **Base:** El check-in se registra en el puesto de control y opera un solo puesto (S05, S06). En las 13 franjas de 10 minutos con 140 o más validaciones, el puesto está ocupado todo el tiempo, así que el intervalo entre check-ins es el tiempo de servicio (1.959 intervalos). Script: analisis/tiempo_validacion.py.
 - **Rango de sensibilidad:** 3 a 5 s de media
-- **En FlexSim:** lognormal2(0, 3.34, 0.494, stream). Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.
-- **Nota:** Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto.
+- **En FlexSim:** lognormal2(0, 3.34, 0.494, stream) por cada ración de la persona (label raciones, S21): quien retira 2 raciones suma 2 muestras. Verificar en la ayuda de FlexSim que scale = e^mu. Alternativa: ajustar data/procesado/intervalos_saturados.csv con ExpertFit.
+- **Nota:** Es un tiempo por DNI, no por persona: en los datos casi no hay check-ins a menos de 1,5 s del anterior (0,2 %), así que cada DNI se valida por separado aunque lo presente la misma persona (S21). Reemplaza el supuesto de 12 a 18 s de la Entrega 1, que no es compatible con el ritmo real observado: hasta 168 validaciones en 10 minutos con un solo puesto.
 - **Usado en:** modelo · **Estado:** confirmado
 
 ### S08 · Tasa de llegadas a la fila por franja de 10 minutos
 
 - **Origen:** Derivado de registros
-- **Valor:** Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).
+- **Valor:** Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01).
 - **Base:** Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.
-- **En FlexSim:** Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual
+- **En FlexSim:** Inter-Arrival Source por grupo con exponential(0, 600 / tasa_personas, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual. El Source asigna las labels grupo, tipo, sin_tacc y raciones desde el origen.
 - **Usado en:** modelo · **Estado:** propuesto
 
 ### S09 · Cola formada antes de la apertura
@@ -124,7 +123,7 @@
 ### S10 · Objetivo de validación del modelo (cola y espera observadas)
 
 - **Origen:** Estimación del referente
-- **Valor:** Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico.
+- **Valor:** Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. Hoy la cola se forma antes de la caja y no en el mostrador.
 - **Base:** Observación directa del referente en un día normal.
 - **En FlexSim:** Se compara contra la longitud máxima de la cola y la espera promedio en el pico
 - **Nota:** Es compatible con el tiempo de servicio real si la fila se forma antes de la apertura (D01, S09): quien llega a las 11:40 espera la apertura más su turno. Con una cola de 65 que se vacía en unos 4 minutos, la espera promedio de los que llegan antes de abrir ronda los 12 minutos.
@@ -137,7 +136,7 @@
 - **Base:** El export real solo trae reservas retiradas (status = used), así que no hay dato. Se supone un valor mayor para estudiantes porque la reserva no tiene penalidad por no asistir, y menor para las becas porque el beneficio está asociado a la persona. Pendiente de pedirle una estimación al referente.
 - **Rango de sensibilidad:** 3 % a 15 %
 - **Cómo se genera:** Filas nuevas con status = no_show. La cantidad por día y grupo es retiradas × p / (1 − p). reserved_at se muestrea de las reservas reales del mismo día y grupo. checked_at queda vacío.
-- **En FlexSim:** No entran a la fila: las llegadas del día son las reservas menos los ausentes. Salida: raciones preparadas que no se retiran (D04).
+- **En FlexSim:** No entran a la fila: las llegadas del día son las reservas menos los ausentes. Se reporta como raciones reservadas que no se retiran (D04).
 - **Usado en:** dataset, modelo · **Estado:** propuesto
 
 ### S12 · Cancelaciones definitivas
@@ -150,66 +149,21 @@
 - **En FlexSim:** No entran a la fila. Solo cambian el conteo de reservas.
 - **Usado en:** dataset · **Estado:** propuesto
 
-### S13 · Menú vegetariano / no vegetariano
+### S13 · Menú: con o sin TACC
+
+- **Origen:** Derivado de registros
+- **Valor:** El menú solo se distingue por ser con o sin TACC, y eso viene del tipo de cliente (dato real): 1 % de las raciones es sin TACC. No hay menú vegetariano.
+- **Base:** Relevamiento con el grupo. Reemplaza la propuesta anterior de un 12 % de menú vegetariano, que se descarta.
+- **En FlexSim:** Label sin_tacc asignada en el Source junto con el tipo. Es informativa: no cambia la fila ni el tiempo de servicio.
+- **Usado en:** modelo · **Estado:** confirmado
+
+### S15 · Tiempo de servicio en el mostrador por ración
 
 - **Origen:** Generado (IA)
-- **Valor:** 12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real.
-- **Base:** El dataset no distingue menú. Supuesto del grupo, pendiente de una estimación del referente.
-- **Rango de sensibilidad:** 5 % a 25 %
-- **Cómo se genera:** Atributo menu_gen asignado a cada reserva, real o generada, con una Bernoulli de p = 0,12.
-- **En FlexSim:** Label menu: define la línea del mostrador (vegetariana o no vegetariana)
-- **Usado en:** dataset, modelo · **Estado:** propuesto
-
-### S14 · Consumo en el salón o para llevar
-
-- **Origen:** Generado (IA)
-- **Valor:** Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar.
-- **Base:** Criterio del grupo: la gran mayoría de las viandas se retira para llevar (el nombre del beneficio lo indica), pero una parte come en el salón. Las viandas son el 42 % de las retiradas (dato real), así que el total para llevar queda cerca del 46 %. Para el resto de los tipos, supuesto del grupo. Pendiente de confirmar con el referente. Es la variable que más pesa en la ocupación del salón.
-- **Rango de sensibilidad:** Viandas 70 % a 100 %; resto 5 % a 30 %
-- **Cómo se genera:** Atributo para_llevar_gen asignado a cada reserva retirada.
-- **En FlexSim:** Label para_llevar: después del mostrador, sale del comedor o busca asiento (S16–S18)
-- **Usado en:** dataset, modelo · **Estado:** propuesto
-
-### S15 · Tiempo de entrega en el mostrador
-
-- **Origen:** Generado (IA)
-- **Valor:** Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana).
-- **Base:** No se puede medir. La cola observada se forma antes de la validación y no en el mostrador, así que el mostrador tiene que atender al menos al ritmo del puesto (3,9 s). Con el 88 % del flujo en la línea no vegetariana, se elige un valor menor.
-- **En FlexSim:** Delay en cada línea del mostrador (vegetariana y no vegetariana), 1 servidor por línea
-- **Usado en:** modelo · **Estado:** propuesto
-
-### S16 · Capacidad de asientos del salón
-
-- **Origen:** Estimación del referente
-- **Valor:** Pendiente: conteo de mesas y sillas del layout modelado en 3D.
-- **Base:** Relevamiento del layout real del comedor, modelado por el grupo.
-- **En FlexSim:** Cantidad de asientos (objetos o Resource) en el salón
-- **Usado en:** modelo · **Estado:** pendiente
-
-### S17 · Tiempo de consumo en el salón
-
-- **Origen:** Generado (IA)
-- **Valor:** Lognormal con una mediana de 20 min y sigma de 0,35 (media de unos 21 min).
-- **Base:** No se puede medir. Supuesto del grupo para un almuerzo en un comedor universitario con bandeja servida, pendiente de una estimación del referente.
-- **Rango de sensibilidad:** 12 a 35 min de mediana
-- **En FlexSim:** lognormal2(0, 1200, 0.35, stream) en segundos, desde que se sienta hasta que libera el asiento
-- **Usado en:** modelo · **Estado:** propuesto
-
-### S18 · Regla de elección de asiento
-
-- **Origen:** Generado (IA)
-- **Valor:** Toma el asiento libre más cercano al mostrador. Si no hay asientos libres, espera de pie hasta que se libere uno.
-- **Base:** Supuesto de comportamiento del grupo. Es la regla más simple de justificar y permite medir si falta capacidad.
-- **En FlexSim:** Asignación del asiento libre más cercano; espera registrada como indicador (tiempo sin asiento)
-- **Usado en:** modelo · **Estado:** propuesto
-
-### S19 · Velocidad de caminata
-
-- **Origen:** Generado (IA)
-- **Valor:** 1,2 m/s dentro del salón.
-- **Base:** Velocidad de marcha habitual de un peatón adulto, reducida por la circulación entre mesas.
-- **Rango de sensibilidad:** 0,8 a 1,4 m/s
-- **En FlexSim:** Velocidad de las personas; los tiempos de traslado salen de las distancias del layout
+- **Valor:** Lognormal con una mediana de 5 s y sigma de 0,4 (media de unos 5,4 s) por ración y por persona que sirve. Quien retira varias raciones suma una muestra por ración.
+- **Base:** No se puede medir. Hoy la cola se forma antes de la caja y no en el mostrador (S10), así que la capacidad del servicio tiene que superar el ritmo máximo observado en la caja: 168 raciones en 10 minutos (1.008 por hora). Con 2 personas sirviendo, eso pide menos de 7,1 s por ración. Con 5 s de mediana la capacidad es de unas 1.330 raciones por hora: alcanza con 1 puesto de validación (924 por hora) pero no con 2 (1.848 por hora). Es el caso que pide estudiar la cátedra: si se mejora la caja, la cola puede pasar al mostrador. Pendiente de una estimación del referente.
+- **Rango de sensibilidad:** 3 a 8 s de mediana
+- **En FlexSim:** lognormal2(0, 5, 0.4, stream) por cada ración, en el Resource ServicioComida (S22)
 - **Usado en:** modelo · **Estado:** propuesto
 
 ### S20 · Capacidad de la cocina
@@ -217,8 +171,44 @@
 - **Origen:** Estimación del referente
 - **Valor:** No es restrictiva: la capacidad de preparación supera ampliamente la demanda.
 - **Base:** Relevamiento con el referente del comedor.
-- **En FlexSim:** No se modela la cocina; el mostrador siempre tiene bandejas disponibles
+- **En FlexSim:** No se modela la cocina: el mostrador siempre tiene bandejas disponibles, y la velocidad del servicio depende solo de quienes sirven (S15, S22).
 - **Usado en:** modelo · **Estado:** confirmado
+
+### S21 · Retiro de más de una ración por persona
+
+- **Origen:** Generado (IA)
+- **Valor:** Becas Nutrirse Vianda: 80 % retira 1 ración, 15 % retira 2 y 5 % retira 3 (1,25 raciones por persona). Resto de los tipos: 95 % retira 1 y 5 % retira 2 (1,05 por persona).
+- **Base:** Una persona puede retirar las raciones de otras si presenta sus DNI. En los datos no se distingue: casi no hay check-ins a menos de 1,5 s del anterior (0,2 %), así que cada DNI se valida por separado y un retiro de 2 raciones se ve igual que 2 personas. Se supone más frecuente en las viandas porque se retiran para llevar. Pendiente de una estimación del referente (frecuencia y máximo de DNI por persona).
+- **Rango de sensibilidad:** Viandas de 1,0 a 1,5 raciones por persona; resto de 1,0 a 1,15
+- **En FlexSim:** Label raciones asignada en el Source con una Empirical Distribution según el grupo. Multiplica el tiempo de validación (S07) y el de servicio (S15). La tasa de llegadas de personas es la de raciones dividida por la media (S08).
+- **Usado en:** modelo · **Estado:** propuesto
+
+### S22 · Personas sirviendo en el mostrador
+
+- **Origen:** Generado (IA)
+- **Valor:** 2 en el escenario base. Se prueba con 3 (E5).
+- **Base:** Supuesto del grupo, pendiente de confirmar con el referente. Junto con S15 define la capacidad del servicio.
+- **Rango de sensibilidad:** 1 a 4 personas
+- **En FlexSim:** Resource ServicioComida con Count = 2 (base) o 3 (E5), con una fila única delante
+- **Usado en:** modelo · **Estado:** propuesto
+
+### S23 · Espacio de la fila entre la caja y el mostrador
+
+- **Origen:** Estimación del referente
+- **Valor:** Pendiente: cuántas personas entran entre la caja y el mostrador.
+- **Base:** Relevamiento del layout real. Sirve para ver si una cola en el servicio termina frenando la validación.
+- **En FlexSim:** Capacidad máxima de la cola FilaServicio. Si se llena, la caja no deja pasar a nadie más (bloqueo) y la cola vuelve a crecer antes de la caja.
+- **Usado en:** modelo · **Estado:** pendiente
+
+## Fuera del alcance
+
+El sistema termina al retirar la bandeja en el mostrador (D02). Estas variables no entran al modelo; se conservan como referencia para mencionarlas en el informe.
+
+- **S14 · Consumo en el salón o para llevar.** Lo que hace la persona después de retirar la bandeja queda fuera del sistema (D02). Propuesta anterior: Becas Nutrirse Vianda 90 % para llevar; resto de los tipos 15 %.
+- **S16 · Capacidad de asientos del salón.** El salón queda fuera del sistema (D02). Se puede mencionar como línea de trabajo futura. No se releva.
+- **S17 · Tiempo de consumo en el salón.** El salón queda fuera del sistema (D02). Propuesta anterior: lognormal con una mediana de 20 min y sigma de 0,35.
+- **S18 · Regla de elección de asiento.** El salón queda fuera del sistema (D02). Propuesta anterior: asiento libre más cercano al mostrador; si no hay, espera de pie.
+- **S19 · Velocidad de caminata en el salón.** El salón queda fuera del sistema (D02). Propuesta anterior: 1,2 m/s.
 
 ## Decisiones abiertas
 
@@ -232,15 +222,15 @@ Con 3,9 s por persona, una cola de 65 se vacía en unos 4 minutos. Para esperar 
 
 **Recomendación:** Decidido: la fila se forma antes de que empiece la atención (S09). Se valida contra la curva real de validaciones por franja y contra la espera observada (S10).
 
-### D02 · ¿El mostrador de entrega entra en el alcance? (resuelta)
+### D02 · ¿Dónde termina el sistema? (resuelta (revisada))
 
-La sección 4 de la Entrega 1 termina el sistema en la validación, pero las secciones 5, 8 y 9 hablan del mostrador y de su ocupación.
+Primero se incluyeron el mostrador y el salón (C). Después se recortó hasta la caja (A). La cátedra pidió incluir el servicio de comida: si se mejora la validación, la cola puede pasar al mostrador, y hay que ver si agregar gente en el servicio acelera el proceso completo en lugar de solo mover el cuello de botella.
 
-- A) El sistema termina en la validación. El mostrador y las mesas quedan solo en la animación 3D.
-- B) Incluir el mostrador con dos líneas (S13, S15).
+- A) El sistema termina en la caja (puesto de validación).
+- B) Hasta el servicio de comida: fila, caja, fila de servicio y mostrador. El salón queda fuera.
 - C) Incluir el mostrador y el salón: dónde se sienta la gente y cuánto tiempo ocupa el asiento.
 
-**Recomendación:** Decidido: C. El flujo completo entra en el alcance: fila, validación, mostrador (2 líneas), salón o salida. Agrega los supuestos S16 a S19. Ojo: si se habilita un segundo puesto, el cuello de botella puede pasar a los asientos.
+**Recomendación:** Decidido: B. Sistema = llegadas + fila + caja + fila de servicio + mostrador. El salón y el retiro para llevar (S14, S16 a S19) quedan fuera y se mencionan en el informe.
 
 ### D03 · Perfiles de demanda a simular (resuelta (por defecto))
 
@@ -261,8 +251,18 @@ En los datos reales, la hora de reserva casi no predice la hora de llegada (corr
 
 ### D05 · Reformular la pregunta de estudio (sección 3) (abierta)
 
-La pregunta de la Entrega 1 incluye el horario límite de reserva, que según D04 no afecta la cola. Además, con D02 el salón pasa a ser parte del sistema.
+La pregunta de la Entrega 1 incluye el horario límite de reserva, que según D04 no afecta la cola. Con D02 revisada, el sistema llega hasta el mostrador.
 
-- Propuesta: ¿cuántos puestos de validación deben operar en simultáneo para que la espera en la fila no supere un valor aceptable en el pico, y alcanza la capacidad del salón para absorber el flujo resultante?
+- Propuesta: ¿qué combinación de puestos de validación, organización de la fila y personas en el servicio de comida reduce el tiempo total desde la llegada hasta retirar la bandeja en el pico, sin que mejorar la caja solo traslade la cola al mostrador?
 
 **Recomendación:** Ajustar la pregunta y el alcance (sección 4) en la próxima entrega.
+
+### D06 · Caso de estudio: dos filas según el tipo de cliente (abierta)
+
+Con 2 puestos, en lugar de una fila única, cada puesto atiende su propia fila según el tipo de cliente. El tipo es un dato real del registro. Becas Nutrirse Vianda es el 42 % de las retiradas y su check-in mediano es unos 17 minutos más tardío que el de los estudiantes de grado.
+
+- A) Fila de viandas (Becas Nutrirse Vianda) y fila general (el resto). Reparto de 42 % y 58 %.
+- B) Fila de estudiantes y fila de becas y personal. Reparto de 49 % y 51 %.
+- C) Comparar A y B contra 2 puestos con fila única (E1).
+
+**Recomendación:** Proponer A, que separa el flujo con un patrón de llegada distinto, y compararla contra 2 puestos con fila única (E1): la fila única suele dar menos espera promedio, así que la separación se justifica solo si reduce la espera de algún grupo.

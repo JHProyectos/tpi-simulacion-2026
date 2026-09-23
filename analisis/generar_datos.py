@@ -1,5 +1,5 @@
 """Fase 3: completa el dataset real con los datos generados declarados en
-supuestos/supuestos.json (S11 a S14). Las filas reales no se modifican.
+supuestos/supuestos.json (S11 y S12). Las filas reales no se modifican.
 
 Salidas:
   data/generado/reservas_generadas.csv  solo las filas sintéticas (no_show, canceled)
@@ -33,7 +33,7 @@ COLUMNAS_REALES = ["event_date", "reserved_at", "canceled_at", "checked_at", "st
 def parametros():
     d = json.loads(SUPUESTOS.read_text(encoding="utf-8"))
     s = {x["id"]: x for x in d["supuestos"]}
-    return d["semilla"], {k: s[k]["parametros"] for k in ("S11", "S12", "S13", "S14")}
+    return d["semilla"], {k: s[k]["parametros"] for k in ("S11", "S12")}
 
 
 def huella(df):
@@ -104,17 +104,6 @@ def generar_filas(real, p, rng):
     return gen
 
 
-def asignar_atributos(df, p, rng):
-    """Columnas generadas sobre todas las filas: menú (S13) y para llevar (S14)."""
-    df["menu_gen"] = np.where(rng.random(len(df)) < p["S13"]["p_vegetariano"], "vegetariano", "no_vegetariano")
-    vianda = df["customer_types"].isin(p["S14"]["tipos_vianda"])
-    prob = np.where(vianda, p["S14"]["p_llevar_vianda"], p["S14"]["p_llevar_resto"])
-    llevar = rng.random(len(df)) < prob
-    # Solo tiene sentido para quien retira la comida.
-    df["para_llevar_gen"] = pd.Series(llevar, index=df.index).where(df["status"] == "used")
-    return df
-
-
 def main():
     semilla, p = parametros()
     rng = np.random.default_rng(semilla)
@@ -124,13 +113,11 @@ def main():
     gen = generar_filas(real, p, rng)
     completo = pd.concat([real, gen], ignore_index=True)
     completo = completo.sort_values(["event_date", "reserved_at", "reserva_id"]).reset_index(drop=True)
-    completo = asignar_atributos(completo, p, rng)
     completo["sin_tacc"] = completo["customer_types"].str.contains("sin TACC")
     completo["re_reserva"] = (completo["origen_fila"] == "real") & completo["canceled_at"].notna()
 
     cols = ["reserva_id", "origen_fila", "event_date", "grupo", "customer_types", "sin_tacc",
-            "status", "reserved_at", "canceled_at", "checked_at", "re_reserva",
-            "menu_gen", "para_llevar_gen", "customer_id"]
+            "status", "reserved_at", "canceled_at", "checked_at", "re_reserva", "customer_id"]
     completo = completo[cols]
 
     # Verificación: las filas reales del archivo final coinciden con el CSV original.
@@ -146,7 +133,6 @@ def main():
     completo[completo["origen_fila"] == "generado_ia"].to_csv(GENERADO / "reservas_generadas.csv", index=False)
     completo.to_csv(FINAL / "reservas_completo.csv", index=False)
 
-    usados = completo[completo["status"] == "used"]
     no_cancel = completo[completo["status"] != "canceled"]
     resumen = {
         "semilla": semilla,
@@ -157,12 +143,6 @@ def main():
         "ausentismo_por_grupo": {g: round(float((no_cancel[no_cancel["grupo"] == g]["status"] == "no_show").mean()), 4)
                                  for g in ORDEN_GRUPOS},
         "cancelacion": round(float((completo["status"] == "canceled").mean()), 4),
-        "vegetariano": round(float((completo["menu_gen"] == "vegetariano").mean()), 4),
-        "para_llevar": round(float(usados["para_llevar_gen"].astype(bool).mean()), 4),
-        "comen_en_salon_por_dia": {
-            "pico": round(float((~usados["para_llevar_gen"].astype(bool)).groupby(usados["event_date"]).sum()
-                                .loc[lambda s: s.index >= "2026-08-10"].median()), 1),
-        },
         "huella_csv_real": huella_antes,
     }
     (FINAL / "resumen.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=1), encoding="utf-8")

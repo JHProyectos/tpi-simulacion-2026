@@ -4,7 +4,9 @@ Dataset completo de reservas: las **34.509 filas reales** sin modificar, más la
 
 Hay dos niveles de origen:
 - **Por fila:** la columna `origen_fila` dice si la reserva existe en el registro real (`real`) o fue generada (`generado_ia`).
-- **Por columna:** la tabla de abajo dice de dónde sale cada valor. Una fila real puede tener columnas generadas (`menu_gen`, `para_llevar_gen`); los nombres con sufijo `_gen` marcan eso.
+- **Por columna:** la tabla de abajo dice de dónde sale cada valor. En las filas reales, todas las columnas son reales o derivadas.
+
+Se sacaron las columnas `menu_gen` y `para_llevar_gen`: el menú solo se distingue por sin TACC, que ya está en `sin_tacc` (S13), y el retiro para llevar queda fuera del alcance (D02). El retiro de varias raciones por persona (S21) no se genera en el dataset: es un parámetro del modelo.
 
 | Columna | Filas reales | Filas generadas | Descripción |
 |---|---|---|---|
@@ -19,8 +21,6 @@ Hay dos niveles de origen:
 | `canceled_at` | **Real** | Generado (S12) | En las reales solo aparece cuando la persona canceló y volvió a reservar (`re_reserva`). En las `canceled`: uniforme entre la reserva y las 11:00 |
 | `checked_at` | **Real** | Vacío | Hora de validación en el puesto de control. Las no retiradas no la tienen |
 | `re_reserva` | Derivado | `False` | `True` en las 313 reservas reales con `canceled_at` anterior a la reserva |
-| `menu_gen` | Generado (S13) | Generado (S13) | `vegetariano` (12 %) o `no_vegetariano`. Define la línea del mostrador |
-| `para_llevar_gen` | Generado (S14) | Vacío | Solo en las retiradas: viandas 90 % para llevar, resto 15 % |
 | `customer_id` | **Real** | Vacío | Id del registro original (único por fila, no identifica personas) |
 
 ## Controles que hace el script

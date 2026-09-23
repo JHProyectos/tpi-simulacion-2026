@@ -24,7 +24,9 @@ def celda(texto):
 
 def main():
     d = json.loads(FUENTE.read_text(encoding="utf-8"))
-    sup = d["supuestos"]
+    # Lo que queda fuera del alcance (D02) va en una sección aparte y no cuenta en los orígenes.
+    sup = [s for s in d["supuestos"] if s.get("alcance") != "fuera"]
+    fuera = [s for s in d["supuestos"] if s.get("alcance") == "fuera"]
     out = [
         "# Registro de supuestos y fuentes de datos",
         "",
@@ -58,6 +60,13 @@ def main():
             if clave in s:
                 out.append(f"- **{rotulo}:** {s[clave]}")
         out += [f"- **Usado en:** {', '.join(s['usado_en'])} · **Estado:** {s['estado']}", ""]
+
+    out += ["## Fuera del alcance", "",
+            "El sistema termina al retirar la bandeja en el mostrador (D02). Estas variables no entran al modelo; "
+            "se conservan como referencia para mencionarlas en el informe.", ""]
+    for s in fuera:
+        out.append(f"- **{s['id']} · {s['variable']}.** {s['base']} {s['valor']}")
+    out.append("")
 
     out += ["## Decisiones abiertas", ""]
     for dec in d["decisiones_abiertas"]:

@@ -7,3 +7,6 @@ desktop.ini
 # Python
 __pycache__/
 *.pyc
+
+# Material de la cátedra (no se redistribuye)
+flexsim/*.pdf

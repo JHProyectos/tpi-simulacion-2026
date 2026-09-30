@@ -1,6 +1,6 @@
 {
- "version": "0.6",
- "actualizado": "2026-09-23",
+ "version": "0.7",
+ "actualizado": "2026-09-30",
  "origenes": {
   "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
   "derivado": "Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.",
@@ -114,8 +114,8 @@
    "id": "S08",
    "variable": "Tasa de llegadas a la fila por franja de 10 minutos",
    "origen": "derivado",
-   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01).",
-   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_personas, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual. El Source asigna las labels grupo, tipo, sin_tacc y raciones desde el origen.",
+   "valor": "Personas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S26), dividida por las raciones promedio por persona del grupo (S21). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra (D01).",
+   "flexsim": "Global Tables TasaLlegadas_Pico y TasaLlegadas_Bajo (personas por franja y grupo). Un Inter-Arrival Source genera un proceso de Poisson no homogéneo con la columna Total y asigna el grupo con los pesos de la franja; después se asignan tipo, sin_tacc y raciones.",
    "base": "Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.",
    "estado": "propuesto",
    "usado_en": [
@@ -358,6 +358,51 @@
    "usado_en": [
     "modelo"
    ]
+  },
+  {
+   "id": "S24",
+   "variable": "Tiempo de validación con QR (escenario E3)",
+   "origen": "generado",
+   "valor": "60 % del tiempo de validación actual por DNI (factor 0,6 sobre S07): mediana de unos 2 s.",
+   "flexsim": "Columna FactorValidacion de la Global Table Escenarios: multiplica cada muestra de S07",
+   "base": "Supuesto del grupo: la lectura del código QR evita buscar a la persona en el sistema, que es parte del tiempo actual. El piso real observado es de unos 1,9 s por validación (percentil 5 de S07), así que un factor menor no sería creíble.",
+   "estado": "propuesto",
+   "sensibilidad": "factor 0,5 a 0,8",
+   "usado_en": [
+    "modelo"
+   ],
+   "parametros": {
+    "factor": 0.6
+   }
+  },
+  {
+   "id": "S25",
+   "variable": "Demora en el inicio de la atención",
+   "origen": "derivado",
+   "valor": "La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0.",
+   "flexsim": "Global Table DemoraApertura (empírica, 32 valores en segundos); la caja se habilita en 1200 + una demora elegida al azar",
+   "base": "Hora del primer check-in de cada día en los registros reales. Suma espera a quienes hicieron fila antes de abrir.",
+   "estado": "confirmado",
+   "usado_en": [
+    "modelo"
+   ]
+  },
+  {
+   "id": "S26",
+   "variable": "Interrupciones del puesto de validación",
+   "origen": "derivado",
+   "valor": "Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra en los escenarios.",
+   "flexsim": "No se modela. El 18 de agosto se excluye del cálculo de llegadas (S08) y de la curva de referencia (Referencia_Validaciones).",
+   "base": "Huecos de más de 3 minutos entre check-ins en horario pico de los registros reales. Los huecos de los días de demanda baja se explican por falta de llegadas, no por fallas.",
+   "estado": "confirmado",
+   "usado_en": [
+    "validacion"
+   ],
+   "parametros": {
+    "fecha": "2026-08-18",
+    "desde": "12:10",
+    "duracion_min": 14
+   }
   }
  ],
  "decisiones_abiertas": [

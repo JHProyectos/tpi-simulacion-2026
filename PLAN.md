@@ -65,22 +65,27 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 - El retiro múltiple (S21) no se genera en el dataset: es un parámetro del modelo
 
 ## Fase 4 · Tablas para FlexSim
-- [ ] [Claude] `flexsim/inputs.xlsx`
-  - [ ] `TasaLlegadas`: franja de 10 min × grupo, por perfil de demanda, en personas (raciones ÷ raciones por persona, S21)
-  - [ ] `MixTipos`: proporciones por tipo de cliente, con su grupo y sin TACC
-  - [ ] `Raciones`: distribución de raciones por persona según el grupo (S21)
-  - [ ] `TiemposServicio`: validación por DNI (S07) y servicio por ración (S15)
-  - [ ] `Escenarios`: puestos, organización de la fila, personas sirviendo, demanda (reservas − ausentes) y cola previa a la apertura
+- [x] [Claude] `analisis/generar_inputs_flexsim.py` genera `flexsim/inputs.xlsx` (solo valores, una tabla por hoja, hoja LEEME con instrucciones)
+  - [x] `TasaLlegadas_Pico` / `_Bajo`: franja de 10 min × grupo, en personas (raciones ÷ raciones por persona, S21), sin el 18/8 (S26)
+  - [x] `ColaPrevia`: personas por grupo que llegan entre 11:40 y 12:00
+  - [x] `DemoraApertura`: demora real del inicio de la atención en los 32 días (S25)
+  - [x] `MixTipos`: proporciones por tipo de cliente, con su grupo, sin TACC, si es vianda y la distribución de raciones por persona (S21)
+  - [x] `TiemposServicio`: validación por DNI (S07) y servicio por ración (S15)
+  - [x] `Escenarios`: E0–E5 × perfil (puestos, puesto extra, factor QR, filas por tipo, personas sirviendo, capacidad de la fila de servicio, cola previa y demanda)
+  - [x] `Referencia_Validaciones`: raciones validadas por franja, para la fase 6
+- [x] [Claude] Supuestos nuevos a partir de los datos: demora de apertura (S25) e interrupción del 18/8 (S26); el factor QR del escenario E3 pasa a S24
+- [ ] [Grupo] Revisar S24 (factor QR) y la capacidad provisoria de la fila de servicio (999, sin límite, hasta tener S23)
 - [ ] [Grupo] Importar con Excel Import/Export a Global Tables
 
 ## Fase 5 · Modelo base en FlexSim (Process Flow)
-- [ ] [Grupo] Configurar el modelo en segundos, con t = 0 a las 11:40 y apertura a las 12:00
+- [x] [Claude] Guía paso a paso para FlexSim 2026 ([`flexsim/GUIA_FLEXSIM.md`](flexsim/GUIA_FLEXSIM.md)), réplica de verificación en Python (`analisis/referencia_modelo.py`) y registro del avance con capturas ([`flexsim/capturas/AVANCE.md`](flexsim/capturas/AVANCE.md))
+- [x] [Grupo] Configurar el modelo en segundos, con t = 0 a las 11:40 y apertura a las 12:00 + demora (S25)
 - [ ] [Grupo] Inter-Arrival Source por grupo con tasa por franja (S08) y llegadas previas a la apertura (S09)
 - [ ] [Grupo] Asignar las labels en el Source, desde el origen: grupo, tipo, sin_tacc y raciones (S13, S21)
 - [ ] [Grupo] FilaCaja y Resource `PuestosValidacion` (1 unidad): el tiempo es la suma de una muestra de S07 por cada ración
 - [ ] [Grupo] FilaServicio con capacidad máxima (S23): si se llena, la caja se bloquea
 - [ ] [Grupo] Resource `ServicioComida` (2 unidades, S22): el tiempo es la suma de una muestra de S15 por cada ración; después sale del sistema
-- [ ] [Grupo] Variante E4: dos filas de caja con un puesto cada una, según la label tipo
+- [ ] [Grupo] Variante E4: fila de viandas con su propio puesto y fila general (D06)
 - [ ] [Grupo] Layout 3D para mostrar la dinámica: fila de caja en serpentina con Path, caja, fila de servicio y mostrador con las personas que sirven. El salón, si se incluye, es solo decorativo
 - [ ] [Grupo] Registrar las salidas: espera en cada fila (total y por tipo), cola máxima en cada fila, tiempo total en el sistema, utilización de la caja y del servicio, tiempo con la caja bloqueada, validaciones por franja, raciones reservadas no retiradas
 - [ ] [Claude] Apoyo con la lógica de Process Flow y con el código de los triggers

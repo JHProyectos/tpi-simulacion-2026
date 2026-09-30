@@ -25,13 +25,14 @@ Estudio de simulación de la fila de validación del Comedor Universitario UNC (
 
 ## Regenerar lo derivado
 
-Requiere Python 3 con `pandas` (`python -m pip install pandas`). Desde la raíz:
+Requiere Python 3 con `pandas` y `openpyxl` (`python -m pip install pandas openpyxl`). Desde la raíz:
 
 ```bash
 python analisis/tiempo_validacion.py
 python analisis/render_supuestos.py
 python analisis/generar_datos.py
 python analisis/organizar_por_tipo.py
+python analisis/generar_inputs_flexsim.py
 ```
 
 ## Publicar la página en Vercel

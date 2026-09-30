@@ -1,13 +1,13 @@
 # Registro de supuestos y fuentes de datos
 
-> Generado desde `supuestos/supuestos.json` (v0.6, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
+> Generado desde `supuestos/supuestos.json` (v0.7, 2026-09-30). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
 
 ## Orígenes
 
 - **Registro de la organización** (`registro`, 1): Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.
-- **Derivado de registros** (`derivado`, 6): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
+- **Derivado de registros** (`derivado`, 8): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
 - **Estimación del referente** (`referente`, 6): Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).
-- **Generado (IA)** (`generado`, 6): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
+- **Generado (IA)** (`generado`, 7): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
 
 ## Resumen
 
@@ -21,7 +21,7 @@
 | S05 | Fila única para todos los tipos | Estimación del referente | Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto. | confirmado |
 | S06 | Puestos de validación activos | Estimación del referente | 1 en el escenario base (hay 2 disponibles). | confirmado |
 | S07 | Tiempo de validación por ración (por DNI) | Derivado de registros | Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s. | confirmado |
-| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01). | propuesto |
+| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Personas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S26), dividida por las raciones promedio por persona del grupo (S21). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra (D01). | propuesto |
 | S09 | Cola formada antes de la apertura | Generado (IA) | Llegadas uniformes entre las 11:40 y las 12:00. Cantidad inicial: 65 personas en el perfil pico y 30 en el perfil bajo. | aceptado (valores a calibrar) |
 | S10 | Objetivo de validación del modelo (cola y espera observadas) | Estimación del referente | Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. Hoy la cola se forma antes de la caja y no en el mostrador. | confirmado |
 | S11 | Ausentismo (reservas no retiradas) | Generado (IA) | Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas. | propuesto |
@@ -32,6 +32,9 @@
 | S21 | Retiro de más de una ración por persona | Generado (IA) | Becas Nutrirse Vianda: 80 % retira 1 ración, 15 % retira 2 y 5 % retira 3 (1,25 raciones por persona). Resto de los tipos: 95 % retira 1 y 5 % retira 2 (1,05 por persona). | propuesto |
 | S22 | Personas sirviendo en el mostrador | Generado (IA) | 2 en el escenario base. Se prueba con 3 (E5). | propuesto |
 | S23 | Espacio de la fila entre la caja y el mostrador | Estimación del referente | Pendiente: cuántas personas entran entre la caja y el mostrador. | pendiente |
+| S24 | Tiempo de validación con QR (escenario E3) | Generado (IA) | 60 % del tiempo de validación actual por DNI (factor 0,6 sobre S07): mediana de unos 2 s. | propuesto |
+| S25 | Demora en el inicio de la atención | Derivado de registros | La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0. | confirmado |
+| S26 | Interrupciones del puesto de validación | Derivado de registros | Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra en los escenarios. | confirmado |
 
 ## Detalle
 
@@ -106,9 +109,9 @@
 ### S08 · Tasa de llegadas a la fila por franja de 10 minutos
 
 - **Origen:** Derivado de registros
-- **Valor:** Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Son raciones: la tasa de personas es la de raciones dividida por las raciones promedio por persona del grupo (S21). Después se calibra (S09, D01).
+- **Valor:** Personas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S26), dividida por las raciones promedio por persona del grupo (S21). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra (D01).
 - **Base:** Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.
-- **En FlexSim:** Inter-Arrival Source por grupo con exponential(0, 600 / tasa_personas, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual. El Source asigna las labels grupo, tipo, sin_tacc y raciones desde el origen.
+- **En FlexSim:** Global Tables TasaLlegadas_Pico y TasaLlegadas_Bajo (personas por franja y grupo). Un Inter-Arrival Source genera un proceso de Poisson no homogéneo con la columna Total y asigna el grupo con los pesos de la franja; después se asignan tipo, sin_tacc y raciones.
 - **Usado en:** modelo · **Estado:** propuesto
 
 ### S09 · Cola formada antes de la apertura
@@ -199,6 +202,31 @@
 - **Base:** Relevamiento del layout real. Sirve para ver si una cola en el servicio termina frenando la validación.
 - **En FlexSim:** Capacidad máxima de la cola FilaServicio. Si se llena, la caja no deja pasar a nadie más (bloqueo) y la cola vuelve a crecer antes de la caja.
 - **Usado en:** modelo · **Estado:** pendiente
+
+### S24 · Tiempo de validación con QR (escenario E3)
+
+- **Origen:** Generado (IA)
+- **Valor:** 60 % del tiempo de validación actual por DNI (factor 0,6 sobre S07): mediana de unos 2 s.
+- **Base:** Supuesto del grupo: la lectura del código QR evita buscar a la persona en el sistema, que es parte del tiempo actual. El piso real observado es de unos 1,9 s por validación (percentil 5 de S07), así que un factor menor no sería creíble.
+- **Rango de sensibilidad:** factor 0,5 a 0,8
+- **En FlexSim:** Columna FactorValidacion de la Global Table Escenarios: multiplica cada muestra de S07
+- **Usado en:** modelo · **Estado:** propuesto
+
+### S25 · Demora en el inicio de la atención
+
+- **Origen:** Derivado de registros
+- **Valor:** La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0.
+- **Base:** Hora del primer check-in de cada día en los registros reales. Suma espera a quienes hicieron fila antes de abrir.
+- **En FlexSim:** Global Table DemoraApertura (empírica, 32 valores en segundos); la caja se habilita en 1200 + una demora elegida al azar
+- **Usado en:** modelo · **Estado:** confirmado
+
+### S26 · Interrupciones del puesto de validación
+
+- **Origen:** Derivado de registros
+- **Valor:** Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra en los escenarios.
+- **Base:** Huecos de más de 3 minutos entre check-ins en horario pico de los registros reales. Los huecos de los días de demanda baja se explican por falta de llegadas, no por fallas.
+- **En FlexSim:** No se modela. El 18 de agosto se excluye del cálculo de llegadas (S08) y de la curva de referencia (Referencia_Validaciones).
+- **Usado en:** validacion · **Estado:** confirmado
 
 ## Fuera del alcance
 

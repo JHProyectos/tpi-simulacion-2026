@@ -39,7 +39,7 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 - [x] [Grupo] **D03** → se simulan los dos perfiles, bajo y pico (por defecto)
 - [x] [Grupo] **D04** → el horario límite sirve para planificar la cocina y no afecta la cola: sale de los escenarios; las reservas definen la demanda
 - [ ] [Grupo] **D05**: reformular la pregunta de estudio y el alcance (secciones 3 y 4)
-- [ ] [Grupo] Contar los asientos del layout 3D y cargar el valor en S16
+- [x] [Grupo] Contar los asientos del layout 3D → 432 asientos (S16, medición propia)
 
 ## Fase 3 · Dataset ampliado (real + generado)
 - [x] [Claude] `analisis/generar_datos.py` (semilla 2026, parámetros leídos de `supuestos.json`) genera `data/generado/` y `data/final/reservas_completo.csv`
@@ -52,16 +52,22 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 - [ ] [Claude] Regenerar si cambian los valores de S11–S14 (un comando)
 
 ## Fase 4 · Tablas para FlexSim
-- [ ] [Claude] `flexsim/inputs.xlsx`
-  - [ ] `TasaLlegadas`: franja de 10 min × grupo, por perfil de demanda
-  - [ ] `MixTipos`: proporciones por tipo, menú y para llevar
-  - [ ] `TiemposServicio`: validación (S07), mostrador (S15) y consumo en el salón (S17)
-  - [ ] `Escenarios`: puestos, demanda (reservas − ausentes) y cola previa a la apertura
-  - [ ] `Salon`: asientos y distancias, cuando esté S16
+- [x] [Claude] `analisis/generar_inputs_flexsim.py` genera `flexsim/inputs.xlsx` (solo valores, una tabla por hoja, hoja LEEME con instrucciones)
+  - [x] `TasaLlegadas_Pico` / `_Bajo`: franja de 10 min × grupo, sin el día de la interrupción
+  - [x] `ColaPrevia`: personas por grupo que llegan entre 11:40 y 12:00
+  - [x] `DemoraApertura`: demora real del inicio de la atención en los 32 días (S22)
+  - [x] `MixTipos`: proporciones por tipo, menú y para llevar
+  - [x] `TiemposServicio`: validación (S07), mostrador (S15) y consumo en el salón (S17)
+  - [x] `Escenarios`: E0–E5 × perfil (puestos, franja del puesto extra, factor QR, interrupción)
+  - [x] `Salon`: 432 asientos, velocidad de caminata y regla de asiento
+  - [x] `Referencia_Validaciones`: curva real por franja para la fase 6
+- [x] [Claude] Hallazgos derivados de los datos: demora de apertura (S22) e interrupción del 18/8 (S23)
+- [ ] [Grupo] Revisar los supuestos nuevos S21 (factor QR) y E5 (escenario de falla)
 - [ ] [Grupo] Importar con Excel Import/Export a Global Tables
 
 ## Fase 5 · Modelo base en FlexSim (Process Flow)
-- [ ] [Grupo] Configurar el modelo en segundos, con t = 0 a las 11:40 y apertura a las 12:00
+- [x] [Claude] Guía paso a paso ([`flexsim/GUIA_FLEXSIM.md`](flexsim/GUIA_FLEXSIM.md)) y réplica de verificación en Python (`analisis/referencia_modelo.py`)
+- [ ] [Grupo] Configurar el modelo en segundos, con t = 0 a las 11:40 y apertura a las 12:00 + demora (tabla DemoraApertura)
 - [ ] [Grupo] Inter-Arrival Source por grupo con tasa por franja (S08) y llegadas previas a la apertura (S09)
 - [ ] [Grupo] Asignar labels: grupo, tipo, sin TACC, menú, para llevar
 - [ ] [Grupo] Cola y Resource `PuestosValidacion` (1 unidad) con tiempo lognormal (S07)
@@ -85,6 +91,7 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
   - [ ] E2: 2 puestos solo de 12:00 a 13:30
   - [ ] E3: autoatención por QR (menos tiempo de validación o un puesto extra)
   - [ ] E4: reordenamiento del layout de mesas (escenario 4 de la Entrega 1)
+  - [ ] E5: interrupción del puesto de 14 min en el pico (caso real del 18/8)
   - [ ] Cada escenario en perfil bajo y perfil pico
 - [ ] [Claude] Procesar resultados: intervalos de confianza, comparación entre escenarios y gráficos
 - [ ] [Grupo] Análisis de sensibilidad de los supuestos generados (rangos en `SUPUESTOS.md`)

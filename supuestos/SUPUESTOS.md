@@ -1,13 +1,14 @@
 # Registro de supuestos y fuentes de datos
 
-> Generado desde `supuestos/supuestos.json` (v0.4, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
+> Generado desde `supuestos/supuestos.json` (v0.6, 2026-09-23). No editar a mano: modificar el JSON y correr `python analisis/render_supuestos.py`.
 
 ## Orígenes
 
 - **Registro de la organización** (`registro`, 1): Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.
-- **Derivado de registros** (`derivado`, 5): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
-- **Estimación del referente** (`referente`, 6): Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).
-- **Generado (IA)** (`generado`, 9): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
+- **Derivado de registros** (`derivado`, 7): Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.
+- **Medición propia** (`medicion`, 1): Medición propia del grupo: conteo u observación directa sobre el layout relevado.
+- **Estimación del referente** (`referente`, 5): Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).
+- **Generado (IA)** (`generado`, 10): Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso.
 
 ## Resumen
 
@@ -21,7 +22,7 @@
 | S05 | Fila única para todos los tipos | Estimación del referente | Todos los tipos, incluidas las viandas de Becas Nutrirse, hacen la misma fila y validan en el mismo puesto. | confirmado |
 | S06 | Puestos de validación activos | Estimación del referente | 1 en el escenario base (hay 2 disponibles). | confirmado |
 | S07 | Tiempo de validación por persona | Derivado de registros | Lognormal con mu = 1,205 y sigma = 0,494: mediana 3,3 s y media 3,8 s. En la muestra, la mediana es 2,9 s, el percentil 5 es 1,9 s y el percentil 95 es 9,7 s. | confirmado |
-| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01). | propuesto |
+| S08 | Tasa de llegadas a la fila por franja de 10 minutos | Derivado de registros | Llegadas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S23). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra. | propuesto |
 | S09 | Cola formada antes de la apertura | Generado (IA) | Llegadas uniformes entre las 11:40 y las 12:00. Cantidad inicial: 65 personas en el perfil pico y 30 en el perfil bajo. | aceptado (valores a calibrar) |
 | S10 | Objetivo de validación del modelo (cola y espera observadas) | Estimación del referente | Cola de 60 a 70 personas antes del puesto; espera estimada de 10 a 15 minutos en el pico. | confirmado |
 | S11 | Ausentismo (reservas no retiradas) | Generado (IA) | Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas. | propuesto |
@@ -29,11 +30,14 @@
 | S13 | Menú vegetariano / no vegetariano | Generado (IA) | 12 % vegetariano, igual para todos los grupos. Independiente de sin TACC, que es un dato real. | propuesto |
 | S14 | Consumo en el salón o para llevar | Generado (IA) | Becas Nutrirse Vianda: 90 % para llevar. Resto de los tipos: 15 % para llevar. | propuesto |
 | S15 | Tiempo de entrega en el mostrador | Generado (IA) | Lognormal con una mediana de 2,5 s y sigma de 0,4 por línea (vegetariana y no vegetariana). | propuesto |
-| S16 | Capacidad de asientos del salón | Estimación del referente | Pendiente: conteo de mesas y sillas del layout modelado en 3D. | pendiente |
+| S16 | Capacidad de asientos del salón | Medición propia | 432 asientos. | confirmado |
 | S17 | Tiempo de consumo en el salón | Generado (IA) | Lognormal con una mediana de 20 min y sigma de 0,35 (media de unos 21 min). | propuesto |
 | S18 | Regla de elección de asiento | Generado (IA) | Toma el asiento libre más cercano al mostrador. Si no hay asientos libres, espera de pie hasta que se libere uno. | propuesto |
 | S19 | Velocidad de caminata | Generado (IA) | 1,2 m/s dentro del salón. | propuesto |
 | S20 | Capacidad de la cocina | Estimación del referente | No es restrictiva: la capacidad de preparación supera ampliamente la demanda. | confirmado |
+| S21 | Tiempo de validación con autoatención por QR (escenario E3) | Generado (IA) | 60 % del tiempo de validación actual (factor 0,6 sobre S07): mediana de unos 2 s. | propuesto |
+| S22 | Demora en el inicio de la atención | Derivado de registros | La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0. | confirmado |
+| S23 | Interrupciones del puesto de validación | Derivado de registros | Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra al modelo base; se usa como escenario E5. | confirmado |
 
 ## Detalle
 
@@ -107,9 +111,9 @@
 ### S08 · Tasa de llegadas a la fila por franja de 10 minutos
 
 - **Origen:** Derivado de registros
-- **Valor:** Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).
+- **Valor:** Llegadas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S23). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra.
 - **Base:** Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.
-- **En FlexSim:** Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual
+- **En FlexSim:** Global Tables TasaLlegadas_Pico y TasaLlegadas_Bajo; tiempo entre llegadas exponential(0, 600 / valor, getstream(activity)) según la franja actual
 - **Usado en:** modelo · **Estado:** propuesto
 
 ### S09 · Cola formada antes de la apertura
@@ -180,11 +184,11 @@
 
 ### S16 · Capacidad de asientos del salón
 
-- **Origen:** Estimación del referente
-- **Valor:** Pendiente: conteo de mesas y sillas del layout modelado en 3D.
-- **Base:** Relevamiento del layout real del comedor, modelado por el grupo.
+- **Origen:** Medición propia
+- **Valor:** 432 asientos.
+- **Base:** Conteo de sillas sobre el layout del salón modelado en 3D por el grupo a partir del relevamiento del comedor.
 - **En FlexSim:** Cantidad de asientos (objetos o Resource) en el salón
-- **Usado en:** modelo · **Estado:** pendiente
+- **Usado en:** modelo · **Estado:** confirmado
 
 ### S17 · Tiempo de consumo en el salón
 
@@ -219,6 +223,31 @@
 - **Base:** Relevamiento con el referente del comedor.
 - **En FlexSim:** No se modela la cocina; el mostrador siempre tiene bandejas disponibles
 - **Usado en:** modelo · **Estado:** confirmado
+
+### S21 · Tiempo de validación con autoatención por QR (escenario E3)
+
+- **Origen:** Generado (IA)
+- **Valor:** 60 % del tiempo de validación actual (factor 0,6 sobre S07): mediana de unos 2 s.
+- **Base:** Supuesto del grupo: la lectura del código QR evita buscar a la persona en el sistema, que es parte del tiempo actual. El piso real observado es de unos 1,9 s por validación (percentil 5 de S07), así que un factor menor no sería creíble.
+- **Rango de sensibilidad:** factor 0,5 a 0,8
+- **En FlexSim:** Factor multiplicador del tiempo de validación en la Global Table Escenarios
+- **Usado en:** modelo · **Estado:** propuesto
+
+### S22 · Demora en el inicio de la atención
+
+- **Origen:** Derivado de registros
+- **Valor:** La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0.
+- **Base:** Hora del primer check-in de cada día en los registros reales. Suma espera a quienes hicieron fila antes de abrir.
+- **En FlexSim:** Global Table DemoraApertura (empírica, 32 valores en segundos); el puesto se habilita en 1200 + demora
+- **Usado en:** modelo · **Estado:** confirmado
+
+### S23 · Interrupciones del puesto de validación
+
+- **Origen:** Derivado de registros
+- **Valor:** Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra al modelo base; se usa como escenario E5.
+- **Base:** Huecos de más de 3 minutos entre check-ins en horario pico de los registros reales. Los huecos de los días de demanda baja se explican por falta de llegadas, no por fallas. El 18 de agosto se excluye del cálculo de llegadas (S08) y de la curva de referencia para validar.
+- **En FlexSim:** Escenarios E5: el Resource del puesto queda no disponible entre InterrupcionDesde_s e InterrupcionHasta_s
+- **Usado en:** modelo, validacion · **Estado:** confirmado
 
 ## Decisiones abiertas
 

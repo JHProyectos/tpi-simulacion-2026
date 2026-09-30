@@ -1,9 +1,10 @@
 {
- "version": "0.4",
+ "version": "0.6",
  "actualizado": "2026-09-23",
  "origenes": {
   "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
   "derivado": "Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.",
+  "medicion": "Medición propia del grupo: conteo u observación directa sobre el layout relevado.",
   "referente": "Estimación de un referente que conoce el proceso (integrante del grupo que trabaja en el comedor).",
   "generado": "Dato generado por el grupo con apoyo de IA (Claude), a partir de la base que se indica en cada caso."
  },
@@ -113,8 +114,8 @@
    "id": "S08",
    "variable": "Tasa de llegadas a la fila por franja de 10 minutos",
    "origen": "derivado",
-   "valor": "Valor inicial: validaciones promedio por franja y por grupo (reporte/datos.json, campo por_franja), escaladas a la demanda del perfil (S03). Después se calibra (S09, D01).",
-   "flexsim": "Inter-Arrival Source por grupo con exponential(0, 600 / tasa_franja, stream), leyendo la tasa de la Global Table TasaLlegadas según la franja actual",
+   "valor": "Llegadas por franja de 10 minutos y por grupo: media por día de las validaciones reales de cada perfil, sin el 18 de agosto (S23). En la franja de las 12:00 se descuenta la cola previa (S09). Después se calibra.",
+   "flexsim": "Global Tables TasaLlegadas_Pico y TasaLlegadas_Bajo; tiempo entre llegadas exponential(0, 600 / valor, getstream(activity)) según la franja actual",
    "base": "Cuando el puesto no está saturado, las llegadas son aproximadamente iguales a las validaciones. En las franjas saturadas, las validaciones subestiman las llegadas; por eso el valor se calibra.",
    "estado": "propuesto",
    "usado_en": [
@@ -244,19 +245,26 @@
    "estado": "propuesto",
    "usado_en": [
     "modelo"
-   ]
+   ],
+   "parametros": {
+    "mediana_s": 2.5,
+    "sigma": 0.4
+   }
   },
   {
    "id": "S16",
    "variable": "Capacidad de asientos del salón",
-   "origen": "referente",
-   "valor": "Pendiente: conteo de mesas y sillas del layout modelado en 3D.",
+   "origen": "medicion",
+   "valor": "432 asientos.",
    "flexsim": "Cantidad de asientos (objetos o Resource) en el salón",
-   "base": "Relevamiento del layout real del comedor, modelado por el grupo.",
-   "estado": "pendiente",
+   "base": "Conteo de sillas sobre el layout del salón modelado en 3D por el grupo a partir del relevamiento del comedor.",
+   "estado": "confirmado",
    "usado_en": [
     "modelo"
-   ]
+   ],
+   "parametros": {
+    "asientos": 432
+   }
   },
   {
    "id": "S17",
@@ -298,7 +306,10 @@
    "sensibilidad": "0,8 a 1,4 m/s",
    "usado_en": [
     "modelo"
-   ]
+   ],
+   "parametros": {
+    "velocidad_m_s": 1.2
+   }
   },
   {
    "id": "S20",
@@ -311,6 +322,52 @@
    "usado_en": [
     "modelo"
    ]
+  },
+  {
+   "id": "S21",
+   "variable": "Tiempo de validación con autoatención por QR (escenario E3)",
+   "origen": "generado",
+   "valor": "60 % del tiempo de validación actual (factor 0,6 sobre S07): mediana de unos 2 s.",
+   "flexsim": "Factor multiplicador del tiempo de validación en la Global Table Escenarios",
+   "base": "Supuesto del grupo: la lectura del código QR evita buscar a la persona en el sistema, que es parte del tiempo actual. El piso real observado es de unos 1,9 s por validación (percentil 5 de S07), así que un factor menor no sería creíble.",
+   "estado": "propuesto",
+   "sensibilidad": "factor 0,5 a 0,8",
+   "usado_en": [
+    "modelo"
+   ],
+   "parametros": {
+    "factor": 0.6
+   }
+  },
+  {
+   "id": "S22",
+   "variable": "Demora en el inicio de la atención",
+   "origen": "derivado",
+   "valor": "La primera validación del día llega en promedio 1,9 min después de las 12:00 (mediana 1,7 min, máximo 7,3 min). En 3 de 32 días empezó antes de las 12:00; en el modelo esos casos se toman como 0.",
+   "flexsim": "Global Table DemoraApertura (empírica, 32 valores en segundos); el puesto se habilita en 1200 + demora",
+   "base": "Hora del primer check-in de cada día en los registros reales. Suma espera a quienes hicieron fila antes de abrir.",
+   "estado": "confirmado",
+   "usado_en": [
+    "modelo"
+   ]
+  },
+  {
+   "id": "S23",
+   "variable": "Interrupciones del puesto de validación",
+   "origen": "derivado",
+   "valor": "Un caso claro en los 12 días pico: el 18 de agosto no hubo validaciones entre las 12:09 y las 12:24 (14 min), con fila esperando. No entra al modelo base; se usa como escenario E5.",
+   "flexsim": "Escenarios E5: el Resource del puesto queda no disponible entre InterrupcionDesde_s e InterrupcionHasta_s",
+   "base": "Huecos de más de 3 minutos entre check-ins en horario pico de los registros reales. Los huecos de los días de demanda baja se explican por falta de llegadas, no por fallas. El 18 de agosto se excluye del cálculo de llegadas (S08) y de la curva de referencia para validar.",
+   "estado": "confirmado",
+   "usado_en": [
+    "modelo",
+    "validacion"
+   ],
+   "parametros": {
+    "fecha": "2026-08-18",
+    "desde": "12:10",
+    "duracion_min": 14
+   }
   }
  ],
  "decisiones_abiertas": [

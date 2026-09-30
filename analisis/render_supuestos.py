@@ -13,6 +13,7 @@ SALIDA = RAIZ / "supuestos" / "SUPUESTOS.md"
 ETIQUETA_ORIGEN = {
     "registro": "Registro de la organización",
     "derivado": "Derivado de registros",
+    "medicion": "Medición propia",
     "referente": "Estimación del referente",
     "generado": "Generado (IA)",
 }

@@ -15,7 +15,7 @@ Estudio de simulación de la fila de validación del Comedor Universitario UNC (
 | `data/final/` | Dataset completo (real + generado) con el origen de cada fila y columna: ver `DICCIONARIO.md` |
 | `analisis/` | Scripts de Python que producen `data/procesado/`, `reporte/` y `supuestos/SUPUESTOS.md` |
 | `supuestos/` | Registro de supuestos: `supuestos.json` es la fuente y `SUPUESTOS.md` se genera a partir de él |
-| `flexsim/` | Modelo de FlexSim y tablas de entrada |
+| `flexsim/` | Modelo de FlexSim y tablas de entrada (`inputs.xlsx`, ver la hoja LEEME) |
 | `reporte/` | Reporte del dataset y del origen de cada dato del modelo (HTML) |
 | `entregas/` | Consignas y documentos entregados a la cátedra |
 | `imagenes/`, `3d/` | Fotos del comedor y modelos de SketchUp |
@@ -30,4 +30,5 @@ python analisis/tiempo_validacion.py
 python analisis/render_supuestos.py
 python analisis/generar_datos.py
 python analisis/organizar_por_tipo.py
+python analisis/generar_inputs_flexsim.py
 ```

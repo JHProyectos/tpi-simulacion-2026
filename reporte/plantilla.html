@@ -121,9 +121,9 @@ td.bar div{height:8px;border-radius:0 3px 3px 0}
 .files code{color:var(--ink)}
 .files span{font-size:13px;color:var(--ink-2)}
 /* origen de los datos */
-:root{--o-registro:#1d6b4f;--o-derivado:#3f8a6c;--o-referente:#5b4bb0;--o-generado:#b0521c;--o-registro-bg:#e3f1ea;--o-derivado-bg:#e8f3ee;--o-referente-bg:#ecebf8;--o-generado-bg:#fbeadf;--o-on:#fff}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-referente-bg:#252240;--o-generado-bg:#3a2415;--o-on:#101311}}
-:root[data-theme="dark"]{--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-referente-bg:#252240;--o-generado-bg:#3a2415;--o-on:#101311}
+:root{--o-registro:#1d6b4f;--o-derivado:#3f8a6c;--o-medicion:#1f5f8b;--o-referente:#5b4bb0;--o-generado:#b0521c;--o-registro-bg:#e3f1ea;--o-derivado-bg:#e8f3ee;--o-medicion-bg:#e1edf6;--o-referente-bg:#ecebf8;--o-generado-bg:#fbeadf;--o-on:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-medicion:#86bde6;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-medicion-bg:#16283a;--o-referente-bg:#252240;--o-generado-bg:#3a2415;--o-on:#101311}}
+:root[data-theme="dark"]{--o-registro:#6fd0a6;--o-derivado:#8fd6b8;--o-medicion:#86bde6;--o-referente:#aea5f0;--o-generado:#f2a06d;--o-registro-bg:#16302a;--o-derivado-bg:#18302a;--o-medicion-bg:#16283a;--o-referente-bg:#252240;--o-generado-bg:#3a2415;--o-on:#101311}
 .origin-bar{display:flex;height:12px;border-radius:3px;overflow:hidden;gap:2px}
 .origin-bar div{height:100%}
 .origin-keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 22px}
@@ -133,6 +133,7 @@ td.bar div{height:8px;border-radius:0 3px 3px 0}
 .ob::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
 .ob.registro{color:var(--o-registro);background:var(--o-registro-bg)}
 .ob.derivado{color:var(--o-derivado);background:var(--o-derivado-bg)}
+.ob.medicion{color:var(--o-medicion);background:var(--o-medicion-bg)}
 .ob.referente{color:var(--o-referente);background:var(--o-referente-bg)}
 .ob.generado{color:var(--o-generado);background:var(--o-generado-bg)}
 .sups{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
@@ -268,12 +269,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <section>
     <div class="sec-head">
       <h2>Archivos generados</h2>
-      <p>Se reconstruyen desde la raíz del TPI corriendo, en orden, <code>tiempo_validacion.py</code>, <code>render_supuestos.py</code>, <code>generar_datos.py</code> y <code>organizar_por_tipo.py</code> (en <code>analisis/</code>).</p>
+      <p>Se reconstruyen desde la raíz del TPI corriendo, en orden, <code>tiempo_validacion.py</code>, <code>render_supuestos.py</code>, <code>generar_datos.py</code>, <code>organizar_por_tipo.py</code> y <code>generar_inputs_flexsim.py</code> (en <code>analisis/</code>).</p>
     </div>
     <div class="files">
       <div><code>data/procesado/ds_app_organizado.csv</code><span>Dataset completo ordenado por grupo → tipo → fecha → check-in, con columnas <code>grupo</code>, <code>sin_tacc</code> y <code>anticipacion_min</code>.</span></div>
       <div><code>data/procesado/por_tipo/*.csv</code><span>Un archivo por grupo: estudiantes, becas_nutrirse, becas_personal, personal.</span></div>
       <div><code>data/final/reservas_completo.csv</code><span>Reservas reales y generadas, con el origen de cada fila y columna (ver <code>DICCIONARIO.md</code>).</span></div>
+      <div><code>flexsim/inputs.xlsx</code><span>Global Tables para FlexSim: llegadas por franja, cola previa, demora de apertura, mezcla de tipos, tiempos, escenarios E0–E5 y salón.</span></div>
       <div><code>data/procesado/intervalos_saturados.csv</code><span>Muestra de tiempos de validación para ajustar en ExpertFit.</span></div>
       <div><code>supuestos/SUPUESTOS.md</code><span>Registro de supuestos y fuentes: el mismo contenido de «Qué es real y qué es supuesto».</span></div>
     </div>
@@ -417,7 +419,7 @@ simpleBars(document.getElementById("ch-dow"), D.por_dow.map(d=>({k:d.dia.slice(0
 simpleBars(document.getElementById("ch-hres"), Object.entries(D.hora_reserva).map(([h,v])=>({k:`${h}h`,v})), {label:"Reservas por hora del día"});
 
 // origen de los datos
-const ORIG={registro:["Registro","Datos de la organización, sin modificar."],derivado:["Derivado","Calculado a partir del registro real con un script reproducible."],referente:["Referente","Estimación del integrante que trabaja en el comedor."],generado:["Generado (IA)","Supuesto generado con apoyo de IA, con la base declarada."]};
+const ORIG={registro:["Registro","Datos de la organización, sin modificar."],derivado:["Derivado","Calculado a partir del registro real con un script reproducible."],medicion:["Medición propia","Conteo u observación directa del grupo."],referente:["Referente","Estimación del integrante que trabaja en el comedor."],generado:["Generado (IA)","Supuesto generado con apoyo de IA, con la base declarada."]};
 const OK=Object.keys(ORIG);
 const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const cnt=Object.fromEntries(OK.map(k=>[k,S.supuestos.filter(s=>s.origen===k).length]));
@@ -451,6 +453,7 @@ const obs=[
   ["ATENCIÓN",`<strong><code>customer_id</code> es único por fila</strong> (${nf.format(T.ids_unicos)} valores para ${nf.format(T.registros)} registros). Funciona como id de registro, no de persona: no se puede medir frecuencia de uso por cliente.`],
   ["INFO",`<strong>${r0} registros tienen <code>canceled_at</code> cargado</strong> pero terminaron retirados. En todos, la cancelación es <em>anterior</em> a <code>reserved_at</code> (mediana: segundos antes): corresponden a cancelar y volver a reservar. ${Math.round(D.por_tipo.find(r=>r.tipo==="Becas Nutrirse Vianda").re_reservas/r0*100)} % son de Becas Nutrirse Vianda.`],
   ["INFO",`<strong>Reserva y retiro ocurren siempre el mismo día</strong> que <code>event_date</code>. El ${f1((D.hora_reserva[8]+D.hora_reserva[9]+D.hora_reserva[10])/T.registros*100)} % reserva entre las 8 y las 11; ${nf.format(Object.entries(D.hora_reserva).filter(([h])=>+h>=11).reduce((a,[,v])=>a+v,0))} reservas se hicieron a partir de las 11.`],
+  ["ATENCIÓN",`<strong>Interrupción del puesto el 18 de agosto:</strong> no hubo validaciones entre las 12:09 y las 12:24 (14 min) en plena hora pico. Se excluye del cálculo de llegadas y se usa como escenario de falla (S23, E5). Además, la atención nunca arranca exactamente a las 12:00: la primera validación llega en promedio 1,9 min después (S22).`],
   ["INFO",`<strong>Check-ins fuera de la ventana:</strong> ${D.hora_checkin[11]||0} antes de las 12:00 y ${D.hora_checkin[15]||0} después de las 15:00. Son pocos; pueden filtrarse como ruido.`],
   ["INFO",`<strong>Tipos con muy pocos registros</strong> (Postgrado, Preuniversitario, variantes sin TACC de personal): conviene modelarlos dentro de su grupo en vez de como flujos propios.`],
 ];

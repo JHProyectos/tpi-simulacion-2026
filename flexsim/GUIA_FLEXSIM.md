@@ -214,7 +214,7 @@ En cada uno: *Reference* = **Numeric**, **elegido con la flechita ▼ de la list
 
 `CapacidadFilaServicio` vale 999 (sin límite) hasta que el referente estime cuántas personas entran entre la caja y el mostrador (S23). Con un valor real, si la fila de servicio se llena, la persona que terminó de validar no puede avanzar y **bloquea la caja**.
 
-**Para más adelante: Acquire y Release en FlexSim 2026.** No son opciones del Resource sino **actividades aparte** (biblioteca > *Shared Assets* > *Acquire Resource* y *Release Resource*), que se agregan en las secciones 8, 10, 12 y 13. El *Acquire Resource* guarda lo que tomó en una label del token (*Assign To Label*), y el *Release Resource* libera lo que está en esa label (*Resource(s) Assigned To*). En toda la guía:
+**Solo de referencia, no hay que hacer nada ahora: Acquire y Release en FlexSim 2026.** No son opciones del Resource sino **actividades aparte** (biblioteca > *Shared Assets* > *Acquire Resource* y *Release Resource*), que se agregan en las secciones 8, 10, 12 y 13. El *Acquire Resource* guarda lo que tomó en una label del token (*Assign To Label*), y el *Release Resource* libera lo que está en esa label (*Resource(s) Assigned To*). En toda la guía:
 
 | Recurso | *Assign To Label* (Acquire) y *Resource(s) Assigned To* (Release) |
 |---|---|

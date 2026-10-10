@@ -91,7 +91,7 @@ Los supuestos y las fuentes de datos se registran en [`supuestos/SUPUESTOS.md`](
 - [ ] [Claude] Apoyo con la lógica de Process Flow y con el código de los triggers
 
 ## Fase 6 · Calibración y validación
-- [ ] [Claude] Script que compare lo que exporta FlexSim contra los datos reales: curva de validaciones por franja y total del día
+- [x] [Claude] Script que compare lo que exporta FlexSim contra los datos reales: curva de validaciones por franja y total del día (`analisis/validar_modelo.py`; probado con datos sintéticos de la réplica, falta correrlo con la exportación real de FlexSim)
 - [ ] [Grupo] Calibrar S08 y S09 hasta reproducir la curva real
 - [ ] [Grupo] Chequear la cola máxima contra 60 a 70 personas (S10) y aplicar la ley de Little
 - [ ] [Grupo] Chequear que en el escenario base no se forme cola en el servicio (S10)

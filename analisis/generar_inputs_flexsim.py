@@ -162,22 +162,23 @@ def main():
     factor_qr = S["S24"]["parametros"]["factor"]
     serv = S["S22"]["parametros"]
     base, extra = serv["servidores_base"], serv["servidores_extra"]
-    # PuestosBase y PuestosExtra son puestos de la fila general. En E4 (FilasPorTipo = 1) se suma un puesto
-    # solo para viandas, con su propia fila (D06): 1 puesto general + 1 de viandas.
+    prob_veg = S["S27"]["parametros"]["prob_veg"]
+    # Toda la gente hace la misma fila de caja. Servidores = personas sirviendo, una de las cuales atiende
+    # la comida vegetariana (S22). ProbVegetariano es la proporción de personas con menú vegetariano (S27).
     escenarios = [
-        ("E0", "Base: 1 puesto, fila única", 1, 0, 0, 0, 1.0, 0, base),
-        ("E1", "2 puestos, fila única", 2, 0, 0, 0, 1.0, 0, base),
-        ("E2", "2 puestos de 12:00 a 13:30, fila única", 1, 1, T_APERTURA, T_APERTURA + 5400, 1.0, 0, base),
-        ("E3", "1 puesto con validación por QR", 1, 0, 0, 0, factor_qr, 0, base),
-        ("E4", "2 puestos: fila de viandas y fila general", 1, 0, 0, 0, 1.0, 1, base),
-        ("E5", f"2 puestos, fila única y {extra} personas sirviendo", 2, 0, 0, 0, 1.0, 0, extra),
+        ("E0", f"Base: 1 puesto, {base} personas sirviendo", 1, 0, 0, 0, 1.0, base),
+        ("E1", f"2 puestos, {base} personas sirviendo", 2, 0, 0, 0, 1.0, base),
+        ("E2", f"2 puestos de 12:00 a 13:30, {base} personas sirviendo", 1, 1, T_APERTURA, T_APERTURA + 5400, 1.0, base),
+        ("E3", f"1 puesto con validación por QR, {base} personas sirviendo", 1, 0, 0, 0, factor_qr, base),
+        ("E4", f"1 puesto, {extra} personas sirviendo", 1, 0, 0, 0, 1.0, extra),
+        ("E5", f"2 puestos, {extra} personas sirviendo", 2, 0, 0, 0, 1.0, extra),
     ]
     filas = []
     for perfil in PERFILES:
-        for cod, desc, pb, pe, desde, hasta, factor, por_tipo, servidores in escenarios:
+        for cod, desc, pb, pe, desde, hasta, factor, servidores in escenarios:
             filas.append({"Escenario": f"{cod}_{perfil}", "Descripcion": desc, "Perfil": perfil,
                           "PuestosBase": pb, "PuestosExtra": pe, "ExtraDesde_s": desde, "ExtraHasta_s": hasta,
-                          "FactorValidacion": factor, "FilasPorTipo": por_tipo, "Servidores": servidores,
+                          "FactorValidacion": factor, "ProbVegetariano": prob_veg, "Servidores": servidores,
                           "CapacidadFilaServicio": SIN_LIMITE, "ColaPrevia": cola_previa[perfil],
                           "PersonasDia": resumen[perfil][0], "RacionesDia": resumen[perfil][1]})
     hojas["Escenarios"] = pd.DataFrame(filas)
@@ -209,10 +210,10 @@ def escribir(hojas, sup, media_grupo):
         ("TasaLlegadas_Pico / _Bajo: PERSONAS que llegan a la fila por franja de 10 min y por grupo (media por día). Derivado de los registros (S08): validaciones reales, sin el 18/8 (S26), divididas por las raciones promedio por persona del grupo (S21). En la franja 12:00 ya se descontó la cola previa. "
          + "Raciones por persona: " + ", ".join(f"{COL_GRUPO[g]} {m:.3f}" for g, m in media_grupo.items()) + ".", ""),
         ("ColaPrevia: personas que llegan entre 11:40 y 12:00, por grupo y perfil (S09, generado). Llegada uniforme en [LlegadaDesde_s, LlegadaHasta_s].", ""),
-        ("MixTipos: proporción de personas de cada tipo dentro de su grupo (derivado de S04, corregido por raciones), sin TACC (S13, real), si es vianda y a qué fila va en E4 (D06), y la distribución de raciones por persona: P1Racion, P2Raciones, P3Raciones (S21, generado).", ""),
+        ("MixTipos: proporción de personas de cada tipo dentro de su grupo (derivado de S04, corregido por raciones), sin TACC (S13, real), si es vianda (informativo: todos hacen la misma fila) y la distribución de raciones por persona: P1Racion, P2Raciones, P3Raciones (S21, generado).", ""),
         ("TiemposServicio: parámetros lognormal2(location, scale, shape) con scale = mediana, POR RACIÓN. Validación por DNI derivada de los registros (S07); servicio en el mostrador generado (S15). Quien retira varias raciones suma una muestra por ración.", ""),
         ("DemoraApertura: demora real del primer check-in de cada uno de los 32 días, en segundos (S25, derivado). La caja se habilita en 1200 s + un valor elegido al azar de esta tabla.", ""),
-        ("Escenarios: E0 a E5 para cada perfil. PuestosBase y PuestosExtra son puestos de la fila general; el extra se habilita entre ExtraDesde_s y ExtraHasta_s (E2). FactorValidacion multiplica el tiempo de validación (E3, S24). FilasPorTipo = 1 en E4: se suma un puesto solo para viandas, con su propia fila (D06). Servidores = personas sirviendo (S22). "
+        ("Escenarios: E0 a E5 para cada perfil. PuestosBase y PuestosExtra son puestos de la caja, con una fila única; el extra se habilita entre ExtraDesde_s y ExtraHasta_s (E2). FactorValidacion multiplica el tiempo de validación (E3, S24). ProbVegetariano = proporción de personas con menú vegetariano (S27). Servidores = personas sirviendo, una de ellas a cargo de la comida vegetariana (S22). "
          f"CapacidadFilaServicio = {SIN_LIMITE} (sin límite) hasta que el referente estime S23.", ""),
         ("Referencia_Validaciones: raciones validadas por franja en los registros reales (media, mínimo y máximo por día, sin el 18/8). Es la curva contra la que se valida el modelo en la fase 6.", ""),
     ]

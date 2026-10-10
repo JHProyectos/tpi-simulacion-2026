@@ -1,5 +1,7 @@
 # Guía paso a paso: el modelo del comedor en FlexSim
 
+> **Actualización del 10/10:** el servicio cambió (3 personas, menú vegetariano, una sola fila de caja, 15 a 30 s por ración). Los cambios al modelo están en [`GUIA_MODIFICACIONES.md`](GUIA_MODIFICACIONES.md) y reemplazan lo que diga esta guía sobre la fila de viandas (secciones 7, 8, 10, 12, 13 y 14) y el tiempo de servicio.
+
 [TOC]
 
 Esta guía cubre la **fase 5 del [PLAN](../PLAN.md)**: armar el modelo base en FlexSim con Process Flow, con los datos de `flexsim/inputs.xlsx`. También deja preparadas las fases 6 (validación) y 7 (escenarios).
@@ -340,10 +342,13 @@ Table demoras = Table("DemoraApertura");
 int fila = duniform(1, demoras.numRows, getstream(activity));
 
 Table dia = Table("Salida_Dia");
-dia.clear();
+for (int c = 1; c <= dia.numCols; c++)
+	dia[1][c] = 0;                    // clear() deja celdas vacías, no ceros
 dia[1]["Apertura_s"] = 1200 + demoras[fila]["Demora_s"];
 
-Table("Salida_Franjas").clear();
+Table franjas = Table("Salida_Franjas");
+for (int r = 1; r <= franjas.numRows; r++)
+	franjas[r][1] = 0;
 
 Table personas = Table("Salida_Personas");
 personas.setSize(1, personas.numCols);   // deja solo la fila 1 (plantilla)
@@ -813,7 +818,13 @@ Para la fase 6, se exportan las tres tablas de salida a un Excel con la misma he
   - *Use Column Headers* tildado; *Starting Row* 1 y *Starting Column* 1
 2. Después de una corrida completa de E0_Pico, **Export Tables**.
 
-El script de validación de la fase 6 lee `flexsim/salidas.xlsx` e ignora la fila de plantilla de `Salida_Personas`.
+El script de validación de la fase 6 lee `flexsim/salidas.xlsx` e ignora la fila de plantilla de `Salida_Personas`. Se corre desde la raíz del TPI, indicando qué escenario se exportó:
+
+```bash
+python analisis/validar_modelo.py --escenario E0_Pico
+```
+
+Compara la corrida contra la realidad (curva por franja y valores de S10), contra la réplica de Python y consigo misma, y escribe el informe `flexsim/validacion_E0_Pico.md`. Si tenés el contenido medio de `Esperar en la fila` de FlexSim, agregá `--little <valor>` para contrastarlo con la ley de Little. Exportá siempre una corrida **completa** (hasta las 16:00) y con el parámetro `Escenario` que coincida con el que le pasás al script.
 
 ---
 

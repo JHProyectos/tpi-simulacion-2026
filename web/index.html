@@ -1072,8 +1072,8 @@ const D = {
  }
 };
 const S = {
- "version": "0.7",
- "actualizado": "2026-09-30",
+ "version": "0.8",
+ "actualizado": "2026-10-10",
  "origenes": {
   "registro": "Registros de la organización: dataset de reservas del comedor (data/real/TP-SIM - ds_app.csv), sin modificar.",
   "derivado": "Calculado por el grupo a partir de los registros de la organización, con un script reproducible en analisis/.",
@@ -1269,11 +1269,11 @@ const S = {
   },
   {
    "id": "S13",
-   "variable": "Menú: con o sin TACC",
+   "variable": "Menú: vegetariano o no, con o sin TACC, vianda o bandeja",
    "origen": "derivado",
-   "valor": "El menú solo se distingue por ser con o sin TACC, y eso viene del tipo de cliente (dato real): 1 % de las raciones es sin TACC. No hay menú vegetariano.",
-   "flexsim": "Label sin_tacc asignada en el Source junto con el tipo. Es informativa: no cambia la fila ni el tiempo de servicio.",
-   "base": "Relevamiento con el grupo. Reemplaza la propuesta anterior de un 12 % de menú vegetariano, que se descarta.",
+   "valor": "Hay menú vegetariano y no vegetariano (S27). El tipo de cliente da el dato real de vianda y sin TACC: 1 % de las raciones es sin TACC. Quienes retiran vianda traen su propio tupper y se les sirve ahí; el resto recibe una bandeja que está en la zona de servicio. Todos hacen la misma fila de caja.",
+   "flexsim": "Labels grupo, tipo, sin_tacc y es_vianda en el Source (informativas, no cambian la fila ni el tiempo de servicio) y es_veg, que decide en el mostrador qué persona atiende.",
+   "base": "Relevamiento del grupo (10/10). Corrige la versión anterior, que descartaba el menú vegetariano: sí existe y se sirve en un puesto aparte, por lo que lo único que separa a las personas es ese puesto. La fila no se divide.",
    "estado": "confirmado",
    "usado_en": [
     "modelo"
@@ -1301,18 +1301,18 @@ const S = {
   {
    "id": "S15",
    "variable": "Tiempo de servicio en el mostrador por ración",
-   "origen": "generado",
-   "valor": "Lognormal con una mediana de 5 s y sigma de 0,4 (media de unos 5,4 s) por ración y por persona que sirve. Quien retira varias raciones suma una muestra por ración.",
-   "flexsim": "lognormal2(0, 5, 0.4, stream) por cada ración, en el Resource ServicioComida (S22)",
-   "base": "No se puede medir. Hoy la cola se forma antes de la caja y no en el mostrador (S10), así que la capacidad del servicio tiene que superar el ritmo máximo observado en la caja: 168 raciones en 10 minutos (1.008 por hora). Con 2 personas sirviendo, eso pide menos de 7,1 s por ración. Con 5 s de mediana la capacidad es de unas 1.330 raciones por hora: alcanza con 1 puesto de validación (924 por hora) pero no con 2 (1.848 por hora). Es el caso que pide estudiar la cátedra: si se mejora la caja, la cola puede pasar al mostrador. Pendiente de una estimación del referente.",
+   "origen": "referente",
+   "valor": "Lognormal con una mediana de 21 s y sigma de 0.21 (media de unos 21.5 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 30 s. Quien retira varias raciones suma una muestra por ración.",
+   "flexsim": "lognormal2(0, 21, 0.21, stream) por cada ración, en el Resource ServicioComida (S22)",
+   "base": "Observación de un integrante del grupo que comió en el comedor: la atención en el mostrador tardó entre 15 y 30 s. No se cronometró y es una sola visita. Reemplaza la propuesta anterior de 5 s, que se había generado para que el mostrador no limitara a la caja. Atención: con 3 personas sirviendo y 21 s por ración, la capacidad del mostrador es de unas 500 raciones por hora, menos que las 1.000 por hora que valida la caja en el pico (S07). Si la medición incluyó la espera en la fila del mostrador y no solo el servicio, el valor real por ración es menor. Pendiente de una estimación del referente.",
    "estado": "propuesto",
-   "sensibilidad": "3 a 8 s de mediana",
+   "sensibilidad": "8 a 25 s de mediana (por si la medición incluía espera)",
    "usado_en": [
     "modelo"
    ],
    "parametros": {
-    "mediana_s": 5,
-    "sigma": 0.4
+    "mediana_s": 21,
+    "sigma": 0.21
    }
   },
   {
@@ -1406,18 +1406,18 @@ const S = {
   {
    "id": "S22",
    "variable": "Personas sirviendo en el mostrador",
-   "origen": "generado",
-   "valor": "2 en el escenario base. Se prueba con 3 (E5).",
-   "flexsim": "Resource ServicioComida con Count = 2 (base) o 3 (E5), con una fila única delante",
-   "base": "Supuesto del grupo, pendiente de confirmar con el referente. Junto con S15 define la capacidad del servicio.",
-   "estado": "propuesto",
-   "sensibilidad": "1 a 4 personas",
+   "origen": "referente",
+   "valor": "3 personas sirviendo en el escenario base. Una de ellas está junto al puesto de comida vegetariana y se encarga de servirla; si está libre, también sirve comida no vegetariana. Las otras dos sirven solo comida no vegetariana. Se prueba con 4 (E4 y E5).",
+   "flexsim": "Resource ServicioComida con Count = 3 (base) o 4, y un Resource PuestoVeg con Count = 1 que limita la comida vegetariana a una persona a la vez. Fila única delante del mostrador.",
+   "base": "Relevamiento de un integrante del grupo: hoy hay un solo puesto de validación y 3 personas sirviendo. Junto con S15 define la capacidad del servicio. Simplificación: la comida vegetariana la sirve cualquiera de las tres posiciones libres, pero nunca más de una persona a la vez; no se distingue cuál de las tres es.",
+   "estado": "confirmado",
+   "sensibilidad": "2 a 5 personas",
    "usado_en": [
     "modelo"
    ],
    "parametros": {
-    "servidores_base": 2,
-    "servidores_extra": 3
+    "servidores_base": 3,
+    "servidores_extra": 4
    }
   },
   {
@@ -1475,6 +1475,22 @@ const S = {
     "fecha": "2026-08-18",
     "desde": "12:10",
     "duracion_min": 14
+   }
+  },
+  {
+   "id": "S27",
+   "variable": "Proporción de menú vegetariano",
+   "origen": "generado",
+   "valor": "12 % de las personas retira menú vegetariano. Se asume por persona: todas las raciones de una misma persona son del mismo menú.",
+   "flexsim": "Columna ProbVegetariano de la Global Table Escenarios. Label es_veg asignada en Asignar tipo y raciones.",
+   "base": "No hay datos: el dataset de reservas no registra el menú. Es la proporción de la propuesta anterior del grupo, pendiente de una estimación del referente. Afecta solo al puesto de comida vegetariana, que atiende a una persona a la vez.",
+   "estado": "propuesto",
+   "sensibilidad": "5 % a 20 %",
+   "usado_en": [
+    "modelo"
+   ],
+   "parametros": {
+    "prob_veg": 0.12
    }
   }
  ],
@@ -1537,20 +1553,19 @@ const S = {
   },
   {
    "id": "D06",
-   "tema": "Caso de estudio: dos filas según el tipo de cliente",
-   "detalle": "Con 2 puestos, en lugar de una fila única, cada puesto atiende su propia fila según el tipo de cliente. El tipo es un dato real del registro. Becas Nutrirse Vianda es el 42 % de las retiradas y su check-in mediano es unos 17 minutos más tardío que el de los estudiantes de grado.",
+   "tema": "Caso de estudio: dos filas según el tipo de cliente (a redefinir)",
+   "detalle": "Con 2 puestos, en lugar de una fila única, cada puesto atiende su propia fila según el tipo de cliente. El tipo es un dato real del registro. Becas Nutrirse Vianda es el 42 % de las retiradas y su check-in mediano es unos 17 minutos más tardío que el de los estudiantes de grado. Actualización (10/10): en el comedor todos hacen la misma fila de caja; lo que se separa es el puesto de comida vegetariana en el mostrador (S13, S22). Las dos filas por tipo ya no son una descripción del sistema real, solo una alternativa que se podría proponer.",
    "opciones": [
     "A) Fila de viandas (Becas Nutrirse Vianda) y fila general (el resto). Reparto de 42 % y 58 %.",
     "B) Fila de estudiantes y fila de becas y personal. Reparto de 49 % y 51 %.",
     "C) Comparar A y B contra 2 puestos con fila única (E1)."
    ],
-   "recomendacion": "Proponer A, que separa el flujo con un patrón de llegada distinto, y compararla contra 2 puestos con fila única (E1): la fila única suele dar menos espera promedio, así que la separación se justifica solo si reduce la espera de algún grupo.",
+   "recomendacion": "Quitar E4 como escenario de dos filas. Decidir con el grupo si se propone igual la separación de filas como mejora o si E4 pasa a probar 4 personas sirviendo con 1 puesto (así está en la tabla de escenarios actual).",
    "estado": "abierta"
   }
  ],
  "semilla": 2026
-}
-;
+};
 const G = ["Estudiantes","Becas Nutrirse","Becas personal","Personal"];
 const COL = {"Estudiantes":"var(--s1)","Becas Nutrirse":"var(--s2)","Becas personal":"var(--s3)","Personal":"var(--s4)"};
 const nf = new Intl.NumberFormat("es-AR");

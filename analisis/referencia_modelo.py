@@ -8,11 +8,11 @@ para detectar errores de armado. Usa la misma lógica y las mismas tablas
 - Cada persona tiene un tipo (S04) y una cantidad de raciones (S21).
 - Caja: abre a las 12:00 más una demora real elegida al azar (S25). Tiempo = una muestra
   de S07 por ración × factor del escenario (S24). Fila única FIFO con 1 o 2 puestos;
-  en E2 el puesto extra cierra a las 13:30 después de atender a quienes ya estaban en la
-  fila; en E4 hay dos filas, viandas y general, con un puesto cada una (D06).
-- Mostrador: fila única FIFO con 2 o 3 personas sirviendo (S22). Tiempo = una muestra de
-  S15 por ración. La fila de servicio no tiene límite mientras S23 esté pendiente, así que
-  la réplica no modela el bloqueo de la caja.
+  en E2 el puesto extra cierra a las 13:30 después de atender a quienes ya estaban en la fila.
+- Mostrador: fila única FIFO con 3 o 4 personas sirviendo (S22). Tiempo = una muestra de
+  S15 por ración. Una fracción de las personas (S27) retira menú vegetariano, que sirve una
+  sola persona a la vez; el resto lo atiende cualquiera. La fila de servicio no tiene límite
+  mientras S23 esté pendiente, así que la réplica no modela el bloqueo de la caja.
 
 Uso: python analisis/referencia_modelo.py [replicas]   (desde la raíz del TPI)
 """
@@ -57,6 +57,23 @@ def fifo(llegada, servicio, libres, cierre_extra=math.inf):
     return inicio, fin
 
 
+def mostrador(llegada, servicio, veg, servidores):
+    """Fila única FIFO con `servidores` personas. La comida vegetariana la sirve una sola persona
+    a la vez (PuestoVeg en FlexSim), y esa persona cuenta como una de las que sirven (S22)."""
+    libres = [0.0] * int(servidores)
+    heapq.heapify(libres)
+    veg_libre = 0.0
+    inicio, fin = np.empty(len(llegada)), np.empty(len(llegada))
+    for i in np.argsort(llegada, kind="stable"):
+        listo = max(llegada[i], veg_libre) if veg[i] else llegada[i]
+        inicio[i] = max(listo, heapq.heappop(libres))
+        fin[i] = inicio[i] + servicio[i]
+        heapq.heappush(libres, fin[i])
+        if veg[i]:
+            veg_libre = fin[i]
+    return inicio, fin
+
+
 def replica(rng, t, esc):
     perfil = esc["Perfil"]
     tasas = t[f"TasaLlegadas_{perfil}"]
@@ -88,24 +105,18 @@ def replica(rng, t, esc):
         u = rng.random(len(idx))
         raciones[idx] = 1 + (u > probs[:, 0]) + (u > probs[:, 0] + probs[:, 1])
 
-    # Caja.
+    # Caja: fila única.
     apertura = T_APERTURA + rng.choice(t["DemoraApertura"]["Demora_s"].to_numpy())
     serv_caja = suma_por_racion(rng, ts.loc["Validacion"], raciones) * esc["FactorValidacion"]
-    if esc["FilasPorTipo"]:
-        inicio_val, fin_val = np.empty(n), np.empty(n)
-        for fila in (vianda, ~vianda):
-            idx = np.flatnonzero(fila)
-            inicio_val[idx], fin_val[idx] = fifo(llegada[idx], serv_caja[idx], [apertura])
-        puestos = 2
-    else:
-        libres = [apertura] * int(esc["PuestosBase"]) + [max(apertura, esc["ExtraDesde_s"])] * int(esc["PuestosExtra"])
-        cierre = esc["ExtraHasta_s"] if esc["PuestosExtra"] else math.inf
-        inicio_val, fin_val = fifo(llegada, serv_caja, libres, cierre)
-        puestos = int(esc["PuestosBase"] + esc["PuestosExtra"])
+    libres = [apertura] * int(esc["PuestosBase"]) + [max(apertura, esc["ExtraDesde_s"])] * int(esc["PuestosExtra"])
+    cierre = esc["ExtraHasta_s"] if esc["PuestosExtra"] else math.inf
+    inicio_val, fin_val = fifo(llegada, serv_caja, libres, cierre)
+    puestos = int(esc["PuestosBase"] + esc["PuestosExtra"])
 
-    # Mostrador.
+    # Mostrador: menú vegetariano por persona (S27).
+    veg = rng.random(n) < esc["ProbVegetariano"]
     serv_mostrador = suma_por_racion(rng, ts.loc["ServicioRacion"], raciones)
-    inicio_srv, salida = fifo(fin_val, serv_mostrador, [0.0] * int(esc["Servidores"]))
+    inicio_srv, salida = mostrador(fin_val, serv_mostrador, veg, esc["Servidores"])
 
     espera_caja = (inicio_val - llegada) / 60
     espera_srv = (inicio_srv - fin_val) / 60
@@ -125,9 +136,15 @@ def replica(rng, t, esc):
         "TiempoTotalDesdeApertura_min": ((salida - np.maximum(llegada, apertura)) / 60).mean(),
         "UtilCaja_pct": 100 * serv_caja.sum() / (puestos * (fin_val.max() - apertura)),
         "UtilServicio_pct": 100 * serv_mostrador.sum() / (esc["Servidores"] * (salida.max() - fin_val.min())),
-        "EsperaCajaViandas_min": desde_apertura[vianda].mean(),
-        "EsperaCajaGeneral_min": desde_apertura[~vianda].mean(),
+        "EsperaServicioVeg_min": espera_srv[veg].mean() if veg.any() else float("nan"),
         "franjas": franjas,
+        # registro por persona, con las mismas columnas que Salida_Personas de FlexSim
+        "apertura": apertura,
+        "log": pd.DataFrame({
+            "Raciones": raciones, "Fila": np.where(vianda, "Viandas", "General"), "Veg": veg,
+            "tLlegada": llegada, "tInicioVal": inicio_val, "tFinVal": fin_val,
+            "tEntraServicio": fin_val, "tInicioServicio": inicio_srv, "tSalida": salida,
+        }),
     }
 
 
@@ -146,7 +163,7 @@ def main():
     filas, franjas = [], {}
     for _, esc in t["Escenarios"].iterrows():
         res = [replica(rng, t, esc) for _ in range(replicas)]
-        df = pd.DataFrame([{k: v for k, v in r.items() if k != "franjas"} for r in res])
+        df = pd.DataFrame([{k: v for k, v in r.items() if k not in ("franjas", "log", "apertura")} for r in res])
         fila = {"Escenario": esc["Escenario"]}
         fila.update(df.mean().round(1).to_dict())
         filas.append(fila)

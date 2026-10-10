@@ -35,6 +35,12 @@ python analisis/organizar_por_tipo.py
 python analisis/generar_inputs_flexsim.py
 ```
 
+Con una corrida exportada de FlexSim (`flexsim/salidas.xlsx`), el script de validación compara las salidas contra los datos reales y contra la réplica de Python (`analisis/referencia_modelo.py`):
+
+```bash
+python analisis/validar_modelo.py --escenario E0_Pico
+```
+
 ## Publicar la página en Vercel
 
 `web/index.html` no depende de nada más: tiene los datos adentro y solo carga las fuentes de Google Fonts. Para publicarla:

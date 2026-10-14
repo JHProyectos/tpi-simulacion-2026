@@ -12,7 +12,7 @@ Esta guía se aplica **sobre el modelo que ya tenés armado** con `GUIA_FLEXSIM.
 | `¿Que fila?` antes de la caja | El Decide pasa a **después de la validación** y separa vegetariano de no vegetariano | S13, S27 |
 | 2 personas sirviendo (3 en E5) | **3 personas sirviendo** en el escenario base | S22 |
 | Una persona atiende cualquier menú | Una de las 3 se encarga de la **comida vegetariana** (y atiende no vegetariana si está libre). Las otras dos solo sirven no vegetariana | S22 |
-| Servicio de 5 s por ración | **15 a 30 s por ración** (mediana 21 s, sigma 0,21) | S15 |
+| Servicio de 5 s por ración | **15 a 20 s por ración** (mediana 17,3 s, sigma 0,09) | S15 |
 | Menú: solo con o sin TACC | Hay menú vegetariano: **12 % de las personas** (generado, a confirmar) | S27 |
 
 Las viandas (quienes traen su tupper) siguen siendo un dato del tipo de cliente, pero **ya no cambian ni la fila ni el servicio**: el modelo las trata igual que a quien recibe bandeja.
@@ -31,37 +31,41 @@ flowchart TB
 
 > La persona del puesto vegetariano **cuenta como una de las tres**. En el modelo, el menú vegetariano necesita el recurso `PuestoVeg` (de a uno por vez) y además una de las 3 personas. Es una simplificación: no se distingue cuál de las tres es. Hay que declararla en el informe.
 
-## 2. Antes de aplicar: qué esperar con 21 s por ración
+## 2. Antes de aplicar: qué esperar con 17,3 s por ración
 
-Con 15 a 30 s por ración y 3 personas, **el mostrador queda saturado en el pico**. La capacidad es de unas 500 raciones por hora, y la caja valida más de 900. Lo da la réplica de Python (`analisis/referencia_modelo.py`), pico, media de 30 réplicas:
+El grupo estima el servicio en **15 a 20 s por ración**: lognormal con mediana 17,3 s y sigma 0,09 (media 17,4 s). El valor sale del 15 a 30 s que el referente observó, ajustado a la baja porque la espera se percibe más larga que el reloj y porque con 15 a 30 s el mostrador se saturaría, cosa que no se observa.
+
+Con 3 personas, la capacidad del mostrador es de unas 620 raciones por hora, y la caja valida más de 900 en el pico. **El mostrador queda al límite y forma cola.** Lo da la réplica de Python (`analisis/referencia_modelo.py`), pico, media de 30 réplicas:
 
 | Escenario | Cola máxima en la caja | Espera media en el mostrador | Cola máxima en el mostrador | Uso del servicio |
 |---|---|---|---|---|
-| E0 base: 1 puesto, 3 sirviendo | 71 | 27,5 min | 325 | 98 % |
-| E1: 2 puestos, 3 sirviendo | 70 | 27,3 min | 326 | 98 % |
-| E2: 2 puestos 12:00 a 13:30 | 72 | 28,9 min | 338 | 98 % |
-| E3: QR | 72 | 27,5 min | 325 | 98 % |
-| E4: 1 puesto, 4 sirviendo | 71 | 6,7 min | 125 | 88 % |
-| E5: 2 puestos, 4 sirviendo | 69 | 6,3 min | 117 | 88 % |
+| E0 base: 1 puesto, 3 sirviendo | 71 | 9,9 min | 158 | 95 % |
+| E1: 2 puestos, 3 sirviendo | 70 | 9,6 min | 158 | 94 % |
+| E2: 2 puestos 12:00 a 13:30 | 72 | 11,1 min | 172 | 96 % |
+| E3: QR | 72 | 9,9 min | 158 | 94 % |
+| E4: 1 puesto, 4 sirviendo | 71 | 0,5 min | 27 | 71 % |
+| E5: 2 puestos, 4 sirviendo | 69 | 0,6 min | 46 | 71 % |
 
 Lo que significa:
 
-- **Mejorar la caja (E1, E2, E3) no cambia nada**: el cuello de botella pasó al mostrador.
-- **Agregar una persona sirviendo (E4, E5) baja la espera de 27 a 7 minutos.** Es justo lo que pidió la cátedra.
-- **La cola de 325 personas en el mostrador no coincide con lo observado:** el grupo y S10 ven la cola antes de la caja, no en el mostrador. Además, un mostrador de unas 500 raciones por hora no puede sostener las 900 a 1.000 que pasan por la caja en el pico: la cola crecería sin parar durante todo el servicio, y eso no se observa.
+- **Mejorar la caja (E1, E2, E3) sigue sin cambiar nada**: el cuello de botella está en el mostrador.
+- **Agregar una persona sirviendo (E4, E5) baja la espera de 10 minutos a menos de 1.** Es justo lo que pidió la cátedra.
+- **Todavía hay cola en el mostrador (158 personas) y los datos dicen que casi no hay.** Con 3 personas la cola se evita solo con unos 12 s por ración o menos. Con 17,3 s el modelo exagera la cola del mostrador respecto de lo observado.
 
-Eso apunta a que **la medición de 15 a 30 s probablemente incluye la espera en la fila del mostrador** y no solo el servicio. Así varía el resultado de E0 según el tiempo por ración (réplica, pico, 3 personas):
+Así varía E0 según el tiempo por ración (réplica, pico, 3 personas, sigma 0,09):
 
 | Mediana por ración | Cola máx. en el mostrador | Espera media en el mostrador | Uso |
 |---|---|---|---|
-| 8 s | 5 | 0 min | 47 % |
-| 10 s | 9 | 0 min | 58 % |
-| 12 s | 23 | 0,3 min | 70 % |
-| 15 s | 89 | 4,2 min | 86 % |
-| 18 s | 226 | 15,9 min | 98 % |
-| **21 s** | **344** | **29,2 min** | **98 %** |
+| 8 s | 4 | 0 min | 44 % |
+| 10 s | 6 | 0 min | 55 % |
+| 12 s | 15 | 0,2 min | 66 % |
+| 14 s | 39 | 1,0 min | 77 % |
+| 15 s | 59 | 2,4 min | 82 % |
+| **17,3 s** | **158** | **9,9 min** | **95 %** |
+| 18 s | 190 | 12,8 min | 97 % |
+| 21 s (sigma 0,21, valor anterior) | 325 | 27,5 min | 98 % |
 
-Recomendación: **aplicá 21 s como pidió el grupo**, pero corré también el escenario base con 10 a 12 s como análisis de sensibilidad, y pedile al referente que cronometre solo el servicio (desde que la persona llega al mostrador hasta que recibe la comida). Mientras no se resuelva, S15 queda como «propuesto».
+Recomendación: **aplicá 17,3 s como pidió el grupo**, pero corré también el escenario base con 10 a 12 s como análisis de sensibilidad, y pedile al referente que cronometre solo el servicio (desde que la persona llega al mostrador hasta que recibe la comida). Mientras no se resuelva, S15 queda como «propuesto».
 
 ## 3. Paso a paso
 
@@ -70,7 +74,7 @@ Recomendación: **aplicá 21 s como pidió el grupo**, pero corré también el e
 `inputs.xlsx` se regeneró. Los tamaños no cambiaron, así que no hay que tocar *Total Rows* ni *Total Columns*. Cerrá el Excel y tocá **Import Tables**. Controlá:
 
 - `Escenarios`: la columna 8 ya no es `FilasPorTipo`, es **`ProbVegetariano`** (0,12). `Servidores` vale 3 en E0 a E3 y 4 en E4 y E5.
-- `TiemposServicio`, fila 2 (`ServicioRacion`): `Scale` = **21** y `Shape` = **0,21**.
+- `TiemposServicio`, fila 2 (`ServicioRacion`): `Scale` = **17,3** y `Shape` = **0,09**.
 
 Si habías modificado a mano `TiemposServicio`, la reimportación pisa tus valores. Es lo que corresponde: el valor se cambia en `supuestos.json` y se regenera.
 
@@ -191,15 +195,15 @@ Si el código sigue leyendo `token.fila`, falla con *Label does not exist*, porq
 
 ### Paso 7. Probar con Escenario = 1
 
-**Reset** y **Run** hasta las 16:00. Con 21 s por ración y 3 personas, **tiene que verse la fila del mostrador creciendo**. Lo esperado para E0_Pico (la réplica da un orden de magnitud, no un valor exacto):
+**Reset** y **Run** hasta las 16:00. Con 17,3 s por ración y 3 personas, **tiene que verse la fila del mostrador creciendo en el pico**. Lo esperado para E0_Pico (la réplica da un orden de magnitud, no un valor exacto):
 
 | Qué mirar | Debería dar |
 |---|---|
 | Personas con menú vegetariano (`EsVeg` = 1 en `Salida_Personas`) | Unas 165 de 1.370 (12 %) |
 | `Salida_Dia`, `ColaCajaMax` | 60 a 75 |
-| `Salida_Dia`, `ColaServicioMax` | Entre 250 y 400 |
-| Espera media en el mostrador | Unos 25 a 30 minutos |
-| Uso del servicio | Cerca del 98 % |
+| `Salida_Dia`, `ColaServicioMax` | Entre 120 y 200 |
+| Espera media en el mostrador | Unos 8 a 12 minutos |
+| Uso del servicio | Cerca del 95 % |
 | `Salida_Franjas` | La misma curva que antes: no depende del mostrador mientras la fila de servicio no tenga límite |
 
 Si `ColaServicioMax` da casi 0, el servicio está tomando el tiempo anterior (5 s): revisá que `TiemposServicio` se haya reimportado.
@@ -218,9 +222,9 @@ El script ya compara contra la réplica nueva, con el menú vegetariano.
 
 | Tema | Qué hay que resolver |
 |---|---|
-| S15, tiempo por ración | Pedirle al referente que cronometre solo el servicio. Si es de 10 a 12 s, el mostrador casi no tiene cola. |
+| S15, tiempo por ración | Pedirle al referente que cronometre solo el servicio. Si es de 10 a 12 s, el mostrador casi no tiene cola. Con 17,3 s hay unos 10 minutos de espera en el pico. |
 | S27, 12 % vegetariano | No hay dato: lo asumimos. Estimar con el referente. |
-| S23, espacio de la fila de servicio | Con 21 s, la fila del mostrador se llena. Con una capacidad real, **bloquea la caja** y cambia los resultados de E1 a E3. |
+| S23, espacio de la fila de servicio | Con 17,3 s, la fila del mostrador se llena. Con una capacidad real, **bloquea la caja** y cambia los resultados de E1 a E3. |
 | D06, dos filas | Ya no describe el comedor. Hay que decidir con el grupo si se propone igual como mejora. E4 pasó a probar 4 personas sirviendo. |
 | Cuál de las tres personas sirve vegetariano | El modelo no lo distingue (ver la nota de la sección 1). |
 

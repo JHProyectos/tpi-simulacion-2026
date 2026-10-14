@@ -27,7 +27,7 @@
 | S11 | Ausentismo (reservas no retiradas) | Generado (IA) | Estudiantes 10 %, Becas Nutrirse 5 %, Becas personal 6 %, Personal 8 % sobre el total de reservas no canceladas. | propuesto |
 | S12 | Cancelaciones definitivas | Generado (IA) | 3 % del total de reservas. | propuesto |
 | S13 | Menú: vegetariano o no, con o sin TACC, vianda o bandeja | Derivado de registros | Hay menú vegetariano y no vegetariano (S27). El tipo de cliente da el dato real de vianda y sin TACC: 1 % de las raciones es sin TACC. Quienes retiran vianda traen su propio tupper y se les sirve ahí; el resto recibe una bandeja que está en la zona de servicio. Todos hacen la misma fila de caja. | confirmado |
-| S15 | Tiempo de servicio en el mostrador por ración | Estimación del referente | Lognormal con una mediana de 21 s y sigma de 0.21 (media de unos 21.5 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 30 s. Quien retira varias raciones suma una muestra por ración. | propuesto |
+| S15 | Tiempo de servicio en el mostrador por ración | Estimación del referente | Lognormal con una mediana de 17.3 s y sigma de 0.09 (media de unos 17.4 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 20 s. Quien retira varias raciones suma una muestra por ración. | propuesto |
 | S20 | Capacidad de la cocina | Estimación del referente | No es restrictiva: la capacidad de preparación supera ampliamente la demanda. | confirmado |
 | S21 | Retiro de más de una ración por persona | Generado (IA) | Becas Nutrirse Vianda: 80 % retira 1 ración, 15 % retira 2 y 5 % retira 3 (1,25 raciones por persona). Resto de los tipos: 95 % retira 1 y 5 % retira 2 (1,05 por persona). | propuesto |
 | S22 | Personas sirviendo en el mostrador | Estimación del referente | 3 personas sirviendo en el escenario base. Una de ellas está junto al puesto de comida vegetariana y se encarga de servirla; si está libre, también sirve comida no vegetariana. Las otras dos sirven solo comida no vegetariana. Se prueba con 4 (E4 y E5). | confirmado |
@@ -164,10 +164,10 @@
 ### S15 · Tiempo de servicio en el mostrador por ración
 
 - **Origen:** Estimación del referente
-- **Valor:** Lognormal con una mediana de 21 s y sigma de 0.21 (media de unos 21.5 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 30 s. Quien retira varias raciones suma una muestra por ración.
-- **Base:** Observación de un integrante del grupo que comió en el comedor: la atención en el mostrador tardó entre 15 y 30 s. No se cronometró y es una sola visita. Reemplaza la propuesta anterior de 5 s, que se había generado para que el mostrador no limitara a la caja. Atención: con 3 personas sirviendo y 21 s por ración, la capacidad del mostrador es de unas 500 raciones por hora, menos que las 1.000 por hora que valida la caja en el pico (S07). Si la medición incluyó la espera en la fila del mostrador y no solo el servicio, el valor real por ración es menor. Pendiente de una estimación del referente.
+- **Valor:** Lognormal con una mediana de 17.3 s y sigma de 0.09 (media de unos 17.4 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 20 s. Quien retira varias raciones suma una muestra por ración.
+- **Base:** Observación de un integrante del grupo que comió en el comedor: la atención en el mostrador tardó entre 15 y 30 s. No se cronometró y es una sola visita. El grupo lo ajustó a 15–20 s (mediana 17,3 s, media geométrica de los extremos), porque la espera se percibe más larga que el reloj y con 15–30 s el mostrador se saturaría, algo que no se observa. Reemplaza la propuesta anterior de 5 s, que se había generado para que el mostrador no limitara a la caja. Atención: con 3 personas sirviendo y 17,3 s por ración, la capacidad del mostrador es de unas 620 raciones por hora, menos que las 1.000 por hora que valida la caja en el pico (S07). Si la medición incluyó la espera en la fila del mostrador y no solo el servicio, el valor real por ración es menor. Pendiente de una estimación del referente.
 - **Rango de sensibilidad:** 8 a 25 s de mediana (por si la medición incluía espera)
-- **En FlexSim:** lognormal2(0, 21, 0.21, stream) por cada ración, en el Resource ServicioComida (S22)
+- **En FlexSim:** lognormal2(0, 17.3, 0.09, stream) por cada ración, en el Resource ServicioComida (S22)
 - **Usado en:** modelo · **Estado:** propuesto
 
 ### S20 · Capacidad de la cocina

@@ -229,17 +229,17 @@
    "id": "S15",
    "variable": "Tiempo de servicio en el mostrador por ración",
    "origen": "referente",
-   "valor": "Lognormal con una mediana de 21 s y sigma de 0.21 (media de unos 21.5 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 30 s. Quien retira varias raciones suma una muestra por ración.",
-   "flexsim": "lognormal2(0, 21, 0.21, stream) por cada ración, en el Resource ServicioComida (S22)",
-   "base": "Observación de un integrante del grupo que comió en el comedor: la atención en el mostrador tardó entre 15 y 30 s. No se cronometró y es una sola visita. Reemplaza la propuesta anterior de 5 s, que se había generado para que el mostrador no limitara a la caja. Atención: con 3 personas sirviendo y 21 s por ración, la capacidad del mostrador es de unas 500 raciones por hora, menos que las 1.000 por hora que valida la caja en el pico (S07). Si la medición incluyó la espera en la fila del mostrador y no solo el servicio, el valor real por ración es menor. Pendiente de una estimación del referente.",
+   "valor": "Lognormal con una mediana de 17.3 s y sigma de 0.09 (media de unos 17.4 s) por ración. Con estos valores, el 90 % de los servicios dura entre 15 y 20 s. Quien retira varias raciones suma una muestra por ración.",
+   "flexsim": "lognormal2(0, 17.3, 0.09, stream) por cada ración, en el Resource ServicioComida (S22)",
+   "base": "Observación de un integrante del grupo que comió en el comedor: la atención en el mostrador tardó entre 15 y 30 s. No se cronometró y es una sola visita. El grupo lo ajustó a 15–20 s (mediana 17,3 s, media geométrica de los extremos), porque la espera se percibe más larga que el reloj y con 15–30 s el mostrador se saturaría, algo que no se observa. Reemplaza la propuesta anterior de 5 s, que se había generado para que el mostrador no limitara a la caja. Atención: con 3 personas sirviendo y 17,3 s por ración, la capacidad del mostrador es de unas 620 raciones por hora, menos que las 1.000 por hora que valida la caja en el pico (S07). Si la medición incluyó la espera en la fila del mostrador y no solo el servicio, el valor real por ración es menor. Pendiente de una estimación del referente.",
    "estado": "propuesto",
    "sensibilidad": "8 a 25 s de mediana (por si la medición incluía espera)",
    "usado_en": [
     "modelo"
    ],
    "parametros": {
-    "mediana_s": 21,
-    "sigma": 0.21
+    "mediana_s": 17.3,
+    "sigma": 0.09
    }
   },
   {

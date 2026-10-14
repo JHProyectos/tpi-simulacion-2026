@@ -12,6 +12,9 @@ Registro del armado del modelo del Comedor Universitario UNC en FlexSim 2026, a 
 | 30/09 | Recursos compartidos del Process Flow | Sección 7 |
 | 30/09 | Actividades del inicio del día y del control del puesto | Sección 8 |
 | 30/09 | Cambio de alcance: el modelo llega hasta el mostrador | Sección 20 |
+| 09/10 | Llegadas, fila de caja y validación probadas | Sección 9 |
+| 14/10 | Servicio con 3 personas, menú vegetariano y 17,3 s por ración | [GUIA_MODIFICACIONES](../GUIA_MODIFICACIONES.md) |
+| 14/10 | Escena 3D: importación del dibujo de SketchUp | Aparte |
 
 ---
 
@@ -150,11 +153,49 @@ El recurso `PuestosValidacion` muestra una unidad tomada (el token de control, e
 
 ---
 
+## 10. Servicio con 3 personas y menú vegetariano (14/10)
+
+Se aplicó la [guía de modificaciones](../GUIA_MODIFICACIONES.md). Ya no hay fila de viandas: la columna 3 completa y el Decide `¿Que fila?` se borraron, y todas las personas pasan por `Esperar en la fila`. Los recursos son `PuestosValidacion`, `PuestoVeg` (antes `PuestoViandas`), `EspacioFilaServicio` y `ServicioComida`.
+
+![Process Flow Comedor completo: inicio del día, puesto extra y el circuito de la persona con el Decide ¿Es Vegetariano? y el Decide ¿Usó el puesto vegetariano?](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/flexsim/capturas/processflow-servicio-veg.png)
+
+El tramo del servicio, ampliado. Los conectores se llaman `veg` y `general` en el primer Decide, y `si` y `no` en el segundo. Quien es vegetariano toma primero `PuestoVeg` y después una de las tres personas (`ServicioComida`); al terminar libera el servidor y, solo si usó el puesto vegetariano, lo libera también.
+
+![Tramo del servicio: ¿Es Vegetariano? con las ramas veg y general, Esperar Servidor, Servir raciones, Liberar servidor y ¿Usó el puesto vegetariano? con las ramas si y no](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/flexsim/capturas/servicio-decide-veg.png)
+
+## 11. Tiempo de servicio de 15 a 20 s (14/10)
+
+El mostrador con 3 personas y 21 s por ración no alcanzaba para el ritmo de la caja (unas 514 raciones por hora contra más de 900), y generaba una cola de servicio que no coincide con lo observado. El grupo asumió **15 a 20 s por ración**. En `TiemposServicio`, `ServicioRacion` quedó con `Scale` = 17,3 y `Shape` = 0,09: mediana 17,3 s y media 17,4 s. La validación sigue en 3,34 s de mediana (3,77 s de media).
+
+![Tabla TiemposServicio con Validacion en Scale 3,34 y Shape 0,49, y ServicioRacion en Scale 17,30 y Shape 0,09, con mediana 17,30 y media 17,40](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/flexsim/capturas/tiempos-servicio-17-3.png)
+
+El razonamiento completo está en [EXPLICACION.md](../EXPLICACION.md).
+
+## 12. Primera corrida de E0_Pico con el servicio (14/10)
+
+`Salida_Dia` de la corrida con `Escenario` = 1:
+
+![Tabla Salida_Dia con Apertura_s 1314,50, EnFilaCaja 0, ColaCajaMax 66, EnFilaServicio 0 y ColaServicioMax 131](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/flexsim/capturas/salida-dia-e0.png)
+
+| Indicador | FlexSim (una corrida) | Réplica de Python (media de 30) | Objetivo |
+|---|---|---|---|
+| `ColaCajaMax` | 66 | 71 | 60 a 70 (S10) |
+| `ColaServicioMax` | 131 | 158 | Entre 120 y 200 (guía) |
+
+Las dos colas caen en el rango esperado y la cola de la caja coincide con la observada. Es una sola corrida: la comparación formal con réplicas y con los registros reales la hace `analisis/validar_modelo.py`, con las salidas exportadas. Que `EnFilaCaja` y `EnFilaServicio` terminen en 0 indica que el día cerró sin gente en cola.
+
+---
+
+## 13. Escena 3D (14/10)
+
+Se empezó la escena 3D. El primer paso fue **importar el dibujo hecho en SketchUp** (`3d/comedor-v00.skp`, exportado a `comedor-v00.dae`): el salón con seis mesas largas con sillas, en dos grupos de tres, y al fondo dos ambientes separados por un muro, donde van el mostrador y la cocina. Todavía es solo la geometría: no hay objetos de FlexSim ni personas, y los puestos no están conectados al Process Flow.
+
+![Vista de la escena 3D en FlexSim con el comedor importado desde SketchUp: seis mesas largas con sillas y, al fondo, dos ambientes separados por un muro](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/flexsim/capturas/escena3d-importada.png)
+
 ## Próximos pasos
 
-1. Regenerar `inputs.xlsx` (ya está hecho en el repositorio) y **reimportar todas las tablas** con *Total Rows* = filas de datos + 1 y *Use Row Headers* destildado. Borrar la tabla `Salon`. Controlar que las tablas de llegadas terminen en `14:30`.
-2. Renombrar los recursos `LineaVegetariana`, `LineaNoVegetariana` y `Asientos` a `PuestoViandas`, `EspacioFilaServicio` y `ServicioComida`, con su nuevo *Count*.
-3. Cambiar las columnas de las tablas de salida (sección 5 de la guía).
-4. Completar los campos de las actividades de la sección 8 (las 3 columnas ya están conectadas).
-5. Hacer Reset y revisar que no queden errores en la *Compiler Console* ni en la *System Console*.
-6. Seguir con la sección 9 de la guía: la cola previa y las llegadas por franja.
+1. Exportar las tres tablas de salida a `flexsim/salidas.xlsx` y correr `python analisis/validar_modelo.py --escenario E0_Pico`.
+2. Correr el escenario base con 10 a 12 s por ración como análisis de sensibilidad, y E4 y E5 (4 personas sirviendo).
+3. Pedirle al referente que cronometre solo el servicio y estime la caminata entre la caja y el mostrador. Con eso se cierra S15.
+4. Confirmar el 12 % de menú vegetariano (S27) y el espacio de la fila de servicio (S23).
+5. Seguir con la escena 3D: ubicar el puesto de validación y el mostrador sobre el dibujo y ver si conviene animar a las personas.

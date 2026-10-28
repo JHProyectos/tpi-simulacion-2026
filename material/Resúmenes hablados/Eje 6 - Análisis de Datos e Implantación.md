@@ -36,7 +36,7 @@ Dos sistemas con el mismo promedio se comportan muy distinto si uno varía poco 
 
 Así se ven dos cajas con la misma atención media de cinco minutos. La A casi siempre tarda entre cuatro y seis; la B va de uno a nueve. Con la B, cada tanto se juntan varias atenciones largas, y ahí se arma la cola.
 
-![Dos cajas con la misma media](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/0ceeea280008e8d0f8d4a9aab5d6b836a3fac595/material/img/eje6-dos-cajas.svg)
+![Dos cajas con la misma media](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/ab8570b4cf0878347ec2f862cb72621b66503e50/material/img/eje6-dos-cajas.svg)
 
 *Figura 2. Misma media, distinta dispersión: cuanto más ancha la curva, más atenciones largas y más cola.*
 
@@ -48,7 +48,7 @@ Preparar es, primero, unificar unidades. Después, sacar duplicados, revisar val
 
 Mirá cómo queda la distribución de esa mesa de ayuda con los dos tipos juntos: dos jorobas, una por tipo. La media cae en el valle del medio, justo donde casi no hay pedidos. Ninguna distribución conocida describe eso; separados, cada tipo tiene la suya.
 
-![Curva bimodal](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/0ceeea280008e8d0f8d4a9aab5d6b836a3fac595/material/img/eje6-bimodal.svg)
+![Curva bimodal](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/ab8570b4cf0878347ec2f862cb72621b66503e50/material/img/eje6-bimodal.svg)
 
 *Figura 3. Dos tipos mezclados: dos modas, y una media en la zona donde casi no hay pedidos.*
 
@@ -58,7 +58,7 @@ Con los faltantes, igual: si son pocos, se descartan; si son muchos, se vuelve a
 
 ¿Cómo ves los atípicos? Con el boxplot. La caja tiene el cincuenta por ciento central, entre el primer y el tercer cuartil, y la línea de adentro es la mediana. Lo que queda afuera de los bigotes son posibles outliers.
 
-![Boxplot de tiempos de atención](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/0ceeea280008e8d0f8d4a9aab5d6b836a3fac595/material/img/eje6-boxplot.svg)
+![Boxplot de tiempos de atención](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/ab8570b4cf0878347ec2f862cb72621b66503e50/material/img/eje6-boxplot.svg)
 
 *Figura 4. Un boxplot de tiempos de atención. La mediana está más cerca de Q1 que de Q3 y el bigote derecho es más largo: la cola va a la derecha. Los dos puntos sueltos, como el cliente con problemas en el pago, se revisan antes de decidir si se borran.*
 
@@ -130,7 +130,7 @@ Moda y mediana quedan en 5; la media, sola, se corre hacia el 8. Ese orden es la
 
 Y es justo la forma típica de los tiempos de atención: la mayoría son cortos y unos pocos se estiran mucho.
 
-![Moda, mediana y media](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/0ceeea280008e8d0f8d4a9aab5d6b836a3fac595/material/img/eje6-moda-mediana-media.svg)
+![Moda, mediana y media](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/ab8570b4cf0878347ec2f862cb72621b66503e50/material/img/eje6-moda-mediana-media.svg)
 
 *Figura 5. Los mismos tiempos de atención del boxplot, como curva. De izquierda a derecha: moda, mediana y media.*
 

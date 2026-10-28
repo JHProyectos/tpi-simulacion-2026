@@ -34,17 +34,39 @@ El ejemplo del apunte: la atención media es de cinco minutos, y alguien carga t
 
 Dos sistemas con el mismo promedio se comportan muy distinto si uno varía poco y el otro mucho. Pensá en un río de un metro de profundidad promedio: igual te ahogás si en el medio tiene tres.
 
+Así se ven dos cajas con la misma atención media de cinco minutos. La A casi siempre tarda entre cuatro y seis; la B va de uno a nueve. Con la B, cada tanto se juntan varias atenciones largas, y ahí se arma la cola.
+
+![Dos curvas con la misma media de 5 minutos: la de la caja A, alta y angosta entre 4 y 6; la de la caja B, baja y ancha entre 1 y 9](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-dos-cajas.svg)
+
+*Figura 2. Misma media, distinta dispersión: cuanto más ancha la curva, más atenciones largas y más cola.*
+
 ¿Qué se mide? Las variables aleatorias que cambian la congestión: tiempos entre llegadas, de servicio, cantidades, y tiempos de falla y reparación.
 
 Y la muestra tiene que ser representativa: distintos momentos, días y condiciones, no diez casos cómodos. Un restaurante no se evalúa yendo solo un martes a la tarde.
 
 Preparar es, primero, unificar unidades. Después, sacar duplicados, revisar valores imposibles, como tiempos negativos, y ordenar. Y por último, separar por tipo cuando corresponda: en una mesa de ayuda, pedidos rápidos y lentos mezclados dan una distribución sin sentido. Es como promediar una bici con un auto.
 
+Mirá cómo queda la distribución de esa mesa de ayuda con los dos tipos juntos: dos jorobas, una por tipo. La media cae en el valle del medio, justo donde casi no hay pedidos. Ninguna distribución conocida describe eso; separados, cada tipo tiene la suya.
+
+![Curva con dos jorobas, una en 4 minutos y otra en 13; la media, en 8,5, cae en el valle entre las dos](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-bimodal.svg)
+
+*Figura 3. Dos tipos mezclados: dos modas, y una media en la zona donde casi no hay pedidos.*
+
 Un outlier es un dato muy alejado del resto, y no siempre se elimina. Puede ser un error de carga o un caso real, como el cliente que tardó muchísimo por un problema con el pago.
 
 Con los faltantes, igual: si son pocos, se descartan; si son muchos, se vuelve a medir.
 
 ¿Cómo ves los atípicos? Con el boxplot. La caja tiene el cincuenta por ciento central, entre el primer y el tercer cuartil, y la línea de adentro es la mediana. Lo que queda afuera de los bigotes son posibles outliers.
+
+![Boxplot de tiempos de atención: caja de Q1 2,9 a Q3 5,3 con la mediana en 3,9, la media marcada con una cruz en 4,3, bigotes de 1,2 a 8,6 y dos posibles outliers en 10,5 y 13 minutos](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-boxplot.svg)
+
+*Figura 4. Un boxplot de tiempos de atención. La mediana está más cerca de Q1 que de Q3 y el bigote derecho es más largo: la cola va a la derecha. Los dos puntos sueltos, como el cliente con problemas en el pago, se revisan antes de decidir si se borran.*
+
+Los bigotes llegan hasta el último dato que no se aleja más de 1,5 veces el ancho de la caja:
+
+$$IQR = Q_3 - Q_1 \qquad \text{outlier si } x < Q_1 - 1{,}5\,IQR \ \text{ o } \ x > Q_3 + 1{,}5\,IQR$$
+
+Acá: $IQR = 5{,}3 - 2{,}9 = 2{,}4$, y el límite de arriba es $5{,}3 + 3{,}6 = 8{,}9$. Por eso 10,5 y 13 quedan afuera.
 
 **Lo importante.** La dispersión y la forma importan tanto como el promedio. Y limpiar no es borrar lo que molesta.
 
@@ -60,13 +82,59 @@ Las medidas descriptivas orientan el ajuste.
 
 La media es el promedio, y la afectan los extremos. La mediana es el dato central, y es más robusta frente a outliers. Si a una sala entra un millonario, el sueldo promedio se dispara, pero la persona del medio casi no cambia.
 
+Con números: cinco personas cobran 500, 600, 700, 800 y 900 mil pesos. Media y mediana, 700. Entra alguien que cobra 50 millones. La media salta a casi 8,9 millones, un sueldo que no cobra nadie de la sala; la mediana apenas se mueve, de 700 a 750.
+
+```grafico
+tipo: barras
+titulo: Sueldos antes y después de que entre el millonario
+unidad: miles de $
+
+Sala, Media, Mediana
+5 personas, 700, 700
+Con el millonario, 8917, 750
+```
+
 Por eso, si media y mediana se parecen, la distribución suele ser simétrica.
 
-La moda es el valor más repetido, y puede no existir o haber más de una.
+La moda es el valor más repetido, y puede no existir o haber más de una. En el histograma, es la barra más alta. La mesa de ayuda de más arriba tiene dos: una por cada joroba.
 
 La varianza y el desvío miden cuánto se alejan los datos de la media, y el desvío está en la unidad del dato. El coeficiente de variación compara dispersión entre procesos.
 
+$$\bar{x} = \frac{\sum x_i}{n} \qquad s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1} \qquad s = \sqrt{s^2} \qquad CV = \frac{s}{\bar{x}}$$
+
 Ejemplo del apunte: cuatro, cinco, cinco, seis y ocho. La media queda un poco por encima de la mediana. ¿Por qué? Porque el ocho la empuja.
+
+```grafico
+tipo: barras
+titulo: Datos del apunte: 4, 5, 5, 6 y 8
+unidad: veces
+
+Valor, Frecuencia
+4, 1
+5, 2
+6, 1
+7, 0
+8, 1
+```
+
+| Medida | Cuenta | Valor |
+|---|---|---|
+| Media | (4 + 5 + 5 + 6 + 8) / 5 | 5,6 |
+| Mediana | el tercero de cinco, ordenados | 5 |
+| Moda | el que más se repite | 5 |
+| Varianza | (2,56 + 0,36 + 0,36 + 0,16 + 5,76) / 4 | 2,3 |
+| Desvío | $\sqrt{2{,}3}$ | 1,52 |
+| CV | 1,52 / 5,6 | 0,27 |
+
+Moda y mediana quedan en 5; la media, sola, se corre hacia el 8. Ese orden es la marca de una distribución con cola a la derecha.
+
+Y es justo la forma típica de los tiempos de atención: la mayoría son cortos y unos pocos se estiran mucho.
+
+![Curva de tiempos de atención con cola a la derecha: el pico, la moda, en 3,2 minutos; la mediana en 3,9 y la media en 4,3](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-moda-mediana-media.svg)
+
+*Figura 5. Los mismos tiempos de atención del boxplot, como curva. De izquierda a derecha: moda, mediana y media.*
+
+El pico de la curva es la moda: 3,2 minutos, la duración más frecuente. La mediana deja la mitad de las atenciones a cada lado: 3,9. Y la media, empujada por las atenciones largas de la cola, 4,3. En una distribución con cola a la derecha el orden suele ser ese: moda, después mediana, después media. Si fuera simétrica, las tres coincidirían en el centro.
 
 El histograma da la primera hipótesis de forma. Y la frase del apunte es: el gráfico dice parece, la prueba dice qué tan bien ajusta.
 
@@ -148,7 +216,7 @@ Ejemplo: un hospital simulado treinta días, con dos de warm-up, se mide del dí
 
 ![Curva de warm-up](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-warmup.svg)
 
-*Figura 2. Un sistema no terminante que arranca vacío. Al principio la cola parece más chica que la real: ese tramo es el warm-up y no se mide. Las estadísticas se toman en la zona estable.*
+*Figura 6. Un sistema no terminante que arranca vacío. Al principio la cola parece más chica que la real: ese tramo es el warm-up y no se mide. Las estadísticas se toman en la zona estable.*
 
 **Lo importante.** El warm-up es para sistemas no terminantes, y elimina el sesgo de arrancar vacío.
 
@@ -204,7 +272,7 @@ La implantación es otra cosa: no compara, lleva la alternativa elegida al siste
 
 ![Verificar, validar, credibilidad e implantar](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-verificar-validar.svg)
 
-*Figura 3. Verificar mira lo que describiste; validar, el sistema real; credibilidad, a los usuarios. Implantar lleva la alternativa elegida al sistema real.*
+*Figura 7. Verificar mira lo que describiste; validar, el sistema real; credibilidad, a los usuarios. Implantar lleva la alternativa elegida al sistema real.*
 
 ¿Cuándo se valida? A medida que se construye, no al final. Primero, definís el objetivo y documentás supuestos. Después, revisás el modelo conceptual con quienes conocen el proceso y probás componentes por separado. Y por último, comparás con datos reales y registrás limitaciones.
 
@@ -272,7 +340,7 @@ El gráfico típico es el diagrama tornado: cada factor es una barra que muestra
 
 ![Diagrama tornado](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje6-tornado.svg)
 
-*Figura 4. Un diagrama tornado. Cada barra muestra cuánto cambia la espera respecto del caso base; las más largas son los supuestos más influyentes.*
+*Figura 8. Un diagrama tornado. Cada barra muestra cuánto cambia la espera respecto del caso base; las más largas son los supuestos más influyentes.*
 
 **Lo importante.** El tornado te dice qué supuestos pesan más y dónde conviene medir mejor.
 

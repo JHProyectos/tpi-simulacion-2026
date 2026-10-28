@@ -110,6 +110,12 @@ Y la tercera, N de t, cuenta los que están en el sistema, o sea, los que espera
 
 Fijate que eso último vale en todo instante: contás las cabezas de la fila, le sumás la del mostrador, y tenés a todos los de adentro. Y como vale instante a instante, vale también para los promedios.
 
+$$N(t) = Q(t) + B(t) \qquad \Rightarrow \qquad L = L_q + \rho$$
+
+Cada promedio en el tiempo es el área bajo su función dividida por el horizonte T:
+
+$$\rho = \frac{1}{T}\int_0^T B(t)\,dt \qquad L_q = \frac{1}{T}\int_0^T Q(t)\,dt \qquad L = \frac{1}{T}\int_0^T N(t)\,dt$$
+
 Esto ahorra trabajo, porque no hace falta dibujar N de t. Y sirve de control: si medís las tres áreas y la suma no cierra, hay un error en algún gráfico. La cuenta la hacés en la práctica, en el paso cuatro.
 
 **Lo importante.** Las tres funciones y su relación: en el sistema están los que esperan más el que se atiende, en todo instante y, por eso, también en promedio.
@@ -123,6 +129,10 @@ Arrancamos por una observación del apunte: el área bajo Q de t coincide exacta
 Imaginate que cada cliente, mientras espera, apoya sobre el gráfico una tira de altura uno, tan larga como su espera. El área bajo Q de t son esas tiras apiladas. La podés medir cliente por cliente o barriendo el tiempo de izquierda a derecha: es la misma superficie. Eso sí, el apunte lo plantea con el sistema vacío al principio y al final, así cada cliente aporta justo el tiempo que estuvo presente.
 
 De ahí sale la Ley de Little, que une las dos maneras de promediar: relaciona la cantidad promedio de clientes, que es un promedio en el tiempo, con el tiempo promedio de permanencia, que es un promedio sobre los clientes, a través de la tasa de llegada. La intuición: si entra mucha gente por minuto y cada uno se queda mucho, adentro hay mucha gente. La cuenta la hacés en la práctica, en el paso cinco.
+
+$$\int_0^T Q(t)\,dt = \sum_{i=1}^{n} W_{q,i} \qquad \int_0^T N(t)\,dt = \sum_{i=1}^{n} W_i$$
+
+$$L = \lambda \, W \qquad L_q = \lambda \, W_q \qquad \text{con } \lambda = \frac{n}{T}$$
 
 Y es muy general: no supone ninguna distribución, disciplina ni cantidad de servidores. Vale para cualquier sistema estable.
 
@@ -150,7 +160,29 @@ Para cada cliente, en orden, cuatro columnas. Primero, el inicio: el mayor valor
 
 Después, el fin: inicio más duración. Tercero, la espera, su Wq: inicio menos llegada. Y por último, la permanencia, su W: fin menos llegada.
 
+Para el cliente $i$, con llegada $a_i$ y duración $s_i$:
+
+$$\text{inicio}_i = \max(a_i,\ \text{fin}_{i-1}) \qquad \text{fin}_i = \text{inicio}_i + s_i$$
+
+$$W_{q,i} = \text{inicio}_i - a_i \qquad W_i = \text{fin}_i - a_i = W_{q,i} + s_i$$
+
 Al final sumás duraciones, esperas y permanencias. Control rápido: la suma de permanencias es la suma de esperas más la de duraciones.
+
+Así queda con los datos del ejercicio uno:
+
+| Cliente | Llegada | Duración | Inicio | Fin | Espera | Permanencia |
+|---|---|---|---|---|---|---|
+| 1 | 0 | 2 | 0 | 2 | 0 | 2 |
+| 2 | 7 | 3 | 7 | 10 | 0 | 3 |
+| 3 | 8 | 2 | 10 | 12 | 2 | 4 |
+| 4 | 9 | 2 | 12 | 14 | 3 | 5 |
+| 5 | 11 | 2 | 14 | 16 | 3 | 5 |
+| 6 | 14 | 2 | 16 | 18 | 2 | 4 |
+| 7 | 15 | 5 | 18 | 23 | 3 | 8 |
+| 8 | 20 | 2 | 23 | 25 | 3 | 5 |
+| **Total** | | **20** | | | **16** | **36** |
+
+Control: 36 = 16 + 20.
 
 **Ojo, trampa.** El empate. Si un cliente llega justo cuando termina el anterior, empieza en ese instante y su espera es cero. La convención de la cátedra, que viene del eje cuatro, es procesar primero el fin de servicio y después la llegada, así el recurso ya está libre. Como en el ascensor: primero bajan, después suben. En la tabla sale solo, por la regla del máximo; donde te puede pisar es al contar la cola.
 
@@ -163,6 +195,22 @@ T es el instante en que se retira el último cliente, o sea, el fin del último 
 ### Paso tres: los indicadores
 
 Son siete. Wq: suma de esperas dividida por la cantidad de clientes. W: suma de permanencias dividida por la cantidad de clientes. Utilización: suma de duraciones dividida por T. Tiempo ocioso: T menos la suma de duraciones. Lambda, la tasa de llegada: clientes dividido T. Proporción que espera: clientes con espera mayor que cero, dividido el total. Y la cola máxima: la mayor cantidad de gente esperando a la vez.
+
+$$W_q = \frac{\sum W_{q,i}}{n} \qquad W = \frac{\sum W_i}{n} \qquad \rho = \frac{\sum s_i}{T} \qquad \text{ocioso} = T - \sum s_i$$
+
+$$\lambda = \frac{n}{T} \qquad P(\text{espera}) = \frac{\#\{i : W_{q,i} > 0\}}{n} \qquad Q_{max} = \max_t Q(t)$$
+
+Con el ejercicio uno ($n = 8$, $T = 25$):
+
+| Indicador | Cuenta | Resultado |
+|---|---|---|
+| $W_q$ | 16 / 8 | 2 min |
+| $W$ | 36 / 8 | 4,5 min |
+| $\rho$ | 20 / 25 | 0,8 |
+| Ocioso | 25 − 20 | 5 min |
+| $\lambda$ | 8 / 25 | 0,32 clientes/min |
+| Proporción que espera | 6 / 8 | 0,75 |
+| Cola máxima | | 2 |
 
 **Ojo, trampa.** Acá todo gira alrededor del divisor.
 
@@ -180,6 +228,28 @@ Tres gráficos sobre el mismo eje de tiempo: las llegadas como marcas, B de t co
 
 Para el área de Q armás la tabla de tramos. Cortás el tiempo en cada llegada, inicio y fin. En cada tramo multiplicás cuántos había en cola por cuánto duró, y sumás todo. Lq es esa área dividida por T. La utilización sale del área de B. Y L es Lq más la utilización.
 
+$$\text{Área}_Q = \sum_{\text{tramos}} Q_k \cdot \Delta t_k \qquad L_q = \frac{\text{Área}_Q}{T} \qquad L = L_q + \rho$$
+
+La tabla de tramos del ejercicio uno:
+
+| Tramo | Quiénes esperan | $Q$ | $\Delta t$ | $Q \cdot \Delta t$ |
+|---|---|---|---|---|
+| 0 a 8 | nadie | 0 | 8 | 0 |
+| 8 a 9 | 3 | 1 | 1 | 1 |
+| 9 a 10 | 3 y 4 | 2 | 1 | 2 |
+| 10 a 11 | 4 | 1 | 1 | 1 |
+| 11 a 12 | 4 y 5 | 2 | 1 | 2 |
+| 12 a 14 | 5 | 1 | 2 | 2 |
+| 14 a 15 | 6 | 1 | 1 | 1 |
+| 15 a 16 | 6 y 7 | 2 | 1 | 2 |
+| 16 a 18 | 7 | 1 | 2 | 2 |
+| 18 a 20 | nadie | 0 | 2 | 0 |
+| 20 a 23 | 8 | 1 | 3 | 3 |
+| 23 a 25 | nadie | 0 | 2 | 0 |
+| **Total** | | | **25** | **16** |
+
+En el minuto 14 termina de esperar el 5 y llega el 6: la cola sigue en uno. Entonces $L_q = 16/25 = 0{,}64$, y con $\rho = 0{,}8$, $L = 1{,}44$.
+
 **Ojo, trampa.** Tres cosas.
 
 La primera: el área de Q te va a coincidir con la suma de esperas, y es un buen control. Pero si te piden Lq por área y vos dividís la suma de esperas por T, no hiciste lo pedido y Little queda circular.
@@ -191,6 +261,10 @@ Y la tercera: L es Lq más la utilización, no Lq más uno, porque no siempre ha
 ### Paso cinco: verificar con Little
 
 Comparás Lq por área contra lambda por Wq, y L contra lambda por W.
+
+$$\underbrace{\frac{\text{Área}_Q}{T}}_{\text{por área}} \overset{?}{=} \underbrace{\lambda \cdot W_q}_{\text{por clientes}} \qquad\qquad L \overset{?}{=} \lambda \cdot W$$
+
+En el ejercicio uno: $0{,}32 \cdot 2 = 0{,}64$, igual que $L_q$ por área, y $0{,}32 \cdot 4{,}5 = 1{,}44$, igual que $L$. Cierra.
 
 **Ojo, trampa.** Se multiplica, no se divide. Y usá lambda como fracción. En el ejercicio dos es ocho treintavos; si lo redondeás a cero coma veintisiete y multiplicás por tres, te da cero coma ochenta y uno, y parece que no cierra.
 
@@ -242,7 +316,13 @@ Ojo con el visitante tres: llega en el siete, justo cuando termina el dos, así 
 
 La consigna e: el jefe dice que, con el operador ocupado el ochenta por ciento, el puesto está bien dimensionado. ¿Qué le contestás? Que la utilización sola no alcanza. La mitad de los visitantes esperó, hubo dos en cola, y las esperas aparecen cuando llegan varios juntos: es la variabilidad.
 
-Y el argumento más fuerte está en el propio práctico: los tres ejercicios tienen utilización cero coma ocho, y Wq da dos, tres y un minuto. Mismo número, tres esperas distintas. Sumale que una sola corrida con ocho visitantes es poca evidencia, y que si un minuto de espera es aceptable depende de un criterio de servicio que el enunciado no da.
+Y el argumento más fuerte está en el propio práctico: los tres ejercicios tienen utilización cero coma ocho, y Wq da dos, tres y un minuto.
+
+| Ejercicio | $T$ | $W_q$ | $W$ | $\rho$ | $\lambda$ | $L_q$ | $L$ | Esperan | Cola máx. |
+|---|---|---|---|---|---|---|---|---|---|
+| 1. Mesa de entradas | 25 | 2 | 4,5 | 0,8 | 8/25 | 0,64 | 1,44 | 6 de 8 | 2 |
+| 2. Farmacia | 30 | 3 | 6 | 0,8 | 8/30 | 0,8 | 1,6 | 5 de 8 | 2 |
+| 3. Formato parcial | 25 | 1 | 3,5 | 0,8 | 8/25 | 0,32 | 1,12 | 4 de 8 | 2 | Mismo número, tres esperas distintas. Sumale que una sola corrida con ocho visitantes es poca evidencia, y que si un minuto de espera es aceptable depende de un criterio de servicio que el enunciado no da.
 
 ## Preguntas tipo multiple choice
 

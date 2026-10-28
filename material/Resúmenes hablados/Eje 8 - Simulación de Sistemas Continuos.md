@@ -80,6 +80,8 @@ Abajo tenés la bañera dibujada como diagrama de Forrester, la notación que va
 
 La ecuación: la derivada del nivel respecto del tiempo es la suma de las entradas menos la suma de las salidas.
 
+$$\frac{dN}{dt} = \sum \text{entradas}(t) - \sum \text{salidas}(t)$$
+
 Y de ahí sale la regla de unidades. Si un nivel se mide en cierta unidad, todos sus flujos se miden en esa unidad por unidad de tiempo: litros en el nivel, litros por minuto en los flujos. Si las unidades no cierran, el modelo está mal, dé lo que dé la simulación.
 
 **Lo importante.** Nivel es lo que se acumula y se ve en la foto. Flujo es velocidad, siempre por unidad de tiempo. Y para saber si un nivel sube o baja, no mires la entrada ni la salida por separado: mirá la diferencia.
@@ -106,9 +108,13 @@ Imaginate que manejás de noche y solo podés mirar el velocímetro una vez por 
 
 La ecuación, en palabras: el nivel en t más delta t es igual al nivel en t, más delta t multiplicado por la diferencia entre las entradas y las salidas calculadas en t.
 
+$$N(t + \Delta t) = N(t) + \Delta t \cdot \big[\text{entradas}(t) - \text{salidas}(t)\big]$$
+
 ¿Por qué el delta t multiplicando? Por las unidades. El flujo neto está en unidades por tiempo; multiplicado por delta t, queda en unidades, y eso sí se puede sumar al nivel. El delta t es lo que hace cerrar las unidades.
 
 El ejemplo del apunte es un tanque de cien litros que se vacía, con un caudal de salida igual a la quinta parte del agua, por minuto. Con delta t de un minuto, Euler da menos agua que la solución exacta.
+
+$$\text{salida}(t) = \frac{V(t)}{5} \qquad V(t + \Delta t) = V(t) - \Delta t \cdot \frac{V(t)}{5} \qquad V_{exacta}(t) = 100\, e^{-t/5}$$
 
 ¿Por qué se equivoca? Volvé al velocímetro. En el primer minuto, Euler supone que salen veinte litros por minuto todo el tiempo, cuando en realidad el caudal va bajando con el agua. Sobreestima la salida en cada paso, y el error se acumula. Con medio paso, el error baja más o menos a la mitad.
 
@@ -124,6 +130,8 @@ Esto es muy preguntable. En el tanque, con un paso de un minuto, el agua baja su
 
 ¿De dónde sale el agua negativa? Del velocímetro otra vez. Al principio salen veinte litros por minuto, y Euler supone que eso sigue igual durante siete minutos y medio: ciento cincuenta litros, de un tanque que tenía cien. Le saca más agua de la que hay, y queda en menos cincuenta. Abajo lo tenés dibujado.
 
+$$V(7{,}5) = 100 - 7{,}5 \cdot \frac{100}{5} = 100 - 150 = -50$$
+
 ![Gráfico del tanque con Euler, con un paso chico y con un paso grande](https://raw.githubusercontent.com/JHProyectos/tpi-simulacion-2026/main/material/img/eje8-euler-paso.svg)
 
 *Figura 2. El tanque con dos pasos. Con un minuto, el agua baja suave. Con siete minutos y medio, pasa de cien a menos cincuenta, a veinticinco y a menos doce y medio: oscilaciones que fabrica el método.*
@@ -135,6 +143,8 @@ Esto es muy preguntable. En el tanque, con un paso de un minuto, el agua baja su
 Primero identificás la constante de tiempo más chica del modelo: el tiempo característico en el que un nivel cambia de manera apreciable. En el tanque es cinco minutos. Y después, tres reglas.
 
 La primera: el paso tiene que ser menor que un tercio de la menor constante de tiempo, según la documentación de Vensim. En el tanque, menor que uno coma siete minutos.
+
+$$\Delta t < \frac{\tau_{min}}{3} \qquad \text{tanque: } \Delta t < \frac{5}{3} \approx 1{,}67 \text{ min}$$
 
 La segunda: preferir potencias de un medio, como uno, cero coma cinco o cero coma veinticinco, porque se representan exacto en la computadora.
 
@@ -316,7 +326,14 @@ La tabla tiene una fila por instante, y una columna por nivel, una por flujo y u
 
 ¿Cómo la llenás? En cada fila, primero los flujos, con los valores de esa fila. Después, el cambio neto. Y por último, el nivel de la fila siguiente, con Euler. Todo con dos decimales. En la última fila solo va el nivel.
 
+| $t$ | Nivel $N(t)$ | Entradas | Salidas | Cambio neto | Nivel siguiente |
+|---|---|---|---|---|---|
+| 0 | $N_0$ | con $N_0$ y $t=0$ | con $N_0$ y $t=0$ | entradas − salidas | $N_0 + \Delta t \cdot \text{neto}$ |
+| $\Delta t$ | el de arriba | ... | ... | ... | ... |
+
 Y para cualquier pregunta de equilibrio, un solo truco: en el equilibrio el nivel no cambia, entonces entradas iguales a salidas, y despejás. Te salva en el calamar, en el inventario y en los errores pendientes.
+
+$$\frac{dN}{dt} = 0 \quad \Leftrightarrow \quad \sum \text{entradas} = \sum \text{salidas}$$
 
 **Ojo, trampa.** Seis errores típicos de la práctica, que te pueden costar puntos.
 
@@ -342,6 +359,19 @@ No hay bucles: el agua no cambia ni la entrada ni la salida. La entrada es entra
 
 El agua va cincuenta, cincuenta y cuatro, cincuenta y siete, cincuenta y nueve, sesenta, sesenta, cincuenta y nueve, cincuenta y siete, del minuto cero al siete.
 
+$$\text{entrada}(t) = 10 - 1 \cdot t \ \ [\text{L/min}] \qquad \text{salida} = 6 \ [\text{L/min}] \qquad A(t+1) = A(t) + 1 \cdot \big[\text{entrada}(t) - 6\big]$$
+
+| $t$ (min) | Agua (L) | Entrada | Salida | Neto |
+|---|---|---|---|---|
+| 0 | 50 | 10 | 6 | 4 |
+| 1 | 54 | 9 | 6 | 3 |
+| 2 | 57 | 8 | 6 | 2 |
+| 3 | 59 | 7 | 6 | 1 |
+| 4 | 60 | 6 | 6 | 0 |
+| 5 | 60 | 5 | 6 | −1 |
+| 6 | 59 | 4 | 6 | −2 |
+| 7 | 57 | | | |
+
 El máximo es sesenta litros, alcanzado por primera vez en el minuto cuatro, donde la entrada vale seis, igual que la salida, y el cambio neto es cero.
 
 ¿La lección? Es el error de la bañera en forma de ejercicio: la entrada baja desde el principio, y aun así el agua sube cuatro minutos.
@@ -352,11 +382,33 @@ Tres bucles: nacimientos, reforzador; muertes y pesca, compensadores.
 
 En el año cero: nacimientos cuatrocientas, muertes doscientas ochenta y ocho, pesca ciento noventa y dos, cambio neto menos ochenta. La población va mil seiscientas, mil quinientas veinte, mil cuatrocientas cuarenta y cuatro, mil trescientas setenta y una coma ochenta.
 
+$$P(t+1) = P(t) + 1 \cdot \big[0{,}25\,P(t) - 0{,}18\,P(t) - 0{,}12\,P(t)\big] = P(t)\,(1 - 0{,}05)$$
+
+| Año | Población (t) | Nacimientos | Muertes | Pesca | Neto |
+|---|---|---|---|---|---|
+| 0 | 1600 | 400 | 288 | 192 | −80 |
+| 1 | 1520 | 380 | 273,60 | 182,40 | −76 |
+| 2 | 1444 | 361 | 259,92 | 173,28 | −72,20 |
+| 3 | 1371,80 | | | | |
+
 La tasa neta es menos cinco por ciento anual: caída exponencial. ¿Y la pesca sostenible? La que hace cero la tasa neta: siete por ciento anual.
+
+$$0{,}25 - 0{,}18 - p = 0 \quad \Rightarrow \quad p = 0{,}07 \ \text{1/año}$$
 
 Ejercicio tres, el café. Ochenta grados, ambiente veinte, constante de tiempo diez minutos. Un bucle compensador.
 
 Con delta t de dos: ochenta, sesenta y ocho, cincuenta y ocho coma cuarenta, cincuenta coma setenta y dos, con enfriamientos seis, cuatro coma ocho y tres coma ochenta y cuatro.
+
+$$\text{enfriamiento}(t) = \frac{C(t) - 20}{10} \ [\text{°C/min}] \qquad C(t+\Delta t) = C(t) - \Delta t \cdot \frac{C(t) - 20}{10}$$
+
+| $t$ (min) | Café (°C) | Enfriamiento | $\Delta t \cdot$ enfriamiento |
+|---|---|---|---|
+| 0 | 80 | 6 | 12 |
+| 2 | 68 | 4,80 | 9,60 |
+| 4 | 58,40 | 3,84 | 7,68 |
+| 6 | 50,72 | | |
+
+$$C_{exacta}(t) = 20 + 60\,e^{-t/10} \qquad C_{exacta}(6) \approx 52{,}93 \qquad 52{,}93 - 50{,}72 = 2{,}21$$
 
 Euler da menos que la exacta, porque supone que el café se enfría a la velocidad del principio de cada paso: el velocímetro otra vez. La diferencia a los seis minutos es dos coma veintiún grados.
 
@@ -366,17 +418,32 @@ Con veinticinco: ochenta, menos setenta, ciento cincuenta y cinco, menos ciento 
 
 La regla pide delta t menor que tres coma treinta y tres minutos: cumplen uno y dos, no cuatro ni cinco.
 
+$$\Delta t < \frac{10}{3} \approx 3{,}33 \text{ min}$$
+
 Ejercicio cuatro, el inventario que no llega. Objetivo dos mil, inventario mil quinientos, ventas veinte por día, tiempo de ajuste cinco días. Bucle compensador entre inventario y producción.
 
 Delta t tiene que ser menor que uno coma sesenta y siete días, y uno cumple.
 
 El inventario va mil quinientos, mil quinientos ochenta, mil seiscientos cuarenta y cuatro, mil seiscientos noventa y cinco coma veinte, con producción cien, ochenta y cuatro y setenta y uno coma veinte.
 
+$$\text{producción}(t) = \frac{2000 - I(t)}{5} \ [\text{u/día}] \qquad I(t+1) = I(t) + 1 \cdot \big[\text{producción}(t) - 20\big]$$
+
+| Día | Inventario | Producción | Ventas | Neto |
+|---|---|---|---|---|
+| 0 | 1500 | 100 | 20 | 80 |
+| 1 | 1580 | 84 | 20 | 64 |
+| 2 | 1644 | 71,20 | 20 | 51,20 |
+| 3 | 1695,20 | | | |
+
 Se estabiliza en mil novecientos, con producción veinte, y le faltan cien. ¿Por qué no llega? Truco del equilibrio: el inventario no cambia, así que la producción iguala a las ventas, veinte. Y la política solo produce veinte cuando faltan cien, porque cien sobre cinco es veinte.
+
+$$\frac{2000 - I^*}{5} = 20 \quad \Rightarrow \quad I^* = 1900$$
 
 No es un error de Euler: es lo que hace esa política, que reacciona solo a la diferencia con el objetivo y no mira las ventas. Es como llenar un balde agujereado mirando solo cuánto le falta: cerca del borde echás tan poquito como lo que se escapa, y ahí se queda.
 
 Con la política corregida, producción igual a ventas más la diferencia sobre el tiempo de ajuste, va mil quinientos, mil seiscientos, mil seiscientos ochenta, mil setecientos cuarenta y cuatro, y se estabiliza en dos mil. La corrección agrega una flecha positiva de ventas a producción: en el balde, reponés primero lo que se escapa.
+
+$$\text{producción}(t) = 20 + \frac{2000 - I(t)}{5} \qquad 20 + \frac{2000 - I^*}{5} = 20 \ \Rightarrow \ I^* = 2000$$
 
 Ejercicio cinco, la reserva. Mil millones de metros cúbicos, consumo ciento cincuenta por año, sin bucles.
 
@@ -384,13 +451,33 @@ La reserva baja de a ciento cincuenta, y en el año siete queda en menos cincuen
 
 La corrección: consumo igual al mínimo entre el previsto y la reserva sobre delta t. Año cinco, doscientos cincuenta con consumo ciento cincuenta; año seis, cien con consumo cien; año siete, cero. Llega a cero en el año siete sin pasar por debajo, y aparece un bucle compensador entre reserva y consumo.
 
+$$\text{consumo}(t) = \min\!\left(150,\ \frac{R(t)}{\Delta t}\right) \qquad R(t+1) = R(t) - 1 \cdot \text{consumo}(t)$$
+
+| Año | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|---|---|---|---|---|---|---|---|
+| Sin regla | 1000 | 850 | 700 | 550 | 400 | 250 | 100 | −50 |
+| Con el mínimo | 1000 | 850 | 700 | 550 | 400 | 250 | 100 | 0 |
+| Consumo con el mínimo | 150 | 150 | 150 | 150 | 150 | 150 | 100 | |
+
 Ejercicio seis, los errores pendientes. Doscientos pendientes, treinta reportados por semana, y dos políticas.
 
 Política A, corregir veinticinco fijos: sin bucle. Los pendientes van doscientos, doscientos cinco, doscientos diez, doscientos quince, doscientos veinte, y crecen cinco por semana para siempre.
 
 Política B, corregir la cuarta parte de los pendientes, con tiempo de corrección de cuatro semanas: bucle compensador. Van doscientos, ciento ochenta, ciento sesenta y cinco, ciento cincuenta y tres coma setenta y cinco, ciento cuarenta y cinco coma treinta y uno, con corregidos cincuenta, cuarenta y cinco, cuarenta y uno coma veinticinco y treinta y ocho coma cuarenta y cuatro. Se estabiliza en ciento veinte.
 
+$$\text{A: } E(t+1) = E(t) + 1 \cdot (30 - 25) \qquad \text{B: } E(t+1) = E(t) + 1 \cdot \left(30 - \frac{E(t)}{4}\right)$$
+
+| Semana | Pendientes A | Pendientes B | Corregidos B | Neto B |
+|---|---|---|---|---|
+| 0 | 200 | 200 | 50 | −20 |
+| 1 | 205 | 180 | 45 | −15 |
+| 2 | 210 | 165 | 41,25 | −11,25 |
+| 3 | 215 | 153,75 | 38,44 | −8,44 |
+| 4 | 220 | 145,31 | | |
+
 Para estabilizar en sesenta hace falta un tiempo de corrección de dos semanas: corregir la mitad cada semana.
+
+$$\frac{E^*}{4} = 30 \ \Rightarrow \ E^* = 120 \qquad\qquad \frac{60}{\tau} = 30 \ \Rightarrow \ \tau = 2 \text{ semanas}$$
 
 La lección: una política que no mira el estado del sistema no lo puede controlar. La A es manejar con el volante atado.
 

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="630" viewBox="0 0 960 630" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Los componentes del modelo en la caja del minimercado</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <g id="persona">
+      <circle cx="0" cy="-22" r="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+      <rect x="-14" y="-7" width="28" height="36" rx="9" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+    </g>
+    <g id="evento">
+      <path d="M0,-11 L11,0 L0,11 L-11,0 z" fill="#d97706" stroke="#ffffff" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="630" fill="#ffffff"/>
+
+  <text x="480" y="40" font-size="24" font-weight="700" text-anchor="middle">Los componentes del modelo en la caja del minimercado</text>
+
+  <!-- El sistema -->
+  <rect x="20" y="62" width="920" height="320" rx="14" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="40" y="92" font-size="18" font-weight="700">El sistema que se simula</text>
+
+  <!-- Flujo de clientes -->
+  <line x1="30" y1="215" x2="124" y2="215" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="168" y1="215" x2="241" y2="215" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="489" y1="215" x2="556" y2="215" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="754" y1="215" x2="915" y2="215" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+
+  <!-- Eventos sobre el flujo -->
+  <use href="#evento" x="66" y="215"/>
+  <text x="66" y="252" font-size="17" font-weight="700" text-anchor="middle">llegada</text>
+  <use href="#evento" x="835" y="215"/>
+  <text x="835" y="252" font-size="17" font-weight="700" text-anchor="middle">fin de atención</text>
+
+  <!-- Entidad con su etiqueta -->
+  <text x="146" y="152" font-size="18" font-weight="700" text-anchor="middle" fill="#1a56db">Entidad: cliente</text>
+  <use href="#persona" x="146" y="210"/>
+  <line x1="146" y1="239" x2="146" y2="290" stroke="#1a56db" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="26" y="290" width="240" height="64" rx="8" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <circle cx="146" cy="300" r="4" fill="#ffffff" stroke="#1a56db" stroke-width="2"/>
+  <text x="146" y="322" font-size="17" font-weight="700" text-anchor="middle" fill="#1a56db">Atributos: viajan con él</text>
+  <text x="146" y="344" font-size="16" text-anchor="middle">hora de llegada, prioridad</text>
+
+  <!-- Cola -->
+  <text x="367" y="152" font-size="18" font-weight="700" text-anchor="middle" fill="#1a56db">Cola FIFO: la fila</text>
+  <rect x="245" y="168" width="244" height="92" rx="10" fill="#ffffff" stroke="#1a56db" stroke-width="2" stroke-dasharray="7 5"/>
+  <use href="#persona" x="300" y="216"/>
+  <use href="#persona" x="367" y="216"/>
+  <use href="#persona" x="434" y="216"/>
+  <text x="367" y="286" font-size="16" text-anchor="middle">aquí esperan clientes</text>
+
+  <!-- Recurso -->
+  <text x="655" y="152" font-size="18" font-weight="700" text-anchor="middle" fill="#dc2626">Recurso: cajero</text>
+  <rect x="560" y="175" width="194" height="80" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="657" y="210" font-size="20" font-weight="700" text-anchor="middle" fill="#dc2626">Cajero</text>
+  <text x="657" y="236" font-size="16" text-anchor="middle">ocupado</text>
+  <text x="657" y="286" font-size="16" text-anchor="middle">libre, ocupado, en falla</text>
+  <text x="657" y="308" font-size="16" text-anchor="middle">o fuera de turno</text>
+
+  <!-- Referencia de evento -->
+  <use href="#evento" x="482" y="352"/>
+  <text x="502" y="358" font-size="17">Evento: un instante que cambia el estado, no dura</text>
+
+  <!-- Variables de estado -->
+  <rect x="20" y="402" width="300" height="212" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="170" y="434" font-size="19" font-weight="700" text-anchor="middle" fill="#059669">Variables de estado</text>
+  <text x="170" y="460" font-size="16" text-anchor="middle">la foto del sistema entero</text>
+  <rect x="40" y="476" width="260" height="38" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="170" y="501" font-size="17" text-anchor="middle">Clientes en fila: 3</text>
+  <rect x="40" y="524" width="260" height="38" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="170" y="549" font-size="17" text-anchor="middle">Cajero: ocupado</text>
+  <text x="170" y="592" font-size="16" text-anchor="middle">no son de ningún cliente</text>
+
+  <!-- Reloj -->
+  <rect x="340" y="402" width="250" height="212" rx="12" fill="#ffffff" stroke="#374151" stroke-width="2.5"/>
+  <text x="465" y="434" font-size="19" font-weight="700" text-anchor="middle">Reloj de simulación</text>
+  <circle cx="465" cy="497" r="38" fill="#ffffff" stroke="#374151" stroke-width="3"/>
+  <line x1="465" y1="465" x2="465" y2="472" stroke="#374151" stroke-width="2"/>
+  <line x1="465" y1="522" x2="465" y2="529" stroke="#374151" stroke-width="2"/>
+  <line x1="433" y1="497" x2="440" y2="497" stroke="#374151" stroke-width="2"/>
+  <line x1="490" y1="497" x2="497" y2="497" stroke="#374151" stroke-width="2"/>
+  <line x1="465" y1="497" x2="465" y2="472" stroke="#374151" stroke-width="3" stroke-linecap="round"/>
+  <line x1="465" y1="497" x2="484" y2="506" stroke="#374151" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="465" cy="497" r="3.5" fill="#374151"/>
+  <text x="465" y="566" font-size="16" text-anchor="middle">ahora marca el minuto 4</text>
+  <text x="465" y="592" font-size="16" text-anchor="middle">tiempo simulado, no real</text>
+
+  <!-- Lista de eventos futuros -->
+  <rect x="610" y="402" width="330" height="212" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="775" y="434" font-size="19" font-weight="700" text-anchor="middle">Lista de eventos futuros</text>
+  <text x="775" y="460" font-size="16" text-anchor="middle">la agenda: aquí esperan eventos</text>
+  <rect x="630" y="476" width="290" height="38" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+  <use href="#evento" x="652" y="495"/>
+  <text x="672" y="501" font-size="17"><tspan font-weight="700">minuto 5:</tspan> fin de atención</text>
+  <rect x="630" y="524" width="290" height="38" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+  <use href="#evento" x="652" y="543"/>
+  <text x="672" y="549" font-size="17"><tspan font-weight="700">minuto 6:</tspan> llegada</text>
+  <text x="775" y="592" font-size="16" text-anchor="middle">estructura central, ordenada por tiempo</text>
+</svg>

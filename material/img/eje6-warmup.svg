@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Sesgo de arranque y warm-up en un sistema no terminante</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="560" fill="#ffffff"/>
+
+  <text x="500" y="40" font-size="24" font-weight="700" text-anchor="middle">Sesgo de arranque y warm-up (sistema no terminante)</text>
+  <text x="500" y="68" font-size="17" text-anchor="middle">Ejemplo: un hospital de 24 horas que, en el modelo, arranca vacío</text>
+
+  <!-- Zonas -->
+  <rect x="110" y="120" width="270" height="320" fill="#fee2e2"/>
+  <rect x="380" y="120" width="580" height="320" fill="#d1fae5"/>
+
+  <!-- Corte del warm-up -->
+  <line x1="380" y1="112" x2="380" y2="440" stroke="#374151" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="380" y="104" font-size="16" font-weight="700" text-anchor="middle">fin del warm-up</text>
+
+  <!-- Textos de las zonas -->
+  <text x="245" y="150" font-size="19" font-weight="700" text-anchor="middle" fill="#dc2626">Warm-up</text>
+  <text x="245" y="174" font-size="16" text-anchor="middle">el modelo corre,</text>
+  <text x="245" y="196" font-size="16" text-anchor="middle">pero no se mide:</text>
+  <text x="245" y="218" font-size="16" font-weight="700" text-anchor="middle">se descarta</text>
+
+  <text x="670" y="150" font-size="19" font-weight="700" text-anchor="middle" fill="#059669">Zona estable</text>
+  <text x="670" y="174" font-size="16" text-anchor="middle">acá se miden las estadísticas</text>
+
+  <!-- Nivel estable -->
+  <line x1="380" y1="240" x2="960" y2="240" stroke="#374151" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="950" y="276" font-size="16" text-anchor="end">nivel de operación estable</text>
+
+  <!-- Curva cualitativa -->
+  <polyline fill="none" stroke="#1a56db" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+    points="110,432 130,418 150,395 170,380 190,350 210,338 230,312 250,300 270,282 290,275 310,262 330,255 350,248 370,243 390,238 410,247 430,232 450,241 470,236 490,249 510,234 530,240 550,228 570,244 590,237 610,246 630,231 650,239 670,245 690,233 710,241 730,236 750,248 770,235 790,240 810,230 830,243 850,238 870,246 890,232 910,240 930,237 950,243"/>
+
+  <!-- Sesgo -->
+  <text x="258" y="345" font-size="16" font-weight="700">Arranca vacío:</text>
+  <text x="258" y="367" font-size="16">la cola parece</text>
+  <text x="258" y="389" font-size="16">más chica</text>
+  <text x="258" y="411" font-size="16">que la real</text>
+
+  <!-- Ejes -->
+  <line x1="110" y1="440" x2="110" y2="114" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="110" y1="440" x2="966" y2="440" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="535" y="472" font-size="16" font-weight="700" text-anchor="middle">Tiempo simulado</text>
+  <text transform="translate(66,280) rotate(-90)" font-size="16" font-weight="700" text-anchor="middle">Cola promedio de las corridas piloto</text>
+
+  <!-- Pie -->
+  <text x="500" y="512" font-size="16" text-anchor="middle"><tspan font-weight="700" fill="#dc2626">Sesgo de inicialización:</tspan> si se midiera desde el arranque, la espera quedaría subestimada.</text>
+  <text x="500" y="540" font-size="16" text-anchor="middle">En un sistema terminante simulado desde su apertura real, como el supermercado, no hace falta warm-up.</text>
+</svg>

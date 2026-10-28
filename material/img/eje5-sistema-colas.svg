@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" font-family="Segoe UI, Arial, sans-serif">
+  <title>Sistema de colas: qué se mide en cada parte</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="500" fill="#ffffff"/>
+
+  <text x="480" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#374151">Un sistema de colas: qué se mide en cada parte</text>
+
+  <!-- Tiempos de cada cliente (arriba) -->
+  <text x="480" y="70" text-anchor="middle" font-size="19" font-weight="700" fill="#1a56db">Tiempos de cada cliente: se promedian sobre los clientes</text>
+  <text x="485" y="99" text-anchor="middle" font-size="17" fill="#374151">Tiempo en el sistema → <tspan font-weight="700" fill="#1a56db">W</tspan></text>
+  <path d="M262,122 V110 H708 V122" fill="none" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="390" y="147" text-anchor="middle" font-size="17" fill="#374151">Espera en cola → <tspan font-weight="700" fill="#1a56db">Wq</tspan></text>
+  <path d="M262,170 V158 H518 V170" fill="none" stroke="#1a56db" stroke-width="2.5"/>
+
+  <!-- Componentes -->
+  <rect x="20" y="185" width="140" height="90" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="90" y="225" text-anchor="middle" font-size="17" font-weight="600" fill="#374151">Fuente de</text>
+  <text x="90" y="247" text-anchor="middle" font-size="17" font-weight="600" fill="#374151">entrada</text>
+
+  <line x1="162" y1="232" x2="254" y2="232" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="207" y="220" text-anchor="middle" font-size="16" fill="#374151">llegan</text>
+
+  <rect x="260" y="185" width="260" height="90" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="390" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#374151">Cola</text>
+  <circle cx="315" cy="247" r="15" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+  <circle cx="365" cy="247" r="15" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+  <circle cx="415" cy="247" r="15" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+  <circle cx="465" cy="247" r="15" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+
+  <line x1="522" y1="232" x2="566" y2="232" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+
+  <rect x="570" y="185" width="140" height="90" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="640" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#374151">Servidor</text>
+  <circle cx="640" cy="247" r="15" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+
+  <line x1="712" y1="232" x2="786" y2="232" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="749" y="220" text-anchor="middle" font-size="16" fill="#374151">se va</text>
+
+  <rect x="790" y="185" width="150" height="90" rx="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+  <text x="865" y="237" text-anchor="middle" font-size="17" font-weight="600" fill="#374151">Salida</text>
+
+  <!-- Cantidades en cada instante (abajo) -->
+  <path d="M262,292 V304 H518 V292" fill="none" stroke="#d97706" stroke-width="2.5"/>
+  <text x="390" y="330" text-anchor="middle" font-size="17" fill="#374151"><tspan font-weight="700">Q(t)</tspan>: cuántos esperan → <tspan font-weight="700">Lq</tspan></text>
+  <path d="M572,292 V304 H708 V292" fill="none" stroke="#d97706" stroke-width="2.5"/>
+  <text x="640" y="330" text-anchor="middle" font-size="17" fill="#374151"><tspan font-weight="700">B(t)</tspan>: ocupado o libre</text>
+  <text x="640" y="352" text-anchor="middle" font-size="17" fill="#374151">→ <tspan font-weight="700">utilización</tspan></text>
+  <path d="M262,370 V382 H708 V370" fill="none" stroke="#d97706" stroke-width="2.5"/>
+  <text x="485" y="408" text-anchor="middle" font-size="17" fill="#374151"><tspan font-weight="700">N(t)</tspan>: cuántos hay en el sistema → <tspan font-weight="700">L</tspan></text>
+
+  <text x="480" y="446" text-anchor="middle" font-size="19" font-weight="700" fill="#d97706">Cantidades en cada instante: se promedian en el tiempo</text>
+  <text x="480" y="478" text-anchor="middle" font-size="16" fill="#374151">En todo instante, en el sistema están los que esperan más el que se atiende.</text>
+</svg>

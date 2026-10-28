@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 595" width="960" height="595" font-family="Segoe UI, Arial, sans-serif">
+  <title>Ejercicio 1: llegadas, B(t) y Q(t) sobre el mismo eje</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="595" fill="#ffffff"/>
+
+  <text x="480" y="32" text-anchor="middle" font-size="22" font-weight="700" fill="#374151">Ejercicio 1: llegadas, B(t) y Q(t) sobre el mismo eje</text>
+
+  <!-- Grilla vertical: un minuto = 28 px, x = 130 + 28 t -->
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="158" y1="130" x2="158" y2="360"/><line x1="186" y1="130" x2="186" y2="360"/>
+    <line x1="214" y1="130" x2="214" y2="360"/><line x1="242" y1="130" x2="242" y2="360"/>
+    <line x1="270" y1="130" x2="270" y2="360"/><line x1="298" y1="130" x2="298" y2="360"/>
+    <line x1="326" y1="130" x2="326" y2="360"/><line x1="354" y1="130" x2="354" y2="360"/>
+    <line x1="382" y1="130" x2="382" y2="360"/><line x1="410" y1="130" x2="410" y2="360"/>
+    <line x1="438" y1="130" x2="438" y2="360"/><line x1="466" y1="130" x2="466" y2="360"/>
+    <line x1="494" y1="130" x2="494" y2="360"/><line x1="522" y1="130" x2="522" y2="360"/>
+    <line x1="550" y1="130" x2="550" y2="360"/><line x1="578" y1="130" x2="578" y2="360"/>
+    <line x1="606" y1="130" x2="606" y2="360"/><line x1="634" y1="130" x2="634" y2="360"/>
+    <line x1="662" y1="130" x2="662" y2="360"/><line x1="690" y1="130" x2="690" y2="360"/>
+    <line x1="718" y1="130" x2="718" y2="360"/><line x1="746" y1="130" x2="746" y2="360"/>
+    <line x1="774" y1="130" x2="774" y2="360"/><line x1="802" y1="130" x2="802" y2="360"/>
+  </g>
+
+  <!-- Panel 1: llegadas -->
+  <text x="20" y="90" font-size="17" font-weight="700" fill="#374151">Llegadas</text>
+  <line x1="130" y1="96" x2="830" y2="96" stroke="#374151" stroke-width="1.5"/>
+  <g fill="#374151">
+    <polygon points="122,74 138,74 130,96"/>
+    <polygon points="318,74 334,74 326,96"/>
+    <polygon points="346,74 362,74 354,96"/>
+    <polygon points="374,74 390,74 382,96"/>
+    <polygon points="430,74 446,74 438,96"/>
+    <polygon points="514,74 530,74 522,96"/>
+    <polygon points="542,74 558,74 550,96"/>
+    <polygon points="682,74 698,74 690,96"/>
+  </g>
+  <g font-size="16" fill="#374151" text-anchor="middle">
+    <text x="130" y="66">0</text><text x="326" y="66">7</text><text x="354" y="66">8</text>
+    <text x="382" y="66">9</text><text x="438" y="66">11</text><text x="522" y="66">14</text>
+    <text x="550" y="66">15</text><text x="690" y="66">20</text>
+  </g>
+
+  <!-- Panel 2: B(t), 1 en y = 140 y 0 en y = 200 -->
+  <text x="20" y="176" font-size="17" font-weight="700" fill="#374151">B(t)</text>
+  <text x="120" y="146" text-anchor="end" font-size="16" fill="#374151">1</text>
+  <text x="120" y="206" text-anchor="end" font-size="16" fill="#374151">0</text>
+  <rect x="130" y="140" width="56" height="60" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <rect x="326" y="140" width="504" height="60" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <line x1="130" y1="200" x2="830" y2="200" stroke="#374151" stroke-width="1.5"/>
+  <text x="158" y="176" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">2 min</text>
+  <text x="256" y="176" text-anchor="middle" font-size="16" font-style="italic" fill="#374151">libre, 5 min</text>
+  <text x="578" y="176" text-anchor="middle" font-size="16" font-weight="700" fill="#374151">ocupado 18 minutos seguidos</text>
+
+  <!-- Panel 3: Q(t), 0 en y = 360, 1 en y = 310, 2 en y = 260 -->
+  <text x="20" y="316" font-size="17" font-weight="700" fill="#374151">Q(t)</text>
+  <text x="120" y="266" text-anchor="end" font-size="16" fill="#374151">2</text>
+  <text x="120" y="316" text-anchor="end" font-size="16" fill="#374151">1</text>
+  <text x="120" y="366" text-anchor="end" font-size="16" fill="#374151">0</text>
+  <line x1="130" y1="260" x2="830" y2="260" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="130" y1="310" x2="830" y2="310" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <path d="M130,360 H354 V310 H382 V260 H410 V310 H438 V260 H466 V310 H550 V260 H578 V310 H634 V360 H690 V310 H774 V360 H830 Z" fill="#fef3c7" stroke="none"/>
+  <g stroke="#d97706" stroke-width="1.2" stroke-dasharray="3 3">
+    <line x1="382" y1="310" x2="382" y2="360"/><line x1="410" y1="310" x2="410" y2="360"/>
+    <line x1="438" y1="310" x2="438" y2="360"/><line x1="466" y1="310" x2="466" y2="360"/>
+    <line x1="550" y1="310" x2="550" y2="360"/><line x1="578" y1="310" x2="578" y2="360"/>
+  </g>
+  <path d="M130,360 H354 V310 H382 V260 H410 V310 H438 V260 H466 V310 H550 V260 H578 V310 H634 V360 H690 V310 H774 V360 H830" fill="none" stroke="#d97706" stroke-width="3" stroke-linejoin="miter"/>
+  <g font-size="16" font-weight="700" fill="#374151" text-anchor="middle">
+    <text x="368" y="341">1</text><text x="396" y="316">2</text><text x="424" y="341">1</text>
+    <text x="452" y="316">2</text><text x="508" y="341">3</text><text x="564" y="316">2</text>
+    <text x="606" y="341">2</text><text x="732" y="341">3</text>
+  </g>
+  <text x="816" y="246" text-anchor="end" font-size="16" font-style="italic" fill="#374151">En cada tramo: cuántos había × cuánto duró</text>
+  <line x1="130" y1="360" x2="830" y2="360" stroke="#374151" stroke-width="2"/>
+
+  <!-- Horizonte T -->
+  <line x1="830" y1="60" x2="830" y2="360" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <!-- Eje de tiempo -->
+  <g font-size="16" fill="#374151" text-anchor="middle">
+    <text x="130" y="386">0</text><text x="158" y="386">1</text><text x="186" y="386">2</text>
+    <text x="214" y="386">3</text><text x="242" y="386">4</text><text x="270" y="386">5</text>
+    <text x="298" y="386">6</text><text x="326" y="386">7</text><text x="354" y="386">8</text>
+    <text x="382" y="386">9</text><text x="410" y="386">10</text><text x="438" y="386">11</text>
+    <text x="466" y="386">12</text><text x="494" y="386">13</text><text x="522" y="386">14</text>
+    <text x="550" y="386">15</text><text x="578" y="386">16</text><text x="606" y="386">17</text>
+    <text x="634" y="386">18</text><text x="662" y="386">19</text><text x="690" y="386">20</text>
+    <text x="718" y="386">21</text><text x="746" y="386">22</text><text x="774" y="386">23</text>
+    <text x="802" y="386">24</text><text x="830" y="386">25</text>
+  </g>
+  <text x="480" y="414" text-anchor="middle" font-size="16" fill="#374151">Tiempo (minutos)</text>
+  <text x="830" y="414" text-anchor="middle" font-size="17" font-weight="700" fill="#dc2626">T = 25</text>
+
+  <!-- Resultados -->
+  <rect x="24" y="434" width="444" height="80" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="246" y="465" text-anchor="middle" font-size="17" fill="#374151">Área bajo B(t) = 2 + 18 = <tspan font-weight="700">20</tspan></text>
+  <text x="246" y="496" text-anchor="middle" font-size="17" fill="#374151">Utilización = 20 ÷ 25 = <tspan font-weight="700">0,8</tspan></text>
+
+  <rect x="492" y="434" width="444" height="80" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="714" y="465" text-anchor="middle" font-size="17" fill="#374151">Área bajo Q(t) = <tspan font-weight="700">16</tspan> = suma de esperas</text>
+  <text x="714" y="496" text-anchor="middle" font-size="17" fill="#374151">Lq = 16 ÷ 25 = <tspan font-weight="700">0,64 clientes</tspan></text>
+
+  <rect x="24" y="528" width="912" height="50" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="252" y="559" text-anchor="middle" font-size="17" fill="#374151">L = 0,64 + 0,8 = <tspan font-weight="700" fill="#1a56db">1,44 clientes</tspan></text>
+  <text x="708" y="559" text-anchor="middle" font-size="17" fill="#374151">Little: lambda × Wq = 0,32 × 2 = <tspan font-weight="700" fill="#1a56db">0,64</tspan></text>
+</svg>

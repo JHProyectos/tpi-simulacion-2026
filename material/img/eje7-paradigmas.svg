@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720" font-family="Segoe UI, Arial, sans-serif">
+  <title>Dónde vive la lógica en eventos discretos, en agentes y en dinámica de sistemas</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="720" fill="#ffffff"/>
+
+  <text x="500" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#374151">Dónde vive la lógica en cada paradigma</text>
+
+  <!-- Encabezados -->
+  <rect x="20" y="65" width="310" height="50" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="175" y="97" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">Eventos discretos</text>
+  <rect x="345" y="65" width="310" height="50" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="500" y="97" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">Agentes</text>
+  <rect x="670" y="65" width="310" height="50" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="825" y="97" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">Dinámica de sistemas</text>
+
+  <!-- Paneles de dibujo -->
+  <rect x="20" y="130" width="310" height="230" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.2"/>
+  <rect x="345" y="130" width="310" height="230" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.2"/>
+  <rect x="670" y="130" width="310" height="230" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.2"/>
+
+  <!-- Eventos discretos: flujo -->
+  <rect x="45" y="158" width="110" height="42" rx="8" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="100" y="185" text-anchor="middle" font-size="17" fill="#374151">Llegada</text>
+  <rect x="195" y="158" width="110" height="42" rx="8" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="250" y="185" text-anchor="middle" font-size="17" fill="#374151">Cola</text>
+  <rect x="195" y="238" width="110" height="42" rx="8" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="250" y="265" text-anchor="middle" font-size="17" fill="#374151">Caja</text>
+  <rect x="45" y="238" width="110" height="42" rx="8" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="100" y="265" text-anchor="middle" font-size="17" fill="#374151">Salida</text>
+  <line x1="155" y1="179" x2="193" y2="179" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="250" y1="200" x2="250" y2="236" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="195" y1="259" x2="157" y2="259" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <circle cx="250" cy="213" r="8" fill="#1a56db"/>
+  <text x="175" y="345" text-anchor="middle" font-size="17" fill="#374151">La entidad sigue el flujo</text>
+
+  <!-- Agentes: individuos en red, uno que decide -->
+  <rect x="368" y="146" width="264" height="84" rx="12" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+  <path d="M452,230 L470,256 L478,230 z" fill="#ffffff" stroke="#059669" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="453" y1="230" x2="477" y2="230" stroke="#ffffff" stroke-width="3"/>
+  <text x="500" y="172" text-anchor="middle" font-size="17" font-weight="700" fill="#374151">Mi estado es X,</text>
+  <text x="500" y="195" text-anchor="middle" font-size="17" font-weight="700" fill="#374151">percibo Y,</text>
+  <text x="500" y="218" text-anchor="middle" font-size="17" font-weight="700" fill="#374151">por eso hago Z.</text>
+  <line x1="470" y1="276" x2="405" y2="300" stroke="#374151" stroke-width="1.5"/>
+  <line x1="470" y1="276" x2="560" y2="292" stroke="#374151" stroke-width="1.5"/>
+  <line x1="560" y1="292" x2="615" y2="262" stroke="#374151" stroke-width="1.5"/>
+  <line x1="405" y1="300" x2="560" y2="292" stroke="#374151" stroke-width="1.5"/>
+  <circle cx="470" cy="276" r="17" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <circle cx="405" cy="300" r="15" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <circle cx="560" cy="292" r="15" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <circle cx="615" cy="262" r="15" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="500" y="345" text-anchor="middle" font-size="17" fill="#374151">Cada individuo decide</text>
+
+  <!-- Dinámica de sistemas: niveles y flujos -->
+  <rect x="720" y="146" width="210" height="40" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="825" y="172" text-anchor="middle" font-size="17" fill="#374151">Susceptibles</text>
+  <rect x="720" y="214" width="210" height="40" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="825" y="240" text-anchor="middle" font-size="17" fill="#374151">Infectados</text>
+  <rect x="720" y="282" width="210" height="40" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="825" y="308" text-anchor="middle" font-size="17" fill="#374151">Recuperados</text>
+  <line x1="760" y1="186" x2="760" y2="212" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="760" y1="254" x2="760" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <text x="772" y="206" font-size="16" fill="#374151">tasa promedio</text>
+  <text x="772" y="274" font-size="16" fill="#374151">tasa promedio</text>
+  <text x="825" y="345" text-anchor="middle" font-size="17" fill="#374151">Se miran los agregados</text>
+
+  <!-- Fila: la lógica está -->
+  <rect x="20" y="378" width="310" height="96" rx="10" fill="#ffffff" stroke="#1a56db" stroke-width="2"/>
+  <text x="38" y="404" font-size="17" font-weight="700" fill="#374151">La lógica está</text>
+  <text x="38" y="430" font-size="17" fill="#374151">en la estructura del proceso:</text>
+  <text x="38" y="454" font-size="17" fill="#374151">la entidad recorre un flujo.</text>
+
+  <rect x="345" y="378" width="310" height="96" rx="10" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+  <text x="363" y="404" font-size="17" font-weight="700" fill="#374151">La lógica está</text>
+  <text x="363" y="430" font-size="17" fill="#374151">en las reglas locales</text>
+  <text x="363" y="454" font-size="17" fill="#374151">de cada individuo.</text>
+
+  <rect x="670" y="378" width="310" height="96" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+  <text x="688" y="404" font-size="17" font-weight="700" fill="#374151">La lógica está</text>
+  <text x="688" y="430" font-size="17" fill="#374151">en niveles agregados, flujos</text>
+  <text x="688" y="454" font-size="17" fill="#374151">y bucles de realimentación.</text>
+
+  <!-- Fila: conviene cuando -->
+  <rect x="20" y="488" width="310" height="96" rx="10" fill="#ffffff" stroke="#1a56db" stroke-width="2"/>
+  <text x="38" y="514" font-size="17" font-weight="700" fill="#374151">Conviene si</text>
+  <text x="38" y="540" font-size="17" fill="#374151">la pregunta es de capacidad,</text>
+  <text x="38" y="564" font-size="17" fill="#374151">cola o secuencia: cuánto.</text>
+
+  <rect x="345" y="488" width="310" height="96" rx="10" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+  <text x="363" y="514" font-size="17" font-weight="700" fill="#374151">Conviene si</text>
+  <text x="363" y="540" font-size="17" fill="#374151">importa la heterogeneidad o</text>
+  <text x="363" y="564" font-size="17" fill="#374151">quién interactúa con quién.</text>
+
+  <rect x="670" y="488" width="310" height="96" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+  <text x="688" y="514" font-size="17" font-weight="700" fill="#374151">Conviene si</text>
+  <text x="688" y="540" font-size="17" fill="#374151">la pregunta se responde</text>
+  <text x="688" y="564" font-size="17" fill="#374151">con promedios.</text>
+
+  <!-- Mensaje final -->
+  <rect x="20" y="604" width="960" height="92" rx="10" fill="#ffffff" stroke="#374151" stroke-width="2.5"/>
+  <text x="500" y="640" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">Ninguno es más realista por definición: decide la pregunta.</text>
+  <text x="500" y="672" text-anchor="middle" font-size="17" fill="#374151">Agentes ve al individuo y al agregado a la vez, pero es más costoso.</text>
+</svg>

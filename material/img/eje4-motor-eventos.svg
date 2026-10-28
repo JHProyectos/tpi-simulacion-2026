@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="780" viewBox="0 0 960 780" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>El ciclo del motor de eventos</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="flecha-naranja" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97706"/>
+    </marker>
+    <marker id="flecha-verde" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="780" fill="#ffffff"/>
+
+  <text x="480" y="38" font-size="24" font-weight="700" text-anchor="middle">El ciclo del motor de eventos</text>
+
+  <!-- Paso 1 -->
+  <rect x="210" y="58" width="540" height="68" rx="12" fill="#ffffff" stroke="#374151" stroke-width="2"/>
+  <text x="480" y="85" font-size="18" font-weight="700" text-anchor="middle">1. Inicialización, una sola vez</text>
+  <text x="480" y="111" font-size="16" text-anchor="middle">reloj y acumuladores en cero, estado inicial, primera llegada</text>
+  <line x1="480" y1="126" x2="480" y2="170" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+
+  <!-- Lista de eventos futuros, en el centro -->
+  <rect x="340" y="360" width="280" height="120" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+  <text x="480" y="400" font-size="20" font-weight="700" text-anchor="middle">Lista de eventos</text>
+  <text x="480" y="425" font-size="20" font-weight="700" text-anchor="middle">futuros</text>
+  <text x="480" y="456" font-size="16" text-anchor="middle">la agenda, ordenada por tiempo</text>
+
+  <!-- Paso 2 -->
+  <rect x="305" y="174" width="350" height="80" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="480" y="206" font-size="18" font-weight="700" text-anchor="middle">2. Elegir el próximo evento</text>
+  <text x="480" y="233" font-size="16" text-anchor="middle">el de menor tiempo, y sale de la lista</text>
+
+  <!-- Paso 3 -->
+  <rect x="640" y="292" width="300" height="80" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="790" y="324" font-size="18" font-weight="700" text-anchor="middle">3. Avanzar el reloj</text>
+  <text x="790" y="351" font-size="16" text-anchor="middle">hasta el instante de ese evento</text>
+
+  <!-- Paso 4 -->
+  <rect x="500" y="535" width="400" height="80" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="700" y="567" font-size="18" font-weight="700" text-anchor="middle">4. Ejecutar la rutina del evento</text>
+  <text x="700" y="594" font-size="16" text-anchor="middle">cambia el estado y programa eventos nuevos</text>
+
+  <!-- Paso 5 -->
+  <rect x="90" y="535" width="340" height="80" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="260" y="567" font-size="18" font-weight="700" text-anchor="middle">5. Actualizar estadísticas</text>
+  <text x="260" y="594" font-size="16" text-anchor="middle">esperas, tiempos ocupados, atendidos</text>
+
+  <!-- Paso 6 -->
+  <rect x="40" y="292" width="280" height="80" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="180" y="324" font-size="18" font-weight="700" text-anchor="middle">6. Control de fin</text>
+  <text x="180" y="351" font-size="16" text-anchor="middle">¿se cumplió el corte?</text>
+
+  <!-- Fin -->
+  <rect x="40" y="172" width="200" height="56" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="140" y="206" font-size="18" font-weight="700" text-anchor="middle">Fin: reporte</text>
+
+  <!-- Flechas del ciclo -->
+  <path d="M655,214 Q790,214 790,288" fill="none" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <path d="M790,372 Q790,470 738,531" fill="none" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="500" y1="575" x2="434" y2="575" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="180" y1="535" x2="180" y2="376" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <path d="M290,292 Q290,214 301,214" fill="none" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="304" y="280" font-size="16" font-weight="700">no: otra vuelta</text>
+  <line x1="140" y1="292" x2="140" y2="232" stroke="#059669" stroke-width="2.5" marker-end="url(#flecha-verde)"/>
+  <text x="152" y="268" font-size="16" font-weight="700" fill="#059669">sí</text>
+
+  <!-- Flechas de la agenda -->
+  <line x1="480" y1="360" x2="480" y2="258" stroke="#d97706" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#flecha-naranja)"/>
+  <text x="492" y="318" font-size="16">sale el próximo</text>
+  <line x1="610" y1="535" x2="585" y2="484" stroke="#d97706" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#flecha-naranja)"/>
+  <text x="575" y="516" font-size="16" text-anchor="end">entran los nuevos</text>
+
+  <!-- Corte y desempate -->
+  <rect x="40" y="648" width="430" height="116" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="255" y="676" font-size="18" font-weight="700" text-anchor="middle" fill="#dc2626">Condiciones de corte, paso 6</text>
+  <text x="255" y="702" font-size="16" text-anchor="middle">tiempo final alcanzado,</text>
+  <text x="255" y="725" font-size="16" text-anchor="middle">cantidad de entidades procesadas</text>
+  <text x="255" y="748" font-size="16" text-anchor="middle">o lista de eventos vacía</text>
+
+  <rect x="490" y="648" width="430" height="116" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="705" y="676" font-size="18" font-weight="700" text-anchor="middle">Regla de desempate</text>
+  <text x="705" y="702" font-size="16" text-anchor="middle">si dos eventos caen en el mismo instante,</text>
+  <text x="705" y="725" font-size="16" text-anchor="middle">primero el fin de servicio</text>
+  <text x="705" y="748" font-size="16" text-anchor="middle">y después la llegada</text>
+</svg>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="484" viewBox="0 0 1000 484" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Recorrido del eje 6: de los datos de entrada a la implantación</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="flecha-azul" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a56db"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="484" fill="#ffffff"/>
+
+  <text x="500" y="44" font-size="24" font-weight="700" text-anchor="middle">El recorrido del eje 6: del dato a la implantación</text>
+
+  <!-- Etapa 1 -->
+  <rect x="30" y="80" width="205" height="150" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="132.5" y="108" font-size="16" font-weight="700" text-anchor="middle">Etapa 1</text>
+  <text x="132.5" y="136" font-size="18" font-weight="700" text-anchor="middle">Datos de entrada</text>
+  <text x="132.5" y="166" font-size="16" text-anchor="middle">medir y limpiar,</text>
+  <text x="132.5" y="188" font-size="16" text-anchor="middle">describir y elegir</text>
+  <text x="132.5" y="210" font-size="16" text-anchor="middle">la distribución</text>
+
+  <!-- Etapa 2 -->
+  <rect x="275" y="80" width="205" height="150" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="377.5" y="108" font-size="16" font-weight="700" text-anchor="middle">Etapa 2</text>
+  <text x="377.5" y="136" font-size="18" font-weight="700" text-anchor="middle">Planeación táctica</text>
+  <text x="377.5" y="166" font-size="16" text-anchor="middle">cuánto simular,</text>
+  <text x="377.5" y="188" font-size="16" text-anchor="middle">desde cuándo medir,</text>
+  <text x="377.5" y="210" font-size="16" text-anchor="middle">cuántas réplicas</text>
+
+  <!-- Etapa 3 -->
+  <rect x="520" y="80" width="205" height="150" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="622.5" y="108" font-size="16" font-weight="700" text-anchor="middle">Etapa 3</text>
+  <text x="622.5" y="136" font-size="18" font-weight="700" text-anchor="middle">Validación y análisis</text>
+  <text x="622.5" y="166" font-size="16" text-anchor="middle">¿representa al</text>
+  <text x="622.5" y="188" font-size="16" text-anchor="middle">sistema real?</text>
+  <text x="622.5" y="210" font-size="16" text-anchor="middle">¿qué supuestos pesan?</text>
+
+  <!-- Etapa 4 -->
+  <rect x="765" y="80" width="205" height="150" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="867.5" y="108" font-size="16" font-weight="700" text-anchor="middle">Etapa 4</text>
+  <text x="867.5" y="136" font-size="18" font-weight="700" text-anchor="middle">Implantación</text>
+  <text x="867.5" y="166" font-size="16" text-anchor="middle">por etapas:</text>
+  <text x="867.5" y="188" font-size="16" text-anchor="middle">plan, piloto</text>
+  <text x="867.5" y="210" font-size="16" text-anchor="middle">y seguimiento</text>
+
+  <!-- Flechas entre etapas -->
+  <line x1="239" y1="155" x2="271" y2="155" stroke="#374151" stroke-width="3" marker-end="url(#flecha)"/>
+  <line x1="484" y1="155" x2="516" y2="155" stroke="#374151" stroke-width="3" marker-end="url(#flecha)"/>
+  <line x1="729" y1="155" x2="761" y2="155" stroke="#374151" stroke-width="3" marker-end="url(#flecha)"/>
+
+  <!-- Zoom a la etapa 1 -->
+  <line x1="132.5" y1="233" x2="132.5" y2="266" stroke="#1a56db" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#flecha-azul)"/>
+  <rect x="20" y="268" width="960" height="196" rx="14" fill="none" stroke="#1a56db" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="40" y="298" font-size="17" font-weight="700" fill="#1a56db">Zoom a la etapa 1: el flujo general de los datos de entrada</text>
+
+  <!-- Paso 1 -->
+  <rect x="39" y="318" width="132" height="124" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="105" y="346" font-size="17" font-weight="700" text-anchor="middle">Sistema real</text>
+  <text x="105" y="374" font-size="16" text-anchor="middle">la fuente</text>
+  <text x="105" y="396" font-size="16" text-anchor="middle">de los datos</text>
+
+  <!-- Paso 2 -->
+  <rect x="197" y="318" width="132" height="124" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="263" y="346" font-size="17" font-weight="700" text-anchor="middle">Recolección</text>
+  <text x="263" y="374" font-size="16" text-anchor="middle">observación,</text>
+  <text x="263" y="396" font-size="16" text-anchor="middle">registros,</text>
+  <text x="263" y="418" font-size="16" text-anchor="middle">sensores</text>
+
+  <!-- Paso 3 -->
+  <rect x="355" y="318" width="132" height="124" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="421" y="346" font-size="17" font-weight="700" text-anchor="middle">Preparación</text>
+  <text x="421" y="374" font-size="16" text-anchor="middle">limpieza,</text>
+  <text x="421" y="396" font-size="16" text-anchor="middle">orden y</text>
+  <text x="421" y="418" font-size="16" text-anchor="middle">depuración</text>
+
+  <!-- Paso 4 -->
+  <rect x="513" y="318" width="132" height="124" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="579" y="346" font-size="17" font-weight="700" text-anchor="middle">Análisis</text>
+  <text x="579" y="374" font-size="16" text-anchor="middle">medidas</text>
+  <text x="579" y="396" font-size="16" text-anchor="middle">descriptivas</text>
+  <text x="579" y="418" font-size="16" text-anchor="middle">y gráficos</text>
+
+  <!-- Paso 5 -->
+  <rect x="671" y="318" width="132" height="124" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="737" y="346" font-size="17" font-weight="700" text-anchor="middle">Ajuste</text>
+  <text x="737" y="374" font-size="16" text-anchor="middle">comparar con</text>
+  <text x="737" y="396" font-size="16" text-anchor="middle">distribuciones</text>
+  <text x="737" y="418" font-size="16" text-anchor="middle">candidatas</text>
+
+  <!-- Paso 6 -->
+  <rect x="829" y="318" width="132" height="124" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="895" y="346" font-size="17" font-weight="700" text-anchor="middle">Decisión</text>
+  <text x="895" y="374" font-size="16" text-anchor="middle">elegir la</text>
+  <text x="895" y="396" font-size="16" text-anchor="middle">distribución</text>
+  <text x="895" y="418" font-size="16" text-anchor="middle">de entrada</text>
+
+  <!-- Flechas entre pasos -->
+  <line x1="173" y1="380" x2="195" y2="380" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="331" y1="380" x2="353" y2="380" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="489" y1="380" x2="511" y2="380" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="647" y1="380" x2="669" y2="380" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <line x1="805" y1="380" x2="827" y2="380" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+</svg>

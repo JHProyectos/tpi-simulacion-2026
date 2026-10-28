@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Los dos tipos de bucle</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="15" markerHeight="15" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="flecha-r" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a56db"/>
+    </marker>
+    <marker id="flecha-b" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="540" fill="#ffffff"/>
+
+  <text x="480" y="38" font-size="24" font-weight="700" text-anchor="middle">Los dos tipos de bucle, con la población</text>
+
+  <!-- Panel reforzador -->
+  <rect x="30" y="62" width="420" height="320" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="240" y="96" font-size="21" font-weight="700" text-anchor="middle" fill="#1a56db">Bucle reforzador (R)</text>
+
+  <text x="118" y="238" font-size="20" font-weight="700" text-anchor="middle">Población</text>
+  <text x="358" y="238" font-size="20" font-weight="700" text-anchor="middle">Nacimientos</text>
+
+  <path d="M 130 212 Q 240 120 340 212" fill="none" stroke="#374151" stroke-width="2.8" marker-end="url(#flecha)"/>
+  <path d="M 350 252 Q 240 344 120 252" fill="none" stroke="#374151" stroke-width="2.8" marker-end="url(#flecha)"/>
+  <text x="338" y="180" font-size="28" font-weight="700" fill="#059669">+</text>
+  <text x="104" y="300" font-size="28" font-weight="700" fill="#059669">+</text>
+
+  <path d="M 214 232 A 26 26 0 1 1 240 258" fill="none" stroke="#1a56db" stroke-width="2.5" marker-end="url(#flecha-r)"/>
+  <text x="240" y="243" font-size="28" font-weight="700" text-anchor="middle" fill="#1a56db">R</text>
+
+  <text x="240" y="336" font-size="17" text-anchor="middle">Más población, más nacimientos, más población.</text>
+  <text x="240" y="362" font-size="17" text-anchor="middle" font-weight="700">Amplifica: crecimiento o caída exponencial</text>
+
+  <!-- Panel compensador -->
+  <rect x="510" y="62" width="420" height="320" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="720" y="96" font-size="21" font-weight="700" text-anchor="middle">Bucle compensador (B)</text>
+
+  <text x="598" y="238" font-size="20" font-weight="700" text-anchor="middle">Población</text>
+  <text x="838" y="238" font-size="20" font-weight="700" text-anchor="middle">Muertes</text>
+
+  <path d="M 610 212 Q 720 120 820 212" fill="none" stroke="#374151" stroke-width="2.8" marker-end="url(#flecha)"/>
+  <path d="M 830 252 Q 720 344 600 252" fill="none" stroke="#374151" stroke-width="2.8" marker-end="url(#flecha)"/>
+  <text x="818" y="180" font-size="28" font-weight="700" fill="#059669">+</text>
+  <text x="580" y="305" font-size="42" font-weight="700" fill="#dc2626">−</text>
+
+  <path d="M 694 232 A 26 26 0 1 1 720 258" fill="none" stroke="#d97706" stroke-width="2.5" marker-end="url(#flecha-b)"/>
+  <text x="720" y="243" font-size="28" font-weight="700" text-anchor="middle">B</text>
+
+  <text x="720" y="336" font-size="17" text-anchor="middle">Más población, más muertes, menos población.</text>
+  <text x="720" y="362" font-size="17" text-anchor="middle" font-weight="700">Contrarresta: busca un equilibrio</text>
+
+  <!-- Regla de los negativos -->
+  <rect x="30" y="404" width="900" height="116" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="480" y="438" font-size="20" font-weight="700" text-anchor="middle">Regla rápida: contá los vínculos negativos del bucle</text>
+  <text x="480" y="469" font-size="18" text-anchor="middle">Cantidad par, incluido el cero: reforzador. Cantidad impar: compensador.</text>
+  <text x="480" y="499" font-size="17" text-anchor="middle">Como con los signos: menos por menos da más.</text>
+</svg>

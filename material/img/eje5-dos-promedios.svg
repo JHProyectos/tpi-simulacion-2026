@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="960" height="520" font-family="Segoe UI, Arial, sans-serif">
+  <title>Dos maneras de promediar</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="520" fill="#ffffff"/>
+
+  <text x="480" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#374151">Dos maneras de promediar</text>
+
+  <!-- Tarjeta izquierda: sobre los clientes -->
+  <rect x="24" y="58" width="444" height="382" rx="14" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <path d="M24,104 V72 Q24,58 38,58 H454 Q468,58 468,72 V104 Z" fill="#1a56db"/>
+  <text x="246" y="89" text-anchor="middle" font-size="21" font-weight="700" fill="#ffffff">Sobre los clientes</text>
+  <text x="60" y="131" font-size="16" fill="#374151">Cliente 1</text>
+  <rect x="150" y="116" width="150" height="20" rx="3" fill="#1a56db"/>
+  <text x="60" y="161" font-size="16" fill="#374151">Cliente 2</text>
+  <rect x="150" y="146" width="70" height="20" rx="3" fill="#1a56db"/>
+  <text x="60" y="191" font-size="16" fill="#374151">Cliente 3</text>
+  <rect x="150" y="176" width="230" height="20" rx="3" fill="#1a56db"/>
+  <text x="60" y="221" font-size="16" fill="#374151">Cliente 4</text>
+  <rect x="150" y="206" width="110" height="20" rx="3" fill="#1a56db"/>
+  <text x="246" y="254" text-anchor="middle" font-size="16" font-style="italic" fill="#374151">Un tiempo por cliente</text>
+
+  <text x="48" y="294" font-size="17" fill="#374151"><tspan font-weight="700">Pregunta:</tspan> ¿cuánto esperó un cliente?</text>
+  <text x="48" y="330" font-size="17" fill="#374151"><tspan font-weight="700">Medidas:</tspan> Wq y W</text>
+  <text x="48" y="366" font-size="17" fill="#374151"><tspan font-weight="700">Unidad:</tspan> minutos</text>
+  <text x="48" y="402" font-size="17" fill="#374151"><tspan font-weight="700">Le importa a:</tspan> el cliente</text>
+
+  <!-- Tarjeta derecha: en el tiempo -->
+  <rect x="492" y="58" width="444" height="382" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <path d="M492,104 V72 Q492,58 506,58 H922 Q936,58 936,72 V104 Z" fill="#d97706"/>
+  <text x="714" y="89" text-anchor="middle" font-size="21" font-weight="700" fill="#ffffff">En el tiempo</text>
+  <path d="M540,226 H590 V176 H640 V136 H680 V176 H750 V226 H790 V176 H836 V226 H880 Z" fill="#d97706" fill-opacity="0.35" stroke="#d97706" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="530" y1="226" x2="900" y2="226" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="530" y1="226" x2="530" y2="120" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+  <text x="896" y="214" text-anchor="end" font-size="16" fill="#374151">tiempo</text>
+  <text x="714" y="254" text-anchor="middle" font-size="16" font-style="italic" fill="#374151">Cada valor pesa según cuánto duró</text>
+
+  <text x="516" y="294" font-size="17" fill="#374151"><tspan font-weight="700">Pregunta:</tspan> ¿cuántos hay en un momento?</text>
+  <text x="516" y="330" font-size="17" fill="#374151"><tspan font-weight="700">Medidas:</tspan> Lq, L y utilización</text>
+  <text x="516" y="366" font-size="17" fill="#374151"><tspan font-weight="700">Unidad:</tspan> clientes</text>
+  <text x="516" y="402" font-size="17" fill="#374151"><tspan font-weight="700">Le importa a:</tspan> quien dimensiona la sala</text>
+
+  <!-- Trampa -->
+  <rect x="24" y="458" width="912" height="46" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="480" y="487" text-anchor="middle" font-size="17" fill="#374151"><tspan font-weight="700" fill="#dc2626">Trampa:</tspan> promediar la cola en unos pocos instantes elegidos no da Lq.</text>
+</svg>

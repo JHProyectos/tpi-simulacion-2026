@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Verificar, validar, credibilidad e implantar</title>
+  <defs>
+    <marker id="flecha-azul" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a56db"/>
+    </marker>
+    <marker id="flecha-verde" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669"/>
+    </marker>
+    <marker id="flecha-naranja" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97706"/>
+    </marker>
+    <marker id="flecha-roja" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="640" fill="#ffffff"/>
+
+  <text x="500" y="42" font-size="24" font-weight="700" text-anchor="middle">Verificar, validar, credibilidad e implantar</text>
+  <text x="500" y="70" font-size="17" text-anchor="middle">Cada uno responde una pregunta distinta. Primero se verifica, después se valida.</text>
+
+  <!-- Cajas principales -->
+  <rect x="20" y="230" width="180" height="90" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="110" y="262" font-size="18" font-weight="700" text-anchor="middle">Lo que</text>
+  <text x="110" y="285" font-size="18" font-weight="700" text-anchor="middle">describiste</text>
+  <text x="110" y="308" font-size="16" text-anchor="middle">modelo conceptual</text>
+
+  <rect x="410" y="230" width="180" height="90" rx="12" fill="#ffffff" stroke="#374151" stroke-width="2.5"/>
+  <text x="500" y="268" font-size="18" font-weight="700" text-anchor="middle">Modelo</text>
+  <text x="500" y="292" font-size="18" font-weight="700" text-anchor="middle">programado</text>
+
+  <rect x="800" y="230" width="180" height="90" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="890" y="268" font-size="18" font-weight="700" text-anchor="middle">Sistema real</text>
+  <text x="890" y="294" font-size="16" text-anchor="middle">lo que se observa</text>
+
+  <!-- Verificar -->
+  <line x1="204" y1="275" x2="406" y2="275" stroke="#1a56db" stroke-width="3" marker-start="url(#flecha-azul)" marker-end="url(#flecha-azul)"/>
+  <text x="305" y="140" font-size="20" font-weight="700" text-anchor="middle" fill="#1a56db">1. Verificar</text>
+  <text x="305" y="164" font-size="16" font-style="italic" text-anchor="middle">mira hacia adentro</text>
+  <text x="305" y="196" font-size="16" text-anchor="middle">¿Lo construimos como</text>
+  <text x="305" y="218" font-size="16" text-anchor="middle">lo describimos?</text>
+  <text x="305" y="304" font-size="16" text-anchor="middle">Ejemplo: la regla FIFO</text>
+  <text x="305" y="326" font-size="16" text-anchor="middle">bien programada</text>
+
+  <!-- Validar -->
+  <line x1="594" y1="275" x2="796" y2="275" stroke="#059669" stroke-width="3" marker-start="url(#flecha-verde)" marker-end="url(#flecha-verde)"/>
+  <text x="695" y="140" font-size="20" font-weight="700" text-anchor="middle" fill="#059669">2. Validar</text>
+  <text x="695" y="164" font-size="16" font-style="italic" text-anchor="middle">mira hacia afuera</text>
+  <text x="695" y="196" font-size="16" text-anchor="middle">¿Representa al sistema</text>
+  <text x="695" y="218" font-size="16" text-anchor="middle">real para este objetivo?</text>
+  <text x="695" y="304" font-size="16" text-anchor="middle">Ejemplo: la espera</text>
+  <text x="695" y="326" font-size="16" text-anchor="middle">simulada se parece</text>
+  <text x="695" y="348" font-size="16" text-anchor="middle">a la observada</text>
+
+  <!-- Credibilidad -->
+  <rect x="410" y="470" width="180" height="80" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="500" y="503" font-size="18" font-weight="700" text-anchor="middle">Usuarios</text>
+  <text x="500" y="527" font-size="18" font-weight="700" text-anchor="middle">del estudio</text>
+  <line x1="500" y1="466" x2="500" y2="324" stroke="#d97706" stroke-width="3" marker-start="url(#flecha-naranja)" marker-end="url(#flecha-naranja)"/>
+  <text x="486" y="372" font-size="20" font-weight="700" text-anchor="end" fill="#d97706">Credibilidad</text>
+  <text x="486" y="396" font-size="16" font-style="italic" text-anchor="end">mira a los usuarios</text>
+  <text x="486" y="420" font-size="16" text-anchor="end">¿Confían en el estudio</text>
+  <text x="486" y="442" font-size="16" text-anchor="end">y lo entienden?</text>
+  <text x="500" y="578" font-size="16" text-anchor="middle">Ejemplo: el encargado reconoce las reglas y acepta las conclusiones</text>
+
+  <!-- Implantar -->
+  <path d="M 570 323 C 600 430, 860 430, 890 326" fill="none" stroke="#dc2626" stroke-width="3" marker-end="url(#flecha-roja)"/>
+  <text x="745" y="452" font-size="20" font-weight="700" text-anchor="middle" fill="#dc2626">Implantar</text>
+  <text x="745" y="476" font-size="16" text-anchor="middle">la alternativa elegida</text>
+  <text x="745" y="498" font-size="16" text-anchor="middle">pasa al sistema real,</text>
+  <text x="745" y="520" font-size="16" text-anchor="middle">por etapas: plan, piloto</text>
+  <text x="745" y="542" font-size="16" text-anchor="middle">y seguimiento</text>
+
+  <!-- Pie -->
+  <text x="500" y="620" font-size="16" font-weight="700" text-anchor="middle">La validez depende del objetivo: un modelo válido para una decisión puede no serlo para otra.</text>
+</svg>

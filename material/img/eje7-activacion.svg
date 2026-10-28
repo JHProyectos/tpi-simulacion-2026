@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 880" width="1000" height="880" font-family="Segoe UI, Arial, sans-serif">
+  <title>Activación sincrónica y asincrónica en un modelo de contagio</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="flechaRoja" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="880" fill="#ffffff"/>
+
+  <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#374151">El mismo contagio con los dos esquemas de activación</text>
+
+  <!-- Leyenda -->
+  <circle cx="200" cy="74" r="11" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="218" y="80" font-size="17" fill="#374151">Sano</text>
+  <circle cx="300" cy="74" r="11" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="318" y="80" font-size="17" fill="#374151">Enfermo</text>
+  <circle cx="430" cy="74" r="11" fill="#d1fae5" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4 3"/>
+  <text x="448" y="80" font-size="17" fill="#374151">Contagio anotado, se aplica al final del tick</text>
+
+  <!-- ===== Columna izquierda: sincrónico ===== -->
+  <rect x="30" y="100" width="450" height="86" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="255" y="130" text-anchor="middle" font-size="21" font-weight="700" fill="#374151">Sincrónico</text>
+  <text x="255" y="155" text-anchor="middle" font-size="17" fill="#374151">Todos calculan con el estado del tick anterior</text>
+  <text x="255" y="176" text-anchor="middle" font-size="17" fill="#374151">y después se actualizan todos juntos</text>
+
+  <!-- Fila 1 -->
+  <rect x="30" y="205" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="50" y="233" font-size="18" font-weight="700" fill="#374151">Inicio del tick</text>
+  <text x="50" y="257" font-size="17" fill="#374151">A está enfermo; B y C, sanos.</text>
+  <circle cx="125" cy="305" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="125" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <circle cx="255" cy="305" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="255" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <circle cx="385" cy="305" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="385" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="255" y1="345" x2="255" y2="373" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <!-- Fila 2 -->
+  <rect x="30" y="375" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="50" y="403" font-size="18" font-weight="700" fill="#374151">Cada uno calcula con la foto anterior</text>
+  <text x="50" y="427" font-size="17" fill="#374151">B ve a A enfermo: queda anotado. C ve a B sano.</text>
+  <circle cx="125" cy="475" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="125" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <line x1="153" y1="475" x2="225" y2="475" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#flechaRoja)"/>
+  <circle cx="255" cy="475" r="26" fill="#d1fae5" stroke="#dc2626" stroke-width="3" stroke-dasharray="6 4"/>
+  <text x="255" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <circle cx="385" cy="475" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="385" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="255" y1="515" x2="255" y2="543" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <!-- Fila 3 -->
+  <rect x="30" y="545" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="50" y="573" font-size="18" font-weight="700" fill="#374151">Fin del tick: se actualizan juntos</text>
+  <text x="50" y="597" font-size="17" fill="#374151">B pasa a enfermo. C sigue sano.</text>
+  <circle cx="125" cy="645" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="125" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <circle cx="255" cy="645" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="255" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <circle cx="385" cy="645" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="385" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="255" y1="685" x2="255" y2="703" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <rect x="30" y="705" width="450" height="52" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="255" y="738" text-anchor="middle" font-size="18" font-weight="700" fill="#374151">C se contagia recién en el tick siguiente.</text>
+
+  <!-- ===== Columna derecha: asincrónico ===== -->
+  <rect x="520" y="100" width="450" height="86" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="745" y="130" text-anchor="middle" font-size="21" font-weight="700" fill="#374151">Asincrónico o secuencial</text>
+  <text x="745" y="155" text-anchor="middle" font-size="17" fill="#374151">Actúan de a uno, y cada uno ve</text>
+  <text x="745" y="176" text-anchor="middle" font-size="17" fill="#374151">los cambios que hicieron los anteriores</text>
+
+  <!-- Fila 1 -->
+  <rect x="520" y="205" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="540" y="233" font-size="18" font-weight="700" fill="#374151">Inicio del tick</text>
+  <text x="540" y="257" font-size="17" fill="#374151">A está enfermo; B y C, sanos.</text>
+  <circle cx="615" cy="305" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="615" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <circle cx="745" cy="305" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="745" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <circle cx="875" cy="305" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="875" y="312" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="745" y1="345" x2="745" y2="373" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <!-- Fila 2 -->
+  <rect x="520" y="375" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="540" y="403" font-size="18" font-weight="700" fill="#374151">Actúa A</text>
+  <text x="540" y="427" font-size="17" fill="#374151">Contagia a B, que se enferma en el acto.</text>
+  <circle cx="615" cy="475" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="615" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <line x1="643" y1="475" x2="715" y2="475" stroke="#dc2626" stroke-width="2.5" marker-end="url(#flechaRoja)"/>
+  <circle cx="745" cy="475" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="745" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <circle cx="875" cy="475" r="26" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+  <text x="875" y="482" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="745" y1="515" x2="745" y2="543" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <!-- Fila 3 -->
+  <rect x="520" y="545" width="450" height="140" rx="10" fill="#ffffff" stroke="#374151" stroke-width="1.5"/>
+  <text x="540" y="573" font-size="18" font-weight="700" fill="#374151">Actúa B, después de A</text>
+  <text x="540" y="597" font-size="17" fill="#374151">B ya está enfermo y puede contagiar a C.</text>
+  <circle cx="615" cy="645" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="615" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">A</text>
+  <circle cx="745" cy="645" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="745" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">B</text>
+  <line x1="773" y1="645" x2="845" y2="645" stroke="#dc2626" stroke-width="2.5" marker-end="url(#flechaRoja)"/>
+  <circle cx="875" cy="645" r="26" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="875" y="652" text-anchor="middle" font-size="20" font-weight="700" fill="#374151">C</text>
+
+  <line x1="745" y1="685" x2="745" y2="703" stroke="#374151" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <rect x="520" y="705" width="450" height="52" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="745" y="738" text-anchor="middle" font-size="18" font-weight="700" fill="#374151">C puede enfermarse en el mismo tick.</text>
+
+  <!-- Mensaje final -->
+  <rect x="30" y="782" width="940" height="80" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2.5"/>
+  <text x="500" y="814" text-anchor="middle" font-size="19" font-weight="700" fill="#374151">Ninguno está mal: el orden de activación es parte de la especificación.</text>
+  <text x="500" y="844" text-anchor="middle" font-size="17" fill="#374151">En el asincrónico hay una segunda decisión: orden fijo o al azar en cada tick.</text>
+</svg>

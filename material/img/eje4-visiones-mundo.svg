@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650" font-family="Segoe UI, Arial, sans-serif" fill="#374151">
+  <title>Las visiones del mundo sobre un mismo motor de eventos</title>
+  <defs>
+    <marker id="flecha" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="flecha-chica" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a56db"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="650" fill="#ffffff"/>
+
+  <text x="500" y="38" font-size="24" font-weight="700" text-anchor="middle">Las visiones del mundo: el mismo sistema, a distinta altura</text>
+
+  <!-- Marco de objetos -->
+  <rect x="15" y="58" width="970" height="572" rx="16" fill="#ffffff" stroke="#059669" stroke-width="3"/>
+  <text x="35" y="88" font-size="18" font-weight="700" fill="#059669">Orientación a objetos: envuelve a las dos visiones</text>
+  <text x="965" y="88" font-size="16" text-anchor="end">nació en la simulación, con SIMULA</text>
+
+  <!-- Columna eventos -->
+  <rect x="40" y="105" width="450" height="325" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="265" y="136" font-size="20" font-weight="700" text-anchor="middle">Orientación a eventos</text>
+  <text x="60" y="170" font-size="16"><tspan font-weight="700">Protagonista:</tspan> el sistema, que reacciona</text>
+  <text x="60" y="198" font-size="16"><tspan font-weight="700">Se escribe:</tspan> una rutina por tipo de evento</text>
+  <rect x="60" y="212" width="170" height="36" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+  <text x="145" y="236" font-size="16" text-anchor="middle">Rutina de llegada</text>
+  <rect x="244" y="212" width="226" height="36" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+  <text x="357" y="236" font-size="16" text-anchor="middle">Rutina de fin de atención</text>
+  <text x="60" y="278" font-size="16"><tspan font-weight="700">Reloj y agenda:</tspan> explícitos,</text>
+  <text x="60" y="300" font-size="16">los programa el modelador</text>
+  <text x="60" y="330" font-size="16"><tspan font-weight="700">Fortaleza:</tspan> control total y máxima eficiencia</text>
+  <text x="60" y="358" font-size="16"><tspan font-weight="700">Debilidad:</tspan> difícil de seguir en modelos grandes</text>
+  <text x="60" y="388" font-size="16"><tspan font-weight="700">Ejemplos:</tspan> SIMSCRIPT y modelos escritos</text>
+  <text x="60" y="410" font-size="16">a mano en C, Java o Python</text>
+
+  <!-- Columna procesos -->
+  <rect x="510" y="105" width="450" height="325" rx="12" fill="#e8f0fe" stroke="#1a56db" stroke-width="2.5"/>
+  <text x="735" y="136" font-size="20" font-weight="700" text-anchor="middle">Orientación a procesos</text>
+  <text x="530" y="170" font-size="16"><tspan font-weight="700">Protagonista:</tspan> la entidad, que actúa</text>
+  <text x="530" y="198" font-size="16"><tspan font-weight="700">Se escribe:</tspan> la historia del cliente</text>
+  <rect x="530" y="212" width="56" height="36" rx="18" fill="#ffffff" stroke="#1a56db" stroke-width="1.5"/>
+  <text x="558" y="236" font-size="16" text-anchor="middle">llega</text>
+  <line x1="588" y1="230" x2="608" y2="230" stroke="#1a56db" stroke-width="2" marker-end="url(#flecha-chica)"/>
+  <rect x="610" y="212" width="56" height="36" rx="18" fill="#ffffff" stroke="#1a56db" stroke-width="1.5"/>
+  <text x="638" y="236" font-size="16" text-anchor="middle">toma</text>
+  <line x1="668" y1="230" x2="688" y2="230" stroke="#1a56db" stroke-width="2" marker-end="url(#flecha-chica)"/>
+  <rect x="690" y="212" width="94" height="36" rx="18" fill="#ffffff" stroke="#1a56db" stroke-width="1.5"/>
+  <text x="737" y="236" font-size="16" text-anchor="middle">se atiende</text>
+  <line x1="786" y1="230" x2="806" y2="230" stroke="#1a56db" stroke-width="2" marker-end="url(#flecha-chica)"/>
+  <rect x="808" y="212" width="62" height="36" rx="18" fill="#ffffff" stroke="#1a56db" stroke-width="1.5"/>
+  <text x="839" y="236" font-size="16" text-anchor="middle">libera</text>
+  <line x1="872" y1="230" x2="892" y2="230" stroke="#1a56db" stroke-width="2" marker-end="url(#flecha-chica)"/>
+  <rect x="894" y="212" width="56" height="36" rx="18" fill="#ffffff" stroke="#1a56db" stroke-width="1.5"/>
+  <text x="922" y="236" font-size="16" text-anchor="middle">se va</text>
+  <text x="530" y="278" font-size="16"><tspan font-weight="700">Reloj y agenda:</tspan> implícitos,</text>
+  <text x="530" y="300" font-size="16">los resuelve el lenguaje</text>
+  <text x="530" y="330" font-size="16"><tspan font-weight="700">Fortaleza:</tspan> legibilidad y rapidez de construcción</text>
+  <text x="530" y="358" font-size="16"><tspan font-weight="700">Debilidad:</tspan> menos control fino en casos particulares</text>
+  <text x="530" y="388" font-size="16"><tspan font-weight="700">Ejemplos:</tspan> GPSS, SIMULA, SimPy y casi</text>
+  <text x="530" y="410" font-size="16">todos los simuladores visuales</text>
+
+  <!-- Bajada al motor -->
+  <line x1="150" y1="430" x2="150" y2="516" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="166" y="470" font-size="16">trabaja directo sobre la agenda</text>
+  <text x="166" y="492" font-size="16">y el reloj</text>
+  <line x1="560" y1="430" x2="560" y2="516" stroke="#374151" stroke-width="2.5" marker-end="url(#flecha)"/>
+  <text x="576" y="458" font-size="16">por debajo, demorar(4) se traduce en</text>
+  <text x="576" y="480" font-size="16">programar «reanudar este proceso»</text>
+  <text x="576" y="502" font-size="16">en reloj + 4</text>
+
+  <!-- Motor -->
+  <rect x="40" y="520" width="920" height="86" rx="12" fill="#374151"/>
+  <text x="500" y="556" font-size="20" font-weight="700" text-anchor="middle" fill="#ffffff">Motor de eventos: lista de eventos futuros y reloj</text>
+  <text x="500" y="586" font-size="17" text-anchor="middle" fill="#ffffff">el mismo motor para las dos visiones: no compiten</text>
+</svg>

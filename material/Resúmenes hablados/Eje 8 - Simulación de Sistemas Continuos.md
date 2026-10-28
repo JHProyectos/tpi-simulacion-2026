@@ -1,6 +1,6 @@
 # Eje 8. Simulación de sistemas continuos
 
-Bueno, vamos con el eje ocho, que es el más rendidor para mañana, porque entra doble: la teoría en el multiple choice y la práctica a mano. La guía resuelta lo dice explícitamente: los ejercicios de esta guía tienen el mismo formato del parcial práctico, papel y calculadora. Esto dura unos cuarenta minutos; si vas justo de tiempo, priorizá las secciones de nivel y flujo, Euler, bucles, modos de comportamiento y la práctica. Te adelanto las cuatro ideas que sostienen todo el eje, y si te quedás solo con esto, ya tenés media nota. Primera: la diferencia entre nivel y flujo. Segunda: la ecuación de Euler, con el delta t multiplicando, y qué pasa si el paso es grande. Tercera: el diagrama causal no se simula, el de Forrester sí, y el tipo de bucle sale de contar los signos negativos. Cuarta: la estructura produce el comportamiento. Vamos tema por tema, y te voy marcando dónde te pueden engañar.
+Bueno, vamos con el eje ocho, que es el más rendidor para mañana, porque entra doble: la teoría en el multiple choice y la práctica a mano. La guía resuelta lo dice explícitamente: los ejercicios de esta guía tienen el mismo formato del parcial práctico, papel y calculadora. Esto dura unos treinta y cuatro minutos; si vas justo de tiempo, priorizá las secciones de nivel y flujo, Euler, bucles, modos de comportamiento y la práctica. Antes, lo que sacó el profe de la teoría: las fórmulas de cálculo, el ejemplo completo de la población, el caso del inventario que no llega, la epidemia y las herramientas. En la teoría te evalúan conceptos, no cuentas. Pero ojo: la práctica entra entera, así que Euler y los seis ejercicios, incluido el del inventario, los tenés que saber hacer a mano. Te adelanto las cuatro ideas que sostienen todo el eje, y si te quedás solo con esto, ya tenés media nota. Primera: la diferencia entre nivel y flujo. Segunda: la ecuación de Euler, con el delta t multiplicando, y qué pasa si el paso es grande. Tercera: el diagrama causal no se simula, el de Forrester sí, y el tipo de bucle sale de contar los signos negativos. Cuarta: la estructura produce el comportamiento. Vamos tema por tema, y te voy marcando dónde te pueden engañar.
 
 ## Tres nombres que te pueden mezclar
 
@@ -44,9 +44,9 @@ Una computadora no resuelve la ecuación diferencial de forma continua: avanza d
 
 La ecuación, en palabras: el nivel en t más delta t es igual al nivel en t, más delta t multiplicado por la diferencia entre las entradas y las salidas calculadas en t. Revisá las unidades: el flujo neto está en unidades por tiempo, multiplicado por delta t queda en unidades, y eso sí se puede sumar al nivel. El delta t es lo que hace cerrar las unidades.
 
-El ejemplo del apunte: un tanque de cien litros que se vacía, con un caudal de salida igual a la quinta parte del agua, por minuto. Con delta t de un minuto da cien, ochenta, sesenta y cuatro, cincuenta y uno coma dos, cuarenta coma noventa y seis. La solución exacta a los cuatro minutos es cuarenta y cuatro coma noventa y tres. Euler queda casi cuatro litros por debajo.
+El ejemplo del apunte es un tanque de cien litros que se vacía, con un caudal de salida igual a la quinta parte del agua, por minuto. Con delta t de un minuto, Euler da menos agua que la solución exacta.
 
-¿Por qué se equivoca? Porque en el primer minuto supone que salen veinte litros por minuto todo el tiempo, cuando en realidad el caudal va bajando con el agua. Sobreestima la salida en cada paso y el error se acumula. Con delta t de cero coma cinco, el resultado a los cuatro minutos es cuarenta y tres coma cero cinco: el error baja de tres coma noventa y siete a uno coma ochenta y ocho.
+¿Por qué se equivoca? Porque en el primer minuto supone que salen veinte litros por minuto todo el tiempo, cuando en realidad el caudal va bajando con el agua. Sobreestima la salida en cada paso y el error se acumula. Con medio paso, el error baja más o menos a la mitad.
 
 **Lo importante.** El supuesto de Euler es que el flujo es constante durante el paso, con el valor del principio. Y la regla: con Euler, achicar el paso a la mitad reduce el error aproximadamente a la mitad, al precio del doble de cálculos.
 
@@ -56,13 +56,13 @@ El ejemplo del apunte: un tanque de cien litros que se vacía, con un caudal de 
 
 ### Qué pasa si el paso es demasiado grande
 
-Esto es muy preguntable. En el tanque, cada paso multiplica el agua por uno menos delta t sobre cinco. Con delta t de uno multiplica por cero coma ocho, y baja suave como en la realidad. Con delta t de siete coma cinco multiplica por menos cero coma cinco: cien, menos cincuenta, veinticinco, menos doce coma cinco. Agua negativa y oscilación. Con delta t de doce coma cinco multiplica por menos uno coma cinco, y la oscilación crece sin límite.
+Esto es muy preguntable. En el tanque, con un paso de un minuto el agua baja suave, como en la realidad. Con un paso mucho más grande, por ejemplo siete minutos y medio, aparece agua negativa y el resultado oscila. Y con un paso todavía más grande, la oscilación crece sin límite.
 
 **Ojo, trampa.** Esas oscilaciones no existen en el sistema: las fabrica el método. Un tanque no puede tener agua negativa ni oscilar. Si una opción dice que la simulación muestra que el sistema oscila, es falsa. Un resultado raro puede ser un error del modelo o un artefacto numérico por haber elegido mal el paso.
 
 ### Cómo elegir delta t
 
-Hay que identificar la constante de tiempo más chica del modelo, que es el tiempo característico en el que un nivel cambia de manera apreciable. En el tanque es cinco minutos, el número que divide al agua.
+Hay que identificar la constante de tiempo más chica del modelo, que es el tiempo característico en el que un nivel cambia de manera apreciable. En el tanque es cinco minutos.
 
 Tres reglas. Primera: el paso tiene que ser menor que un tercio de la menor constante de tiempo, según la documentación de Vensim; en el tanque, menor que uno coma siete minutos. Segunda: preferir potencias de un medio, como uno, cero coma cinco o cero coma veinticinco, porque se representan exacto en la computadora. Tercera: verificar siempre corriendo con delta t y con delta t sobre dos; si los resultados cambian de manera apreciable, el paso todavía es grande.
 
@@ -110,8 +110,6 @@ Para pasar del causal al de Forrester hay cinco pasos. Uno: identificar los nive
 
 **Ojo, trampa.** No hay traducción automática del causal al de Forrester, porque el causal no dice qué variables se acumulan. Esa decisión la toma el modelador con la prueba de la foto.
 
-El ejemplo del apunte: población de mil personas, natalidad cero coma cero tres por año, mortalidad cero coma cero uno por año. En el causal, un bucle reforzador por los nacimientos y uno compensador por las muertes. En Forrester, un nivel, población; nacimientos entrando desde una nube; muertes saliendo a una nube; dos constantes, las tasas; y canales de información desde población a cada flujo. Las tasas se miden en uno sobre año, y uno sobre año por personas da personas por año, que cierra. Con delta t de un año da mil, mil veinte, mil cuarenta coma cuarenta y mil sesenta y uno coma veintiuno; la exacta es mil sesenta y uno coma ochenta y cuatro.
-
 **Si te toca de desarrollo.** Para comparar causal y Forrester: el causal es una hipótesis de estructura, con variables, flechas con polaridad y bucles marcados, y no se simula. El de Forrester distingue niveles, flujos, constantes y canales de información, lleva ecuaciones con unidades y valores iniciales, y sí se simula. Las constantes aparecen recién en Forrester. Y el paso de uno a otro no es automático: hay que decidir qué se acumula.
 
 ## Modos de comportamiento
@@ -130,17 +128,9 @@ Oscilación: un bucle compensador con una demora. Ejemplos, regular la ducha con
 
 **Ojo, trampa.** El multiple choice típico te cruza los pares. La oscilación no la produce un reforzador: la produce un compensador con demora. El crecimiento en S no es un compensador solo: es un reforzador que choca con un límite. Y la caída exponencial tiene la misma estructura que el crecimiento exponencial; lo que cambia es el signo de la tasa neta.
 
-### El inventario que no llega
-
-Este caso es muy probable, porque además está en la práctica. Un depósito quiere quinientas unidades, vende veinticinco por día, y la política es producir cada día la cuarta parte de lo que falta. El inventario baja, se frena y se estabiliza en cuatrocientos, no en quinientos. ¿Por qué? En el equilibrio el inventario no cambia, así que la producción iguala a las ventas, veinticinco. Y la política solo produce veinticinco si faltan cien, porque cien sobre cuatro es veinticinco.
-
-**Ojo, trampa.** No es un error de la simulación: es lo que hace esa política. Pasa porque hay una salida permanente, las ventas, y la regla solo reacciona a la diferencia con el objetivo. Si no hubiera ventas, sí llegaría. La corrección es cambiar la política: producir lo que se vende más una parte de la diferencia.
-
-**Si te toca de desarrollo.** Explicalo en cuatro pasos: describí la estructura, un bucle compensador más una salida constante; mostrá que en el equilibrio producción igual a ventas; despejá cuánto falta para que la política produzca eso; y cerrá con que es efecto de la política y con cómo se corrige.
-
 ### Demoras materiales
 
-Una demora material es algo que tarda en pasar de un estado a otro: pedidos en tránsito, alumnos cursando una carrera. Se modela con un nivel cuya salida es el nivel dividido por el tiempo medio de permanencia. Seiscientos alumnos que permanecen seis años en promedio dan unos cien egresos por año. Es la misma estructura que el desagote del tanque, y la misma de la política B del ejercicio seis.
+Una demora material es algo que tarda en pasar de un estado a otro: pedidos en tránsito, alumnos cursando una carrera. Se modela con un nivel cuya salida depende de cuánto hay acumulado y de cuánto tiempo se queda cada cosa, en promedio. Es la misma estructura que el desagote del tanque, y la misma de la política B del ejercicio seis.
 
 ## Verificar el modelo y comparar escenarios
 
@@ -160,23 +150,9 @@ La principal utilidad de un modelo de dinámica de sistemas no es pronosticar un
 
 **Ojo, trampa.** Si una opción dice que el objetivo principal es predecir con exactitud el valor futuro, es el distractor. El calamar del ejercicio dos lo dice clarito: el modelo no pronostica cuánto calamar habrá, pero sí responde qué regla de pesca es sostenible.
 
-## La epidemia: el mismo problema con dos paradigmas
+## Anexos, rápido
 
-El modelo clásico divide a la población en tres niveles: susceptibles, que pueden contagiarse; infectados, que pueden contagiar; y recuperados, que quedan inmunes. Dos flujos: contagios, que dependen de cuántos susceptibles y cuántos infectados hay, y recuperaciones, que son los infectados dividido la duración promedio de la enfermedad, una demora material.
-
-Tres bucles: uno reforzador, más infectados, más contagios, más infectados; y dos compensadores, los contagios agotan a los susceptibles y las recuperaciones sacan gente de los infectados. Al principio domina el reforzador, después los compensadores, y sale la curva con un pico de infectados.
-
-La comparación con Virus on a Network del eje siete. El de agentes representa cada computadora; el agregado, cantidades. En el de agentes solo contagian las conectadas; en el agregado, cualquiera a cualquiera, en promedio. El de agentes tiene azar y necesita varias corridas; el agregado es determinístico y alcanza una. En el de agentes una computadora puede reinfectarse salvo que gane resistencia; en el agregado, el recuperado queda inmune para siempre.
-
-**Ojo, trampa.** Son modelos distintos, no dos dibujos de lo mismo, y sus números no se comparan directamente. Lo que se compara es qué pregunta responde cada uno. Y ningún paradigma es mejor que otro: si alcanza con promedios, el agregado es mejor porque es más simple; si importa quién está conectado con quién, hace falta el de agentes.
-
-**Si te toca de desarrollo.** Compará los dos modelos de epidemia en cuatro ejes, representación, contacto, azar y réplicas, y qué pasa al recuperarse. Después cerrá con el criterio de elección: depende de la pregunta, y es la idea de paradigmas del eje cuatro.
-
-## Herramientas y anexos, rápido
-
-Herramientas: Vensim, con edición PLE gratuita para uso educativo, usa Euler por defecto y ofrece Runge-Kutta; Insight Maker, gratuito en el navegador; Stella, comercial; AnyLogic, el multimétodo, que combina dinámica de sistemas, eventos discretos y agentes; y la planilla de cálculo, que no dibuja diagramas pero sirve para Euler paso a paso.
-
-Anexos, por si cae una pregunta suelta. La simulación continua más allá de la dinámica de sistemas: control con MATLAB y Simulink, electrónica con SPICE, mecánica con Modelica, fluidos y estructuras con elementos finitos; y Cellier y Kofman, autores del libro de referencia, son de la Universidad Nacional de Rosario. Más allá de Euler: Runge-Kutta, paso variable y sistemas rígidos, donde conviven cambios muy rápidos y muy lentos. Funciones tabla: cuando una relación no tiene fórmula simple, se da una lista de puntos y el programa interpola; es la forma habitual de meter límites y saturaciones. Modelos clásicos: difusión de Bass, crecimiento en S; presa y depredador, oscilaciones sostenidas; sobrepaso y colapso; y la ley de Brooks, que agregar gente a un proyecto atrasado lo atrasa más.
+Por si cae una pregunta suelta. La simulación continua más allá de la dinámica de sistemas: control con MATLAB y Simulink, electrónica con SPICE, mecánica con Modelica, fluidos y estructuras con elementos finitos; y Cellier y Kofman, autores del libro de referencia, son de la Universidad Nacional de Rosario. Más allá de Euler: Runge-Kutta, paso variable y sistemas rígidos, donde conviven cambios muy rápidos y muy lentos. Funciones tabla: cuando una relación no tiene fórmula simple, se da una lista de puntos y el programa interpola; es la forma habitual de meter límites y saturaciones. Modelos clásicos: difusión de Bass, crecimiento en S; presa y depredador, oscilaciones sostenidas; sobrepaso y colapso; y la ley de Brooks, que agregar gente a un proyecto atrasado lo atrasa más.
 
 Y la validación según Barlas, de mil novecientos noventa y seis. Dos grupos de pruebas: de estructura, que ecuaciones, unidades y bucles correspondan al sistema real y que se comporte bien en condiciones extremas; y de comportamiento, que reproduzca la forma del comportamiento real, si crece, si oscila, cuándo llega a un pico.
 
@@ -200,7 +176,7 @@ Ejercicio dos, el calamar. Mil seiscientas toneladas, natalidad veinticinco por 
 
 Ejercicio tres, el café. Ochenta grados, ambiente veinte, constante de tiempo diez minutos. Un bucle compensador. Con delta t de dos: ochenta, sesenta y ocho, cincuenta y ocho coma cuarenta, cincuenta coma setenta y dos, con enfriamientos seis, cuatro coma ocho y tres coma ochenta y cuatro. Euler da menos que la exacta, porque supone que el café se enfría a la velocidad del principio de cada paso; la diferencia a los seis minutos es dos coma veintiún grados. Con delta t de quince: ochenta, menos diez, treinta y cinco, doce coma cinco; queda debajo del ambiente y la distancia se achica. Con veinticinco: ochenta, menos setenta, ciento cincuenta y cinco, menos ciento ochenta y dos coma cinco; queda debajo y la distancia crece. La regla pide delta t menor que tres coma treinta y tres minutos: cumplen uno y dos, no cuatro ni cinco.
 
-Ejercicio cuatro, el inventario que no llega. Objetivo dos mil, inventario mil quinientos, ventas veinte por día, tiempo de ajuste cinco días. Bucle compensador entre inventario y producción. Delta t tiene que ser menor que uno coma sesenta y siete días, y uno cumple. El inventario va mil quinientos, mil quinientos ochenta, mil seiscientos cuarenta y cuatro, mil seiscientos noventa y cinco coma veinte, con producción cien, ochenta y cuatro y setenta y uno coma veinte. Se estabiliza en mil novecientos, con producción veinte, y le faltan cien. Con la política corregida, producción igual a ventas más la diferencia sobre el tiempo de ajuste, va mil quinientos, mil seiscientos, mil seiscientos ochenta, mil setecientos cuarenta y cuatro, y se estabiliza en dos mil. La corrección agrega una flecha positiva de ventas a producción.
+Ejercicio cuatro, el inventario que no llega. Objetivo dos mil, inventario mil quinientos, ventas veinte por día, tiempo de ajuste cinco días. Bucle compensador entre inventario y producción. Delta t tiene que ser menor que uno coma sesenta y siete días, y uno cumple. El inventario va mil quinientos, mil quinientos ochenta, mil seiscientos cuarenta y cuatro, mil seiscientos noventa y cinco coma veinte, con producción cien, ochenta y cuatro y setenta y uno coma veinte. Se estabiliza en mil novecientos, con producción veinte, y le faltan cien. ¿Por qué no llega? En el equilibrio el inventario no cambia, así que la producción iguala a las ventas, veinte, y la política solo produce veinte cuando faltan cien, porque cien sobre cinco es veinte. No es un error de Euler: es lo que hace esa política, que reacciona solo a la diferencia con el objetivo y no mira las ventas. Con la política corregida, producción igual a ventas más la diferencia sobre el tiempo de ajuste, va mil quinientos, mil seiscientos, mil seiscientos ochenta, mil setecientos cuarenta y cuatro, y se estabiliza en dos mil. La corrección agrega una flecha positiva de ventas a producción.
 
 Ejercicio cinco, la reserva. Mil millones de metros cúbicos, consumo ciento cincuenta por año, sin bucles. La reserva va bajando de a ciento cincuenta y en el año siete queda en menos cincuenta, que no existe. Con la regla consumo igual al mínimo entre el previsto y la reserva sobre delta t: año cinco, doscientos cincuenta con consumo ciento cincuenta; año seis, cien con consumo cien; año siete, cero. Llega a cero en el año siete sin pasar por debajo, y aparece un bucle compensador entre reserva y consumo.
 
@@ -212,33 +188,27 @@ Pregunta uno. ¿Cuál de estas es un nivel: los litros de agua en la bañera, lo
 
 Pregunta dos. La canilla se va cerrando, pero la entrada sigue siendo mayor que la salida. ¿Qué pasa con el agua? Las opciones típicas: baja, sube, queda constante, depende de la entrada. La correcta es que sube. El distractor es «baja porque la entrada disminuye», que es el error de la bañera.
 
-Pregunta tres. ¿Cuál es la ecuación de Euler? La correcta es nivel más delta t por entradas menos salidas. El distractor es nivel menos flujo, sin delta t, que no cierra en unidades.
+Pregunta tres. ¿Qué supone Euler sobre los flujos durante un paso? Que son constantes, con el valor del principio del intervalo. El distractor es «usa un flujo promedio dentro del intervalo», que describe a Runge-Kutta.
 
-Pregunta cuatro. ¿Qué supone Euler sobre los flujos durante un paso? Que son constantes, con el valor del principio del intervalo. El distractor es «usa un flujo promedio dentro del intervalo», que describe a Runge-Kutta.
+Pregunta cuatro. Con Euler, si el paso se reduce a la mitad, el error: se reduce aproximadamente a la mitad. Distractores: a la cuarta parte, desaparece, no cambia.
 
-Pregunta cinco. Con Euler, si el paso se reduce a la mitad, el error: se reduce aproximadamente a la mitad. Distractores: a la cuarta parte, desaparece, no cambia.
+Pregunta cinco. ¿Qué regla práctica se recomienda para delta t? Menor que un tercio de la menor constante de tiempo. El distractor cambia «menor» por «mayor» constante, o el tercio por el doble.
 
-Pregunta seis. ¿Qué regla práctica se recomienda para delta t? Menor que un tercio de la menor constante de tiempo. El distractor cambia «menor» por «mayor» constante, o el tercio por el doble.
+Pregunta seis. Una simulación de un tanque con paso grande da valores negativos que oscilan. ¿Qué indica? Un artefacto numérico por el paso demasiado grande. El distractor es que el sistema real oscila.
 
-Pregunta siete. Una simulación de un tanque con paso grande da valores negativos que oscilan. ¿Qué indica? Un artefacto numérico por el paso demasiado grande. El distractor es que el sistema real oscila.
+Pregunta siete. Sobre el diagrama causal, ¿cuál es verdadera? Que es una hipótesis de estructura y no se puede simular. Distractores: que incluye niveles y ecuaciones, que lleva las constantes, que es equivalente al de Forrester.
 
-Pregunta ocho. Sobre el diagrama causal, ¿cuál es verdadera? Que es una hipótesis de estructura y no se puede simular. Distractores: que incluye niveles y ecuaciones, que lleva las constantes, que es equivalente al de Forrester.
+Pregunta ocho. Un bucle tiene dos vínculos negativos. ¿De qué tipo es? Reforzador, porque la cantidad de negativos es par. El distractor es compensador, «porque tiene negativos».
 
-Pregunta nueve. Un bucle tiene dos vínculos negativos. ¿De qué tipo es? Reforzador, porque la cantidad de negativos es par. El distractor es compensador, «porque tiene negativos».
+Pregunta nueve. Las ventas superan a la producción y el inventario baja. ¿Qué polaridad tiene el vínculo de producción a inventario? Positiva, porque con más producción el inventario queda más alto de lo que habría sido. El distractor es negativa porque el inventario baja.
 
-Pregunta diez. Las ventas superan a la producción y el inventario baja. ¿Qué polaridad tiene el vínculo de producción a inventario? Positiva, porque con más producción el inventario queda más alto de lo que habría sido. El distractor es negativa porque el inventario baja.
+Pregunta diez. ¿Qué estructura produce oscilación? Un bucle compensador con demora. Distractores: un reforzador dominante, un reforzador que choca con un límite, que es el crecimiento en S.
 
-Pregunta once. ¿Qué estructura produce oscilación? Un bucle compensador con demora. Distractores: un reforzador dominante, un reforzador que choca con un límite, que es el crecimiento en S.
+Pregunta once. En un modelo de reserva, el nivel queda negativo. ¿Qué corresponde? Corregir el modelo agregando una regla que limite el consumo. El distractor es reemplazar el valor negativo por cero en el resultado.
 
-Pregunta doce. En el inventario que no llega, ¿por qué se estabiliza por debajo del objetivo? Porque la política reacciona solo a la diferencia y no tiene en cuenta las ventas, que son una salida permanente. El distractor es «es un error del método de Euler» o «el paso es demasiado grande».
+Pregunta doce. ¿Hacen falta réplicas en un modelo de dinámica de sistemas? En general no, porque es determinístico, aunque sí análisis de sensibilidad; y si se sortean parámetros, vuelven a hacer falta muchas corridas. El distractor tiene un absoluto: «nunca hacen falta varias corridas» o «siempre hacen falta réplicas».
 
-Pregunta trece. En un modelo de reserva, el nivel queda negativo. ¿Qué corresponde? Corregir el modelo agregando una regla que limite el consumo. El distractor es reemplazar el valor negativo por cero en el resultado.
-
-Pregunta catorce. ¿Hacen falta réplicas en un modelo de dinámica de sistemas? En general no, porque es determinístico, aunque sí análisis de sensibilidad; y si se sortean parámetros, vuelven a hacer falta muchas corridas. El distractor tiene un absoluto: «nunca hacen falta varias corridas» o «siempre hacen falta réplicas».
-
-Pregunta quince. Sobre el modelo agregado de epidemia y el de agentes, ¿cuál es verdadera? Son modelos distintos, sus números no se comparan directamente, y la elección depende de la pregunta. Distractores: que el de agentes siempre es mejor, o que son dos formas de dibujar lo mismo.
-
-Pregunta dieciséis. El trabajo integrador en FlexSim, ¿es dinámica de sistemas? No: es una simulación dinámica de eventos discretos. Dinámica de sistemas es la metodología de Forrester con niveles, flujos y bucles.
+Pregunta trece. El trabajo integrador en FlexSim, ¿es dinámica de sistemas? No: es una simulación dinámica de eventos discretos. Dinámica de sistemas es la metodología de Forrester con niveles, flujos y bucles.
 
 ## Lo que puede entrar en desarrollo
 
@@ -248,11 +218,9 @@ Segundo: el método de Euler y la elección de delta t. El supuesto, la ecuació
 
 Tercero: diagrama causal contra diagrama de Forrester. Qué muestra cada uno, cuál se simula, dónde van las constantes, polaridad y regla de paridad para el tipo de bucle, y los cinco pasos para pasar de uno a otro.
 
-Cuarto: la estructura produce el comportamiento. Los cuatro modos con su estructura, y el inventario que no llega como ejemplo de una política razonable que produce un resultado que nadie buscaba.
+Cuarto: la estructura produce el comportamiento. Los cuatro modos con su estructura, y que sistemas muy distintos con la misma estructura de bucles se comportan igual.
 
 Quinto: verificación del modelo. Las cuatro verificaciones de la lista de control, por qué un nivel negativo se corrige en el modelo, y por qué no hacen falta réplicas pero sí sensibilidad.
-
-Sexto, menos probable pero posible: la epidemia agregada contra la de agentes, y el criterio de elección de paradigma.
 
 ## Lo mínimo que te tenés que llevar
 

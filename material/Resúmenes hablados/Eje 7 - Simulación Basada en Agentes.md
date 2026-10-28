@@ -1,6 +1,6 @@
 # Eje 7. Simulación basada en agentes
 
-Bueno, vamos con el eje siete, simulación basada en agentes. Esto te lleva unos veintiocho minutos de escucha. De este eje entra solo la teoría, casi todo en multiple choice y quizás alguna pregunta de desarrollo. El práctico de NetLogo no entra; lo nombro solo cuando ayuda. Las cuatro ideas centrales son estas: qué es un agente y qué no es; que el tiempo y el orden de activación son parte de la especificación del modelo; qué es emergencia y cómo se reconoce, con el ejemplo de Schelling; y cuándo conviene usar agentes, con la equifinalidad como su crítica más seria.
+Bueno, vamos con el eje siete, simulación basada en agentes. Esto te lleva unos veintitrés minutos de escucha. De este eje entra solo la teoría, casi todo en multiple choice y quizás alguna pregunta de desarrollo. El práctico de NetLogo no entra; lo nombro solo cuando ayuda. Además, el profe sacó del parcial la sección del modelo trazado a mano, es decir, todo el ejercicio de Schelling con su grilla, su tick y sus números, y todas las fórmulas de cálculo: se evalúan los conceptos. Así que eso no lo estudies. Las cuatro ideas centrales son estas: qué es un agente y qué no es; que el tiempo y el orden de activación son parte de la especificación del modelo; qué es emergencia y cómo se reconoce, con el test rápido, el criterio completo y los tres casos; y cuándo conviene usar agentes, con la equifinalidad como su crítica más seria.
 
 ## Para ubicarte
 
@@ -26,7 +26,7 @@ Para acordarte del núcleo, pensá en cuatro preguntas: quién es, qué tiene, d
 
 **Lo importante.** Un modelo perfectamente válido puede no tener ninguna de las otras seis propiedades. Según el apunte, muchos malentendidos vienen de exigirle a todo agente cosas que solo tienen algunos.
 
-**Ojo, trampa.** Tres suenan obligatorias y no lo son. La interacción es muy frecuente, no núcleo. La heterogeneidad parece la esencia del paradigma, pero no es obligatoria: en Schelling los dos tipos de agente no tienen ninguna asimetría. Y el aprendizaje es opcional.
+**Ojo, trampa.** Tres suenan obligatorias y no lo son. La interacción es muy frecuente, no núcleo. La heterogeneidad parece la esencia del paradigma, pero es frecuente, no obligatoria. Y el aprendizaje es opcional.
 
 ### Cuatro cosas que un agente no es
 
@@ -93,38 +93,6 @@ Caso tres, sí es emergencia. Cada pájaro aplica tres reglas mirando a sus veci
 La primera es tratar la emergencia como algo misterioso o inexplicable; en modelos simples se puede analizar perfectamente. La segunda es convertirla en requisito, creer que si un modelo no muestra emergencia no es de agentes. No hay acuerdo en la literatura sobre eso. Como dice el apunte, es una razón poderosa para usar el paradigma, no un carnet de pertenencia.
 
 **Si te toca de desarrollo.** Dá la definición. Explicá el test rápido y el criterio completo, remarcando que sacar una regla y ver caer el patrón refuerza la evidencia. Aplicalo a los tres casos. Y cerrá con las dos exageraciones: no es misteriosa y no es requisito.
-
-## Schelling, trazado a mano
-
-Thomas Schelling se preguntó en 1971 si hace falta que la gente sea intolerante para que una ciudad termine segregada. Y lo trabajó sin computadora, moviendo fichas sobre un tablero.
-
-### Las reglas
-
-Una grilla con un agente como máximo por celda y dos tipos, A y B, sin asimetría. La grilla es toroidal: la última columna es vecina de la primera y la última fila de la primera, así no hay efectos de borde. La vecindad son las ocho celdas de alrededor.
-
-Cada agente tiene un umbral de tolerancia: el porcentaje mínimo de vecinos iguales que necesita. Dos detalles clave. Se cuenta solo sobre las vecinas ocupadas: las vacías no cuentan. Y está satisfecho si la proporción alcanza o supera el umbral; si no, se muda a una celda vacía.
-
-Con umbral del cincuenta por ciento, el agente no exige vivir entre iguales: aceptaría un barrio perfectamente mezclado.
-
-Las métricas globales son dos. El porcentaje de similitud, que es qué parte de todas las relaciones de vecindad une a dos agentes del mismo tipo, y mide qué tan segregada está la grilla. Y la cantidad de insatisfechos.
-
-### El ejemplo de cuatro por cuatro
-
-Doce agentes, seis de cada tipo, cuatro vacías, umbral del cincuenta por ciento. El B de la fila cuatro, columna uno tiene seis vecinas ocupadas, y dos son iguales: treinta y tres por ciento, insatisfecho.
-
-Haciendo la cuenta para los doce, hay cuatro insatisfechos, y cuatro agentes quedan justo en el cincuenta por ciento y están satisfechos, porque alcanzar el umbral alcanza. En total hay setenta vecinos ocupados y treinta y cuatro iguales: la similitud es cuarenta y ocho coma cincuenta y siete por ciento. Cada vecindad se cuenta dos veces, pero eso no cambia el porcentaje.
-
-### Un tick, dos órdenes
-
-Los cuatro insatisfechos se mudan a las cuatro vacías, con los destinos fijados de antemano. Lo único que cambia es el orden de activación.
-
-Con el orden uno, la similitud queda en cuarenta y siete coma veintidós por ciento, con siete insatisfechos. Con el orden dos, el inverso, con el mismo estado inicial, las mismas reglas y los mismos destinos, queda en cincuenta y cinco coma cincuenta y seis por ciento, con tres insatisfechos.
-
-**Lo importante.** Tres lecciones. Primera: el orden de activación cambia el resultado, y ninguno de los dos está mal; son dos modelos distintos. Segunda: el sistema no mejora prolijamente tick a tick. En el orden uno los insatisfechos subieron de cuatro a siete, porque el que se muda deja huérfanos a sus vecinos y puede caer donde tampoco está cómodo. Un modelo de agentes no es un algoritmo de optimización, es un sistema que evoluciona. Tercera, la central: nadie programó la segregación. Ninguna regla dice formá barrios, y aun así, con muchos ticks, la grilla se segrega. Eso es emergencia.
-
-**Ojo, trampa.** Conclusiones falsas típicas: que el modelo prueba que la segregación real se explica así, o que los individuos querían segregarse. Lo que muestra es más acotado: una preferencia individual moderada alcanza para producir un resultado colectivo extremo.
-
-**Ojo, trampa.** En el cálculo, nunca dividas por ocho: dividí por las ocupadas. Un agente con siete vecinas vacías y una ocupada por un igual está satisfecho con el cien por ciento.
 
 ## Cuándo conviene usar agentes y cuándo no
 
@@ -202,27 +170,21 @@ Pregunta siete. ¿Qué refuerza la evidencia de que un patrón es emergente? Opc
 
 Pregunta ocho. Un modelo hecho con agentes no muestra ningún patrón emergente. ¿Qué se puede decir? Opciones: que no es un modelo de agentes; que en realidad es de eventos discretos; que puede ser un modelo de agentes correctamente construido; o que está mal verificado. La correcta es la tercera: la emergencia no es un carnet de pertenencia. El distractor tramposo es la primera.
 
-Pregunta nueve. En Schelling, con umbral del cincuenta por ciento, un agente tiene dos vecinas vacías y seis ocupadas, tres de ellas iguales a él. ¿Cómo está? Opciones: insatisfecho, porque tres de ocho no llega; insatisfecho, porque tiene que superar el umbral; satisfecho, porque tres de seis es justo el cincuenta por ciento; o no se puede evaluar. La correcta es la tercera. Hay dos distractores tramposos: dividir por ocho, cuando las vacías no cuentan, y exigir superar el umbral, cuando alcanza con igualarlo.
+Pregunta nueve. ¿Qué es la equifinalidad? Opciones: que distintos paradigmas dan el mismo resultado; que un modelo puede reproducir perfectamente los datos con reglas equivocadas; que todos los agentes terminan en el mismo estado; o que el modelo converge siempre al mismo equilibrio. La correcta es la segunda, la crítica metodológica más seria al paradigma. Los distractores tramposos son la tercera y la cuarta, que se cuelgan del nombre.
 
-Pregunta diez. En el ejemplo a mano, tras un tick con el orden uno, los insatisfechos pasan de cuatro a siete. ¿Qué muestra? Opciones: un error de cálculo; que el orden uno está mal especificado; que el sistema no mejora prolijamente tick a tick; o que el modelo nunca converge. La correcta es la tercera: no es un algoritmo de optimización. El distractor tramposo es la segunda: el apunte dice que ninguno de los dos órdenes está mal.
+Pregunta diez. ¿Cuál es la diferencia más defendible entre eventos discretos y agentes? Opciones: que en eventos discretos las entidades no tienen atributos; que en eventos discretos no se rutea según condiciones; dónde se ubica la lógica, en el flujo del sistema o en el individuo; o que usan software distinto. La correcta es la tercera. Las dos primeras son la trampa: una entidad de eventos discretos puede tener atributos y rutearse según condiciones.
 
-Pregunta once. ¿Qué permite concluir el modelo de Schelling? Opciones: que la segregación real se explica así; que los individuos quieren vivir separados; que una preferencia individual moderada alcanza para producir un resultado colectivo extremo; o que con umbral del cincuenta por ciento los agentes exigen vivir entre iguales. La correcta es la tercera. El distractor tramposo es la primera: el apunte dice expresamente que eso no se sigue del modelo.
+Pregunta once. Si la pregunta sobre una epidemia se responde bien con promedios, ¿qué conviene? Opciones: agentes, porque es más realista; agentes, porque representa a cada persona; dinámica de sistemas, porque es más barato y tiene menos supuestos; o da lo mismo. La correcta es la tercera. El distractor tramposo es la primera: ningún paradigma es más realista por definición.
 
-Pregunta doce. ¿Qué es la equifinalidad? Opciones: que distintos paradigmas dan el mismo resultado; que un modelo puede reproducir perfectamente los datos con reglas equivocadas; que todos los agentes terminan en el mismo estado; o que el modelo converge siempre al mismo equilibrio. La correcta es la segunda, la crítica metodológica más seria al paradigma. Los distractores tramposos son la tercera y la cuarta, que se cuelgan del nombre.
-
-Pregunta trece. ¿Cuál es la diferencia más defendible entre eventos discretos y agentes? Opciones: que en eventos discretos las entidades no tienen atributos; que en eventos discretos no se rutea según condiciones; dónde se ubica la lógica, en el flujo del sistema o en el individuo; o que usan software distinto. La correcta es la tercera. Las dos primeras son la trampa: una entidad de eventos discretos puede tener atributos y rutearse según condiciones.
-
-Pregunta catorce. Si la pregunta sobre una epidemia se responde bien con promedios, ¿qué conviene? Opciones: agentes, porque es más realista; agentes, porque representa a cada persona; dinámica de sistemas, porque es más barato y tiene menos supuestos; o da lo mismo. La correcta es la tercera. El distractor tramposo es la primera: ningún paradigma es más realista por definición.
-
-Pregunta quince. Sobre el protocolo ODD, ¿qué es correcto? Opciones: que valida el modelo; que garantiza que el modelo es bueno; que documenta el modelo para que otro pueda reproducirlo y discutirlo; o que tiene ocho componentes. La correcta es la tercera: documenta, no valida. El distractor tramposo es la cuarta: ocho son las filas de la ficha, y el ODD tiene siete elementos.
+Pregunta doce. Sobre el protocolo ODD, ¿qué es correcto? Opciones: que valida el modelo; que garantiza que el modelo es bueno; que documenta el modelo para que otro pueda reproducirlo y discutirlo; o que tiene ocho componentes. La correcta es la tercera: documenta, no valida. El distractor tramposo es la cuarta: ocho son las filas de la ficha, y el ODD tiene siete elementos.
 
 ## Lo que puede entrar en desarrollo
 
 Primer tema: qué es un agente. Empezá con la definición completa. Separá el núcleo de cuatro de las propiedades frecuentes y opcionales. Seguí con las cuatro cosas que un agente no es, con un ejemplo cada una. Y cerrá con que lo define su papel: un individuo que decide por sí mismo.
 
-Segundo tema: la emergencia explicada con Schelling. Definí emergencia y el criterio para reconocerla. Contá las reglas de Schelling, remarcando que con umbral del cincuenta por ciento el agente acepta un barrio mezclado. Mostrá que ninguna regla ordena formar barrios y aun así la grilla se segrega. Y cerrá con la conclusión acotada: una preferencia moderada alcanza para un resultado extremo, sin que eso pruebe cómo funciona la segregación real.
+Segundo tema: la emergencia. Definí emergencia y el criterio para reconocerla: el test rápido y el criterio completo, remarcando que sacar una regla local y ver caer el patrón refuerza la evidencia. Aplicalo a los tres casos, con la bandada como el caso que sí es emergencia. Y cerrá con las dos exageraciones: no es misteriosa y no es requisito.
 
-Tercer tema: el tiempo y la activación. Desarmá la idea de que agentes es igual a incrementos fijos y decí qué define realmente al paradigma. Explicá el esquema sincrónico y el asincrónico con el ejemplo del contagio. Usá el ejemplo de Schelling, cuarenta y siete coma veintidós contra cincuenta y cinco coma cincuenta y seis por ciento, para mostrar que el orden cambia el resultado. Y cerrá con que es parte de la especificación y por eso la fila siete de la ficha no se deja en blanco.
+Tercer tema: el tiempo y la activación. Desarmá la idea de que agentes es igual a incrementos fijos y decí qué define realmente al paradigma. Explicá el esquema sincrónico y el asincrónico con el ejemplo del contagio, y la segunda decisión del asincrónico: en qué orden actúan. Mostrá que esa elección puede cambiar el resultado: dos implementaciones del mismo modelo conceptual dan resultados distintos sin que ninguna tenga un error. Y cerrá con que es parte de la especificación y por eso la fila siete de la ficha no se deja en blanco.
 
 Cuarto tema: los límites del paradigma. Explicá el costo oculto de inventar reglas difíciles de medir. Definí equifinalidad: reproducir los datos no prueba que las reglas sean correctas. Nombrá algunas señales en contra. Y cerrá con el ODD, que documenta, no valida.
 
@@ -234,10 +196,8 @@ Un agente no es necesariamente una persona, ni inteligencia artificial, ni un ob
 
 Lo que define al paradigma es cómo representa el sistema, no cómo avanza el reloj.
 
-El orden de activación es parte de la especificación y cambia los resultados. La fila de tiempo y activación nunca va en blanco.
+El orden de activación es parte de la especificación y puede cambiar los resultados. La fila de tiempo y activación nunca va en blanco.
 
 Emergencia es un patrón global sin regla global, explicable por reglas locales. No es misteriosa ni es requisito.
-
-En Schelling, las vacías no cuentan y alcanzar el umbral alcanza. Una preferencia moderada produce segregación sin que nadie la programe.
 
 Ningún paradigma es más realista por definición, y reproducir los datos no prueba que las reglas sean las correctas.

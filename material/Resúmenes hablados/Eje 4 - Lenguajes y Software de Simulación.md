@@ -1,6 +1,6 @@
 # Eje 4. Lenguajes y software de simulación
 
-Vamos con el eje cuatro. Este audio dura unos veintiocho minutos. Del eje entra solo la teoría, casi toda en multiple choice, así que vamos a lo preguntable y a las trampas. Son cuatro ideas centrales. Una, el eje agrega el motor de tiempo: el reloj avanza al siguiente evento y todo simulador repite el mismo ciclo. Dos, hay dos visiones del mundo, eventos y procesos, y por debajo los procesos corren sobre un motor de eventos. Tres, cada herramienta tiene su paradigma, y el paradigma se elige al modelar, no al elegir el software. Cuatro, verificar no es validar.
+Vamos con el eje cuatro. Este audio dura unos veinticuatro minutos. Del eje entra solo la teoría, casi toda en multiple choice, así que vamos a lo preguntable y a las trampas. Ojo, el profe sacó de la evaluación los lenguajes clásicos y lo que aportó cada uno, los lenguajes de hoy como bibliotecas sobre lenguajes de propósito general, el panorama de herramientas y los dos complementos, el de la evolución de los lenguajes y el software y el de los criterios para elegir una herramienta. Eso no lo estudies: ya lo saqué de este resumen. Son cuatro ideas centrales. Una, el eje agrega el motor de tiempo: el reloj avanza al siguiente evento y todo simulador repite el mismo ciclo. Dos, hay dos visiones del mundo, eventos y procesos, y por debajo los procesos corren sobre un motor de eventos. Tres, cada herramienta tiene su paradigma, y el paradigma se elige al modelar, no al elegir el software. Cuatro, verificar no es validar.
 
 ## Dónde está parado este eje
 
@@ -98,36 +98,6 @@ Y el dato que más se pregunta: la programación orientada a objetos nació dent
 
 **Si te toca de desarrollo.** Definí visión del mundo. Explicá eventos con sus rutinas y procesos con la historia del cliente, con demorar y tomar. Compará protagonista, reloj, fortaleza y debilidad. Cerrá con el motor de eventos por debajo y los objetos envolviendo a ambas.
 
-## Los lenguajes clásicos
-
-Ya casi no se usan tal cual, pero sus ideas siguen vigentes.
-
-GPSS, de 1961, de IBM, creado por Gordon. Visión de procesos, con transacciones. Aportó el modelado por bloques, antepasado directo de la interfaz de casi todos los simuladores visuales.
-
-SIMSCRIPT, de 1962 y 1963, de la RAND. Visión de eventos, con una sintaxis cercana al inglés.
-
-SIMULA, de 1962 a 1967, del Centro de Cómputos de Noruega. Visión de procesos. Introdujo clase, objeto y herencia.
-
-GASP, SLAM y SIMAN, de 1969 a 1982, en Estados Unidos. Híbridos: combinaron eventos, procesos y variables continuas. SIMAN es el motor sobre el que se construyó Arena.
-
-DEVS, de 1976, de Zeigler. No es un lenguaje sino un formalismo: una especificación matemática de los sistemas de eventos discretos, independiente de la implementación.
-
-Modelica, de 1997, de un consorcio internacional. Basado en ecuaciones, para sistemas continuos e híbridos.
-
-**Lo importante.** Tres parejas: GPSS y bloques, SIMULA y objetos, SIMAN y Arena. SIMSCRIPT es el clásico de eventos; GPSS y SIMULA son de procesos.
-
-**Ojo, trampa.** GPSS presentado como de eventos, o SIMSCRIPT como de procesos. DEVS presentado como lenguaje: el apunte aclara que no lo es. Modelica asociado a eventos discretos. Y Arena construida sobre GPSS: fue sobre SIMAN.
-
-### Los lenguajes de hoy: bibliotecas
-
-Hoy el planteo se invirtió: en vez de crear un lenguaje nuevo, se toma uno de propósito general y se le agrega una biblioteca con el motor, conservando todo su ecosistema. SimPy, de Python, es el ejemplo más claro: implementa la visión orientada a procesos con los generadores del lenguaje. Simmer, de R, es similar, y SSJ, de Java, cubre el mismo espacio.
-
-Por eso saber programar sigue siendo una ventaja: los simuladores visuales resuelven el noventa por ciento de los casos, y el diez por ciento restante se resuelve programando.
-
-**Lo importante.** La tendencia actual es biblioteca sobre lenguaje general, con SimPy como ejemplo.
-
-**Ojo, trampa.** SimPy no es un lenguaje de simulación: es una biblioteca. Y es de procesos, no de eventos.
-
 ## Software de simulación
 
 ### Cuatro familias de herramientas
@@ -160,17 +130,7 @@ La advertencia: elegir el paradigma es una decisión de modelado, no de software
 
 **Ojo, trampa.** Dinámica de sistemas con individuos, o agentes con un comportamiento global programado en lugar de emergente. Y sobre todo, que el paradigma se elige según el software disponible.
 
-**Si te toca de desarrollo.** Definí los tres paradigmas principales con una pregunta típica de cada uno. Nombrá el híbrido. Explicá que la elección es de modelado. Cerrá con una herramienta por paradigma.
-
-### Panorama de herramientas
-
-Arena es un simulador visual por diagrama de bloques, de eventos discretos. FlexSim es visual, en tres dimensiones y orientado a objetos, de eventos discretos con módulo de agentes. Simio es visual orientado a objetos, de eventos discretos y agentes. AnyLogic es la plataforma multimétodo: discreto, continuo y agentes. Simul8, Witness, ExtendSim, ProModel, Plant Simulation y el libre JaamSim son visuales de eventos discretos. GPSS World y SIMSCRIPT tres son lenguajes de simulación. Vensim, Stella y Powersim son de dinámica de sistemas. NetLogo, Repast y Mesa, de agentes. Y OMNeT más más y ns tres simulan redes.
-
-En el laboratorio se usan FlexSim, para los eventos discretos del trabajo integrador, y Vensim, para los modelos continuos del eje ocho. Se usan las dos justamente porque son de paradigmas distintos.
-
-**Lo importante.** FlexSim y Vensim con su paradigma, y AnyLogic como multimétodo.
-
-**Ojo, trampa.** El cruce entre FlexSim y Vensim es casi seguro: FlexSim es eventos discretos; Vensim, dinámica de sistemas.
+**Si te toca de desarrollo.** Definí los tres paradigmas principales con una pregunta típica de cada uno. Nombrá el híbrido. Cerrá con que la elección es de modelado: si el paradigma no corresponde al problema, ninguna herramienta lo arregla.
 
 ### Qué resuelve el software y qué sigue siendo tuyo
 
@@ -224,16 +184,6 @@ Fijar la semilla para reproducir exactamente una corrida, al depurar o para que 
 
 **Si te toca de desarrollo.** Explicá por qué un modelo estocástico obliga a cuidar la aleatoriedad. Desarrollá los tres cuidados con su propósito: reproducir, estimar y comparar. Cerrá con que la reproducibilidad permite auditar las conclusiones.
 
-## Los dos complementos
-
-No son núcleo de la unidad. La evolución pasó por cinco etapas, desde la programación artesanal de los cincuenta hasta la integración y el análisis desde 2010, y cada una automatizó trabajo manual, pero ninguna la parte conceptual.
-
-Para elegir herramienta, el apunte lista criterios como paradigma, flexibilidad, prestaciones estadísticas, integración, curva de aprendizaje y costo total, y uno decisivo: comunicar los resultados a quien decide.
-
-**Lo importante.** Lo conceptual nunca se automatizó.
-
-**Ojo, trampa.** Elegir por la animación o porque la usa todo el mundo: el apunte dice que no. Y el costo total no es solo la licencia.
-
 ## Preguntas tipo multiple choice
 
 Pregunta uno. ¿Qué mecanismo de avance del tiempo domina en eventos discretos? Opciones: incrementos fijos, siguiente evento, sincronizado con el tiempo real, o el que elija el usuario. La correcta es siguiente evento, porque entre eventos no cambia nada. El distractor tramposo es incrementos fijos: existe, pero es para continuos.
@@ -248,21 +198,17 @@ Pregunta cinco. Sobre las visiones del mundo, ¿cuál es verdadera? Opciones: pr
 
 Pregunta seis. En procesos, ¿qué instrucción suspende por un tiempo desconocido hasta que el recurso esté libre? Opciones: demorar, tomar, liberar o programar. La correcta es tomar. El distractor es demorar, que suspende un tiempo conocido.
 
-Pregunta siete. ¿Dónde nació la programación orientada a objetos? Opciones: C más más, Java, SIMULA o GPSS. La correcta es SIMULA. La trampa es creer que la simulación tomó los objetos de los lenguajes generales; GPSS aportó otra cosa, los bloques.
+Pregunta siete. ¿Dónde nació la programación orientada a objetos? Opciones: C más más, Java, SIMULA o GPSS. La correcta es SIMULA. La trampa es creer que la simulación tomó los objetos de los lenguajes generales: fue al revés, de SIMULA pasaron a C más más y a Java.
 
-Pregunta ocho. ¿Sobre qué motor se construyó Arena? Opciones: GPSS, SIMAN, SIMSCRIPT o DEVS. La correcta es SIMAN. GPSS es el distractor plausible, por ser el antepasado de la interfaz por bloques.
+Pregunta ocho. ¿Qué familia tiene flexibilidad alta y desarrollo alto? Opciones: lenguaje de propósito general, biblioteca de simulación, lenguaje de simulación o simulador visual. La correcta es la biblioteca. El lenguaje general tiene flexibilidad máxima, y el de simulación, media alta: es fácil cruzarlos.
 
-Pregunta nueve. ¿Qué es DEVS? Opciones: un lenguaje de procesos de IBM, un formalismo matemático de los eventos discretos, un simulador visual, o un estándar de ecuaciones para continuos. La correcta es el formalismo: no es un lenguaje. La primera describe a GPSS, y la última, a Modelica.
+Pregunta nueve. ¿Cuándo se elige el paradigma? Opciones: al elegir el software, tras la primera corrida, al formular el modelo conceptual, o lo decide la herramienta. La correcta es al formular el modelo conceptual. La trampa es al elegir el software.
 
-Pregunta diez. ¿Qué familia tiene flexibilidad alta y desarrollo alto? Opciones: lenguaje de propósito general, biblioteca de simulación, lenguaje de simulación o simulador visual. La correcta es la biblioteca. El lenguaje general tiene flexibilidad máxima, y el de simulación, media alta: es fácil cruzarlos.
+Pregunta diez. ¿Qué resuelve el software? Opciones: elegir la distribución de las llegadas, validar el modelo, administrar la agenda y el reloj, o verificar el modelo. La correcta es la agenda y el reloj. La más tramposa es elegir la distribución: el software la genera, pero no la elige.
 
-Pregunta once. ¿Cuándo se elige el paradigma? Opciones: al elegir el software, tras la primera corrida, al formular el modelo conceptual, o lo decide la herramienta. La correcta es al formular el modelo conceptual. La trampa es al elegir el software.
+Pregunta once. Quedó invertida una regla de prioridad en el código. ¿Qué problema es? Opciones: validación, verificación, reproducibilidad o paradigma. La correcta es verificación: el implementado no coincide con el conceptual. La tramposa es validación, que compara contra el sistema real.
 
-Pregunta doce. ¿Qué resuelve el software? Opciones: elegir la distribución de las llegadas, validar el modelo, administrar la agenda y el reloj, o verificar el modelo. La correcta es la agenda y el reloj. La más tramposa es elegir la distribución: el software la genera, pero no la elige.
-
-Pregunta trece. Quedó invertida una regla de prioridad en el código. ¿Qué problema es? Opciones: validación, verificación, reproducibilidad o paradigma. La correcta es verificación: el implementado no coincide con el conceptual. La tramposa es validación, que compara contra el sistema real.
-
-Pregunta catorce. Para estimar un indicador conviene: una corrida con semilla fija, varias réplicas con la misma semilla, varias réplicas con semillas distintas, o usar constantes. La correcta es réplicas con semillas distintas. La tramposa es la misma semilla, que repite la misma corrida; las constantes son para verificar.
+Pregunta doce. Para estimar un indicador conviene: una corrida con semilla fija, varias réplicas con la misma semilla, varias réplicas con semillas distintas, o usar constantes. La correcta es réplicas con semillas distintas. La tramposa es la misma semilla, que repite la misma corrida; las constantes son para verificar.
 
 ## Lo que puede entrar en desarrollo
 
@@ -272,7 +218,7 @@ El motor de tiempo. Presentá los dos mecanismos y justificá el siguiente event
 
 Verificación y validación. Definí cada una con su pregunta, qué compara y su naturaleza. Dá un ejemplo de falla de cada tipo y algunas técnicas de verificación. Cerrá con que verificado no implica válido.
 
-Elegir y usar el software. Presentá las cuatro familias y la relación inversa entre flexibilidad y velocidad. Explicá que el paradigma se elige al modelar. Separá lo que resuelve el software de lo que es del analista. Cerrá con FlexSim y Vensim, usadas juntas por ser de paradigmas distintos.
+El software de simulación. Presentá las cuatro familias y la relación inversa entre flexibilidad y velocidad. Explicá que el paradigma se elige al modelar. Cerrá separando lo que resuelve el software de lo que sigue siendo del analista.
 
 ## Lo mínimo que te tenés que llevar
 
@@ -282,9 +228,9 @@ El ciclo tiene seis pasos, se elige el evento de menor tiempo y, ante un empate,
 
 En eventos el sistema reacciona; en procesos la entidad actúa. Por debajo, procesos corre sobre un motor de eventos.
 
-GPSS trajo los bloques, SIMSCRIPT es de eventos, SIMULA creó los objetos, SIMAN es el motor de Arena y DEVS es un formalismo.
+La orientación a objetos envuelve a las dos visiones, y nació dentro de la simulación, con SIMULA.
 
-Flexibilidad y velocidad son inversas, y el paradigma se elige al modelar. FlexSim es de eventos discretos; Vensim, de dinámica de sistemas.
+Flexibilidad y velocidad son inversas, y el paradigma se elige al modelar.
 
 Verificar es construir bien el modelo; validar es construir el modelo correcto. La animación ayuda, pero no prueba.
 

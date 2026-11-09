@@ -38,6 +38,26 @@ Queda en unos 6 minutos de locución para cada uno. A unas 130 palabras por minu
 
 > **Regla de la consigna:** no se nombra la organización. En la locución se dice siempre «un comedor universitario» o «el comedor». Antes de grabar, revisá que no se vea el nombre en el modelo de FlexSim (títulos, tablas, nombre del archivo en la barra de la ventana) ni en las diapositivas.
 
+## Material grabado y de dónde salen los números
+
+Las tomas están en [`flexsim/LISTA_DE_TOMAS.md`](../../flexsim/LISTA_DE_TOMAS.md), y las grabaciones, en `videos/una-caja.mkv` (escenario base) y `videos/dos-cajas.mkv` (E1).
+
+> **Las grabaciones son una animación ilustrativa**, hecha con un replay de un escenario más exigente que el medido: la cola llega a 100 personas y la caja abre a las 12:01:54. **Ningún número que se diga en voz alta sale de la animación.** Los números de la locución salen del modelo medido ([`validacion_E0_Pico.md`](../../flexsim/validacion_E0_Pico.md)) y, para los escenarios alternativos, del Experimenter.
+>
+> Mientras se ve la animación, va un pie fijo y chico abajo: «Animación ilustrativa de un escenario más exigente que el medido».
+
+| Escena | Tomas |
+|---|---|
+| 1 Organización | Toma 1 de `una-caja.mkv` (plano general, acelerada) |
+| 2 Problemática | Final de la toma 1: la fila armada antes de abrir |
+| 4 Render 3D | Toma 5 (una persona camino a la salida) y planos de la toma 1 |
+| 5 Ejecución base | Tomas 2, 3 y 4 de `una-caja.mkv` |
+| 7, E1 | Tomas 2 y 3 de `dos-cajas.mkv` y la fila de servicio llena (bloque 5 de la lista) |
+| 7, E2 a E5 | **Faltan tomas.** Se cubren con los gráficos de cada escenario o se graban con el mismo encuadre |
+| 9 Conclusión | Toma 6 de las dos grabaciones, lado a lado |
+
+> **Pendiente:** la lista de tomas habla de 4 puestos en el mostrador en la toma 4 y de 3 en el bloque 3, y el guion dice 3 personas en el escenario base. Confirmen la cifra y usen la misma en la locución, en los textos y en la lista. Además, en el bloque 1 de la lista, el texto «Comedor Universitario UNC» hay que cambiarlo por «Un comedor universitario».
+
 ---
 
 # Escena 0 · Apertura (0:00 – 0:15)
@@ -88,7 +108,7 @@ La trampa es que si agilizamos la validación, la cola puede simplemente **corre
 
 «Este es el **escenario base**, la situación de partida contra la que comparamos todo.
 
-Las personas empiezan a llegar a las 11:40 y forman la fila antes de la **apertura de las 12:00**. Las llegadas salen de los **registros reales de reservas**, por franjas de diez minutos y por tipo de cliente: estudiantes, becarios y personal.
+Las personas empiezan a llegar a las 11:40 y forman la fila antes de la **apertura, alrededor de las 12**: la caja casi nunca abre en punto, y esa demora también sale de los registros. Las llegadas salen de los **registros reales de reservas**, por franjas de diez minutos y por tipo de cliente: estudiantes, becarios y personal.
 
 Hay **un solo puesto de validación**. Cada persona presenta un DNI por cada ración que retira, y cada DNI lleva **unos cuatro segundos**, un tiempo que derivamos de los registros reales del puesto.
 
@@ -102,30 +122,32 @@ El caso es **mixto**: las llegadas y la validación vienen de datos reales, y lo
 
 # Escena 4 · Renderizado 3D (3:15 – 3:45) · opcional
 
-- **🎥 Pantalla:** recorrido lento de cámara por la escena 3D: entrada, fila de caja, puesto, fila de servicio y mostrador.
+- **🎥 Pantalla:** recorrido lento de cámara por la escena 3D: entrada, fila de caja, puesto, fila de servicio y mostrador. Se puede armar con planos de la toma 1 y cerrar con la toma 5, siguiendo a una persona que sale con la bandeja.
 
 **🗣️ Jonatan:** «Esta es la representación tridimensional del comedor. Acá se forma la **fila de caja**, este es el **puesto de validación**, y por acá la gente avanza hacia el **mostrador**.»
 
-> Acá las palabras en negrita funcionan mejor como etiquetas que aparecen **sobre cada sector** en el momento en que se nombran. Si la escena 3D no llega a estar animada, cortá esta escena entera: es opcional y ahorra 30 segundos para los resultados.
+> Acá las palabras en negrita funcionan mejor como etiquetas que aparecen **sobre cada sector** en el momento en que se nombran. Si el video se pasa de tiempo, esta es la primera escena para recortar: es opcional.
 
 ---
 
 # Escena 5 · Ejecución del escenario base (3:45 – 5:15)
 
-- **🎥 Pantalla:** corrida de E0_Pico en FlexSim, acelerada, con un reloj con la hora del modelo en una esquina. Tres momentos clave, cada uno con un zoom:
-  1. 11:55: la cola previa armada.
-  2. 12:00 a 12:30: la caja procesando y la fila de servicio creciendo.
-  3. El pico de la fila de servicio.
+- **🎥 Pantalla:** `una-caja.mkv`, con el pie de animación ilustrativa. Tres momentos clave, cada uno con un zoom:
+  1. Toma 2: abre la caja y la fila arranca.
+  2. Toma 3: plano general alejándose (efecto dron).
+  3. Toma 4: el mostrador sirviendo en paralelo, con la fila de servicio llena.
 
 **🗣️ Jonatan:**
 
-«Corremos el escenario base en el día pico. A las 11:55 ya hay **[N] personas esperando**.
+«Corremos el escenario base en el día pico. Antes de que abra la caja ya se juntan **más de 60 personas** esperando.
 
-Abre la caja y la fila empieza a bajar rápido: con cuatro segundos por DNI, **la validación no es el problema**.
+Abre la caja y la fila empieza a bajar rápido: con cuatro segundos por DNI, **la validación no es el problema**. La caja trabaja apenas a un 60 % de su capacidad.
 
-Miren lo que pasa en la fila del servicio: [crece hasta N personas]. **El cuello de botella no está en la caja, está en el mostrador.** [Ajustar según lo que muestre la corrida real.]»
+Miren lo que pasa en la fila del servicio: llega a **más de 130 personas**. **El cuello de botella no está en la caja, está en el mostrador.**»
 
-> «El cuello de botella no está en la caja, está en el mostrador» es la idea central del video: dale el texto más grande de todos, y en la edición hacé una pausa de un segundo antes de que Jonatan la diga. Grabá la corrida sin hablar y poné la locución después: así podés acelerar o pausar la simulación sin que la voz se corte.
+> Los números dichos («más de 60», «más de 130», «un 60 %») son de la corrida medida (cola máxima en caja de 66, cola máxima en servicio de 131, caja al 62,6 %), **no** de lo que se ve en la animación, que es más exigente. Si con las réplicas cambian, ajustalos.
+>
+> «El cuello de botella no está en la caja, está en el mostrador» es la idea central del video: dale el texto más grande de todos, y en la edición hacé una pausa de un segundo antes de que Jonatan la diga. La locución va aparte de la grabación, así que podés acelerar o pausar la animación sin que la voz se corte.
 
 ---
 
@@ -137,13 +159,19 @@ Miren lo que pasa en la fila del servicio: [crece hasta N personas]. **El cuello
 
 «Estos son los resultados del escenario base, con **[30] réplicas** del día pico.
 
-La espera media en la fila de caja es de **[X] minutos**, y el **tiempo total**, desde que la persona llega hasta que tiene la bandeja, es de **[X] minutos**, con un intervalo de confianza del 95 % de [X a X].
+Quien llega antes de la apertura espera **unos 13 minutos** en la cola previa. Una vez abierta la caja, la espera ahí es **de menos de un minuto**. Donde se espera es en el mostrador: **casi 8 minutos** de media.
 
-La caja trabaja al **[X] %** de su capacidad, mientras que el servicio está al **[X] %**: está prácticamente saturado.
+La caja trabaja al **63 %** de su capacidad, mientras que el servicio está al **94 %**: está prácticamente saturado.
 
-Para validar el modelo, comparamos las validaciones por franja contra los registros reales [y la curva coincide / la diferencia es de X %]. La cola máxima de la caja, [X] personas, también cae en el rango que se observa en el comedor.»
+El **tiempo total**, desde que la persona llega hasta que tiene la bandeja, es de **[X] minutos**, con un intervalo de confianza del 95 % de [X a X].
 
-> En pantalla, cada número aparece con su etiqueta corta: «Espera en caja: [X] min», «Tiempo total: [X] min», «Caja: [X] %», «Servicio: [X] %».
+Para validar el modelo, comparamos las raciones validadas cada diez minutos contra los registros reales: la curva coincide, con una **correlación de 0,95**, y el total del día difiere en **menos de un 2 %**. La cola máxima de la caja, 66 personas, también cae en el rango que se observa en el comedor.»
+
+> En pantalla, cada número aparece con su etiqueta corta: «Cola previa: 13 min», «Caja: < 1 min», «Mostrador: 8 min», «Caja: 63 %», «Servicio: 94 %», «Correlación: 0,95».
+>
+> **Atención:** estos valores son de **una sola corrida** de FlexSim ([`validacion_E0_Pico.md`](../../flexsim/validacion_E0_Pico.md)), redondeados. Cuando estén las réplicas, reemplazalos por las medias. No muestren la espera *máxima* en el servicio: la validación la marca para revisar (86 min en FlexSim contra unos 17 en la réplica de Python). El tiempo total todavía no está calculado.
+>
+> El gráfico de la curva real contra el modelo ya está armado en la validación: se puede mostrar acá tal cual.
 
 ---
 
@@ -152,6 +180,8 @@ Para validar el modelo, comparamos las validaciones por franja contra los regist
 Cada escenario sigue la misma estructura de unos 30 segundos: el nombre del escenario aparece en pantalla, un fragmento corto de la corrida y uno o dos números. Repetir el formato ayuda a que el espectador compare solo. Los oradores **se alternan por escenario**: el cambio de voz marca el cambio de escenario.
 
 - **🎥 Pantalla:** 5 a 10 s de la corrida acelerada de cada escenario → gráfico de colas de ese escenario.
+  - **E1:** tomas 2 y 3 de `dos-cajas.mkv`, con el mismo encuadre que en la escena 5 para que se compare, y después la fila de servicio llena (bloque 5 de la lista de tomas).
+  - **E2 a E5:** todavía no hay grabación. Dos opciones: grabarlos con el mismo encuadre de la toma 3, o mostrar solo el gráfico de cada escenario. Si solo hay gráficos, conviene darle a cada escenario el mismo tipo de gráfico, para que la repetición del formato se mantenga.
 
 **🗣️ Juan:** «Ahora probamos cinco cambios sobre el escenario base. En cada uno **modificamos una sola cosa**, así sabemos qué causa la diferencia.»
 
@@ -194,7 +224,7 @@ Tabla para completar (la misma va en el PDF):
 
 # Escena 9 · Conclusión (11:15 – 12:40)
 
-- **🎥 Pantalla:** vuelve la pregunta de la escena 2, achicada arriba; la respuesta se escribe debajo mientras Juan la dice.
+- **🎥 Pantalla:** vuelve la pregunta de la escena 2, achicada arriba; la respuesta se escribe debajo mientras Juan la dice. Para el cierre de Jonatan, la toma 6 de las dos grabaciones lado a lado: la sala vaciándose. Las horas de salida de la animación (14:01 y 13:23) no se dicen ni se escriben: son del escenario exigente, no del medido.
 
 **🗣️ Juan:**
 

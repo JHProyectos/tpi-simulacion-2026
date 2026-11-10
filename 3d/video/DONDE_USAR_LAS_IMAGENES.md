@@ -33,6 +33,25 @@ Las tomas se pasaron por IA (Nano Banana 2, 2K) para dar realismo, con la 01 com
 - Usar `00_vista-lineas` como fondo de la placa con los apellidos: se reconoce el comedor sin competir con el texto.
 - Para el fundido final, pasar de `00_vista-lineas` a `01_vista-general` (misma cámara, así el cambio se ve como si el dibujo "tomara color").
 - El cartel rojo "Comedor Universitario" se ve en esta toma: sirve como identidad visual.
+- Para la placa usar `artlist/00_vista-lineas_ia_vector_cartel` (la de tinta tiene un mueble inventado en la pared derecha).
+
+#### Cómo armar el fundido de línea a color
+
+Las dos imágenes salen de la misma cámara, así que el cartel y las aberturas quedan casi en el mismo lugar y el cambio se ve como si el dibujo "tomara color".
+
+1. **0:00 a 0:10:** `00_vista-lineas_ia_vector_cartel` con la placa de apellidos encima y un zoom muy lento (un 3 % a 5 %).
+2. **0:10 a 0:14:** fundido cruzado de 2 a 3 segundos hacia `01_vista-general_ia`, sin mover la cámara. Si el cartel de las dos no coincide al superponerlas, escalar apenas una de las dos hasta que coincida.
+3. **Hasta 0:15:** `01_vista-general_ia` quieta, con el pie «Animación ilustrativa».
+
+Con ffmpeg, un ejemplo de 8 segundos (4 de líneas, 4 de color, fundido de 2):
+
+```bash
+ffmpeg -loop 1 -t 6 -i 00_vista-lineas_ia_vector_cartel.png -loop 1 -t 6 -i 01_vista-general_ia.png -filter_complex "[0][1]xfade=transition=fade:duration=2:offset=4,format=yuv420p" -r 30 apertura.mp4
+```
+
+Los apellidos y el pie conviene ponerlos en el editor de video, no en la imagen.
+
+Ya hay un clip armado: `apertura_lineas-a-color.mp4` (1920×1080, 30 fps, 16 s, sin texto). Muestra 10 s de líneas, un fundido de 3 s y 3 s de la sala a color, con un zoom lento continuo de un 4 %. El cartel coincide entre las dos imágenes con una diferencia de 2 a 3 píxeles, así que el fundido se ve limpio.
 
 ### Escena 3 · Escenario base (1:45 – 3:15)
 

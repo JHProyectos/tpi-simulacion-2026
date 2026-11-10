@@ -10,3 +10,15 @@ __pycache__/
 
 # Material de la cátedra (no se redistribuye)
 flexsim/*.pdf
+
+# Material de la catedra (no se redistribuye)
+material/*.pdf
+
+# Videos pesados que no se versionan:
+# las grabaciones crudas ya estan en el repo como .mkv, estos .mp4 son recodificaciones,
+# y los exports del film se regeneran desde el artifact.
+videos/una-caja.mp4
+videos/dos-cajas.mp4
+videos/fila-del-comedor-universitario.mp4
+videos/fila-del-comedor-universitario_low.mp4
+videos/prueba-con-voz.mp4

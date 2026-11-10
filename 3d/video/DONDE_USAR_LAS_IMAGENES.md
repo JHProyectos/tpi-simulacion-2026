@@ -17,6 +17,14 @@ Propuesta de uso de las tomas renderizadas en Blender (`3d/video/`, 1920×1080),
 | `07b_mostrador-completo` | Mostrador completo, con todos los puestos | 5 (servicio en paralelo) | 6, 7 |
 | `08_recorrido-cenital` | Vista cenital del recorrido completo | 4 (recorrido 3D) | 3 |
 
+## Versiones con IA (carpeta `artlist/`)
+
+Las tomas se pasaron por IA (Nano Banana 2, 2K) para dar realismo, con la 01 como referencia de color. Mismo nombre que la toma original, con el sufijo `_ia`:
+
+- `01_vista-general_ia`, `02_aerea_ia`, `04_fila-de-caja_ia`, `06_fila-de-servicio_ia`, `07a_mostrador-medio_ia`, `07b_mostrador-completo_ia`, `08_recorrido-cenital_ia`.
+- Se usan en las mismas escenas que la toma original (ver tabla).
+- La IA inventa detalles que no están en el modelo (lámparas, grietas en la pared, campana y bandejas de acero). En la `07b` cambió bastante el mostrador: usarla sólo como ambiente, no como plano fiel.
+
 ## Escena por escena
 
 ### Escena 0 · Apertura (0:00 – 0:15)

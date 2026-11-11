@@ -1,0 +1,19 @@
+#stage { --ground:#11181F; --main:#2F8F7A; --second:#E6EDF2; --accent:#F2A541; color:var(--second); font-family:var(--sans, system-ui, sans-serif);
+  --grilla:color-mix(in srgb, var(--main) 20%, var(--ground)); --linea:color-mix(in srgb, var(--main) 78%, var(--ground)); --tenue:color-mix(in srgb, var(--second) 52%, var(--ground));
+  --panel:color-mix(in srgb, var(--ground) 86%, var(--second)); --vidrio:color-mix(in srgb, var(--ground) 80%, transparent); --borde:color-mix(in srgb, var(--main) 44%, var(--ground));
+  --marca:color-mix(in srgb, var(--accent) 86%, var(--ground)); --hueco:color-mix(in srgb, var(--second) 16%, var(--ground)) }
+.ground { position:absolute; inset:0; background:var(--ground) }
+.art { position:absolute; inset:0; width:100%; height:100%; overflow:visible }
+.words { position:absolute; margin:0; display:flex; flex-direction:column; gap:20px } .words > * { margin:0 }
+.line { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:92px; line-height:1.06; font-weight:700 } .sub { font-size:34px; color:var(--tenue) }
+.num { font-family:var(--mono, ui-monospace, monospace); font-variant-numeric:tabular-nums }
+.etiqueta { position:absolute; font-size:30px; letter-spacing:.02em; color:var(--second); background:var(--vidrio); padding:8px 18px; border-radius:6px; border:1px solid var(--borde); white-space:nowrap }
+.tarjeta { background:var(--panel); border:1px solid var(--borde); border-radius:10px; padding:18px 26px; display:flex; flex-direction:column; gap:6px }
+.rotulo { font-size:27px; color:var(--tenue); letter-spacing:.05em }
+.dato { font-family:var(--mono, ui-monospace, monospace); font-variant-numeric:tabular-nums; font-size:60px; font-weight:700; color:var(--second); line-height:1 }
+.pendiente { font-family:var(--mono, ui-monospace, monospace); font-size:28px; color:var(--marca); letter-spacing:.08em }
+.calm { position:absolute; inset:0; background:color-mix(in srgb, var(--ground) 78%, transparent) }
+.edge { position:absolute; inset:0; background:radial-gradient(96% 90% at 50% 48%, transparent 56%, rgba(0,0,0,.34)) }
+.foto { position:absolute; overflow:hidden; background:var(--panel) } .foto img { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; display:block }
+.marco { border:2px solid var(--borde); border-radius:12px }
+.ambiente { opacity:.3; filter:grayscale(.35) }

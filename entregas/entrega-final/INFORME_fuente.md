@@ -142,29 +142,29 @@ Los registros originales no se modificaron. Los datos generados están marcados 
 
 ### 7.1 Llegadas: prueba de bondad de ajuste
 
-Antes de elegir cómo representar las llegadas, se probó si la cantidad de raciones por franja horaria sigue una distribución teórica supuesta. Se usó la prueba **chi-cuadrado** sobre una muestra de **1.176 raciones** de un día de servicio, agrupada en 6 franjas de 30 minutos.
+Antes de elegir cómo representar las llegadas, se probó si se reparten de manera pareja a lo largo del turno. Se usó la prueba **chi-cuadrado** sobre las **1.175 raciones** consumidas el **1 de julio de 2026**, agrupadas en 6 franjas de 30 minutos.
 
 | Franja | Observadas ($O_i$) | Probabilidad teórica ($p_i$) | Esperadas ($E_i$) | $(O_i - E_i)^2 / E_i$ |
 |---|---|---|---|---|
-| 12:00 – 12:30 | 306 | 0,2089 | 245,67 | 14,82 |
-| 12:30 – 13:00 | 236 | 0,2963 | 348,45 | 36,29 |
-| 13:00 – 13:30 | 277 | 0,2505 | 294,59 | 1,05 |
-| 13:30 – 14:00 | 190 | 0,1852 | 217,80 | 3,55 |
-| 14:00 – 14:30 | 165 | 0,0450 | 52,92 | 237,38 |
-| 14:30 – 15:00 | 2 | 0,0141 | 16,58 | 12,82 |
-| **Total** | **1.176** | **1,0000** | **1.176,00** | **305,90** |
+| 12:00 – 12:30 | 304 | 0,1667 | 195,83 | 59,74 |
+| 12:30 – 13:00 | 236 | 0,1667 | 195,83 | 8,24 |
+| 13:00 – 13:30 | 276 | 0,1667 | 195,83 | 32,82 |
+| 13:30 – 14:00 | 191 | 0,1667 | 195,83 | 0,12 |
+| 14:00 – 14:30 | 163 | 0,1667 | 195,83 | 5,50 |
+| 14:30 – 15:00 | 5 | 0,1667 | 195,83 | 185,96 |
+| **Total** | **1.175** | **1,0000** | **1.175,00** | **292,39** |
 
-- $H_0$: las llegadas siguen la distribución teórica supuesta a lo largo del turno.
-- $H_1$: las llegadas difieren significativamente de esa distribución.
-- Grados de libertad: $k - 1 - p = 6 - 1 - 1 = 4$. Nivel de significación: $\alpha = 0{,}05$.
+- $H_0$: las raciones se reparten de manera uniforme entre las seis franjas del turno.
+- $H_1$: el reparto difiere significativamente del uniforme.
+- Grados de libertad: $k - 1 = 6 - 1 = 5$. No se estima ningún parámetro a partir de la muestra, porque la distribución bajo $H_0$ queda definida sin ajustar nada. Nivel de significación: $\alpha = 0{,}05$.
 
-$$\chi^2_{calc} = \sum \frac{(O_i - E_i)^2}{E_i} = 305{,}90 \;>\; \chi^2_{0,05;\,4} = 9{,}488$$
+$$\chi^2_{calc} = \sum \frac{(O_i - E_i)^2}{E_i} = 292{,}39 \;>\; \chi^2_{0,05;\,5} = 11{,}070$$
 
-**Se rechaza $H_0$** con un 95 % de confianza. La mayor diferencia está entre las 14:00 y las 14:30: llegaron 165 personas contra 53 esperadas, una demanda tardía que la distribución supuesta no contempla.
+**Se rechaza $H_0$** con un 95 % de confianza. La demanda está concentrada al principio del turno y se apaga al final: en la primera media hora se sirven 304 raciones y en la última, 5. Esa última franja sola aporta 186 de los 292,39.
 
-**Qué se hizo con este resultado en el modelo:** como una sola distribución teórica para todo el turno no representa las llegadas, el modelo no usa una tasa única. Usa **una tasa distinta para cada franja de 10 minutos** y para cada grupo de clientes, calculada desde los registros reales (S08). Dentro de cada franja las llegadas son de Poisson; es decir, el modelo trabaja con un proceso de Poisson **no homogéneo**, cuya tasa sigue la forma real del día.
+**Qué se hizo con este resultado en el modelo:** como las llegadas no se reparten parejo, el modelo no usa una tasa única. Usa **una tasa distinta para cada franja de 10 minutos** y para cada grupo de clientes, calculada desde los registros reales (S08). Dentro de cada franja las llegadas son de Poisson; es decir, el modelo trabaja con un proceso de Poisson **no homogéneo**, cuya tasa sigue la forma real del día.
 
-> **Pendiente:** aclarar de dónde sale la probabilidad teórica $p_i$ de cada franja y qué día corresponde a la muestra de 1.176 raciones.
+Los valores observados se obtienen de `data/final/reservas_completo.csv`, contando los registros con `status = used` según la media hora de `checked_at`.
 
 ### 7.2 Tipo de cliente: método de Monte Carlo
 

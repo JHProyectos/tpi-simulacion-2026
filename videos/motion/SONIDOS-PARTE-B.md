@@ -160,7 +160,7 @@ Locución: `videos/audios/jonatan/jonatan-e11-distribuciones.wav`.
 | 38,5 | pop | 34 | entra el renglón de las raciones por persona |
 | 40,7 | tick | 22 | «según la beca» |
 | 42,3 | pop | 36 | entra el renglón de la cola antes de abrir |
-| 45,1 | tick | 22 | el dato, 60 a 70 personas |
+| 45,1 | tick | 22 | el dato, que no hay registro |
 | 46,3 | chime | 40 | queda marcado «supuesto declarado», el único que no se midió |
 
 ### Verificación y validación (159,0 s – 200,0 s)

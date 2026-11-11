@@ -9,7 +9,7 @@ const VARIABLES = [
   { fig: 'curva', rotulo: 'Validaci&oacute;n del DNI', que: 'Lo que tarda el puesto con cada persona', dato: 'algo m&aacute;s de 3 s', forma: 'Lognormal', fuente: 'registros del puesto', supuesto: false, t: [4.2, 8.9, 13.8] },
   { fig: 'dias', rotulo: 'Apertura de la caja', que: 'La demora con que abre, respecto de las 12:00', dato: '2 min de media, hasta 7', forma: 'Emp&iacute;rica', fuente: '32 d&iacute;as anotados', supuesto: false, t: [16, 22.8, 20.2] },
   { fig: 'raciones', rotulo: 'Raciones por persona', que: 'Cu&aacute;ntas retira cada uno al llegar al mostrador', dato: 'seg&uacute;n la beca', forma: 'Por tipo de cliente', fuente: 'registros de reservas', supuesto: false, t: [26.5, 28.7, 28.7] },
-  { fig: 'cola', rotulo: 'Cola antes de abrir', que: 'Cu&aacute;nta gente ya est&aacute; esperando a las 11:40', dato: '60 a 70 personas', forma: 'Ajustada por nosotros', fuente: 'supuesto declarado', supuesto: true, t: [30.3, 33.1, 34.3] },
+  { fig: 'cola', rotulo: 'Cola antes de abrir', que: 'Cu&aacute;nta gente ya est&aacute; esperando a las 11:40', dato: 'sin registro', forma: 'Ajustada por nosotros', fuente: 'supuesto declarado', supuesto: true, t: [30.3, 33.1, 34.3] },
 ];
 
 // Las cuatro miniaturas, dibujadas una sola vez. Ninguna lleva texto: los rotulos van en HTML.

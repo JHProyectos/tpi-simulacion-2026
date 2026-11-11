@@ -16,10 +16,10 @@ const FILAS = [
 kit.scene('ficha', {
   init(kit) {
     kit.css('.ficha-caja { position:absolute; left:1138px; top:124px; width:650px }' +
-      '.ficha-titulo { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:62px; font-weight:700; line-height:1.08; margin:0 }' +
+      '.ficha-titulo { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:62px; font-weight:700; line-height:1.08; margin:0; color:var(--tinta) }' +
       '.ficha-fila { display:flex; justify-content:space-between; align-items:flex-start; gap:36px; padding:15px 0; border-top:1px solid var(--borde) }' +
       '.ficha-col { display:flex; flex-direction:column; align-items:flex-end; gap:5px }' +
-      '.ficha-valor { font-family:var(--mono, ui-monospace, monospace); font-variant-numeric:tabular-nums; font-size:40px; font-weight:700; line-height:1.1; text-align:right }' +
+      '.ficha-valor { font-family:var(--mono, ui-monospace, monospace); font-variant-numeric:tabular-nums; font-size:40px; font-weight:700; line-height:1.1; text-align:right; color:var(--tinta) }' +
       '.ficha-nota { font-size:23px; color:var(--tenue); text-align:right }' +
       '.ficha-planta { transform-origin:center }' +
       '.ficha-pie { position:absolute; left:150px; top:900px }');

@@ -5,14 +5,16 @@
 Tres escenas que hoy no están en el video y que el informe ya tiene resueltas.
 Todo sale de `entregas/entrega-final/INFORME.md`, secciones 7.1, 7.3 y 9.
 
-Son **2:05 de locución**, toda de Jonatan. La primera versión eran 3:30 con
-las mismas ideas: lo que se fue es la prosa de enlace, no los datos.
+Son **1:51 de locución**, toda de Jonatan, **ya grabada y recortada**. La
+primera versión eran 3:30 con las mismas ideas: lo que se fue es la prosa de
+enlace, no los datos. Falta una sola frase, al final de la escena 1: ver
+«Qué falta grabar» más abajo.
 
 | Escena nueva | Va en | Dura |
 | --- | --- | --- |
-| Bondad de ajuste de las llegadas | Parte A, después de la ficha | 0:36 |
-| Las distribuciones del modelo | Parte B, antes de la corrida | 0:44 |
-| Verificación, validación y réplicas | Parte B, al final | 0:46 |
+| Bondad de ajuste de las llegadas | Parte A, después de la ficha | 0:33 |
+| Las distribuciones del modelo | Parte B, antes de la corrida | 0:37 |
+| Verificación, validación y réplicas | Parte B, al final | 0:41 |
 
 Con esto los tres films pasan de 7:45 a unos 9:50. Para llegar a los 12
 minutos el resto tiene que salir de los tramos de captura de FlexSim, que van
@@ -33,16 +35,24 @@ Va en la **Parte A**, después de la ficha del escenario base. En pantalla: la
 tabla de las seis franjas, y la última fila destacada sobre «después de las
 dos y media, cinco».
 
-> Probamos si la gente llega pareja a lo largo del turno. Un día de servicio,
-> el primero de julio: mil ciento setenta y cinco raciones en seis franjas de
-> media hora. El chi-cuadrado da doscientos noventa y dos, contra un valor
-> crítico de once. Se rechaza.
+Esto es lo que quedó grabado, que es lo que vale:
+
+> Probamos si la gente llega pareja a lo largo del turno. Para eso tomamos un
+> día de servicio de pico, el primero de julio: mil ciento setenta y cinco
+> raciones en seis franjas de media hora.
 >
-> En la primera media hora entran trescientas cuatro personas. Después de las
-> dos y media, cinco.
+> El chi-cuadrado da doscientos noventa y dos, contra un valor crítico de
+> once. Se rechaza.
 >
-> Por eso el modelo no usa una tasa única: usa una por franja de diez minutos
-> y por grupo, sacada de los registros. Un proceso de Poisson no homogéneo.
+> En la primera media hora entran trescientas cuatro personas, y después de
+> las dos y media solo cinco.
+>
+> Por eso el modelo no usa una tasa única: usa una franja de diez minutos por
+> grupo. Esto lo sacamos de los registros.
+
+«Día de servicio de pico» es correcto: el informe trabaja con dos perfiles de
+demanda, pico y bajo, y el primero de julio está en el grupo alto (dieciocho
+de los treinta y dos días pasan las mil raciones).
 
 ---
 
@@ -100,11 +110,38 @@ derecha, y la placa de las 30 réplicas sobre la última frase.
   tres segundos de silencio al principio y al final.
 - Si te trabás, **repetí la oración entera** en vez de retomar a mitad.
 
-| Escena | Archivo |
-| --- | --- |
-| 1 | `videos/audios/jonatan/jonatan-e10-ajuste.wav` |
-| 2 | `videos/audios/jonatan/jonatan-e11-distribuciones.wav` |
-| 3 | `videos/audios/jonatan/jonatan-e12-verificacion.wav` |
+| Escena | Archivo | Dura |
+| --- | --- | --- |
+| 1 | `videos/audios/jonatan/jonatan-e10-ajuste.wav` | 32,6 s |
+| 2 | `videos/audios/jonatan/jonatan-e11-distribuciones.wav` | 37,5 s |
+| 3 | `videos/audios/jonatan/jonatan-e12-verificacion.wav` | 41,0 s |
+
+Los tres salen de `videos/audios/jonatan-locucion-nueva.ogg`, que es la toma
+cruda completa y queda en el repo por si hay que volver a cortar.
+
+## Qué falta grabar
+
+**Una sola frase**, de unos tres segundos, para pegar al final de la escena 1:
+
+> Un proceso de Poisson no homogéneo.
+
+Es el único pedazo del guion que no quedó en la toma. Nombra el método con el
+término que la cátedra busca, y hoy la escena 1 termina en «esto lo sacamos de
+los registros», que describe de dónde salen los números pero no cómo se
+modelan las llegadas. Grabala suelta, con el mismo micrófono, y se concatena
+al final del `jonatan-e10-ajuste.wav`.
+
+Todo lo demás está completo. Las dos retomas que habías dejado en la toma
+cruda (un arranque falso al principio de la escena 1, y otro en medio de la
+escena 2) ya quedaron fuera de los recortes.
+
+## Un detalle de nivel
+
+La toma nueva está **4,5 dB más fuerte** que los audios ya grabados (−19,4 dB
+medios contra −23,9 dB) y llega a 0,0 dB de pico, o sea que en algún momento
+toca el techo. No se tocó nada: si se monta así, la voz nueva va a sonar más
+alta que la vieja. Se arregla en la edición, bajando estos tres archivos, o
+acá con un `loudnorm` antes de montarlos.
 
 ## El pendiente de la sección 7.1
 

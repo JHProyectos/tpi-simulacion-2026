@@ -32,9 +32,9 @@ kit.scene('abrir', {
   render(t) {
     kit.seek(this.vApertura, clamp(t, 0, 15.9));
     this.velo.style.opacity = (lerp(0.6, 0.93, eo(seg(t, 0, 1.6))) * lerp(1, 1.05, eio(seg(t, COLOR - 3, COLOR)))).toFixed(3);
-    this.sello.style.opacity = eo(seg(t, COLOR + 0.4, COLOR + 1.2)) * 0.88;
-    TextFx.fadeFromRight(this.linea, t, -0.3, { stagger: 0.1, dur: 0.55, dx: 30 });
-    this.sub.style.opacity = eo(seg(t, 1.5, 2.1));
-    this.firma.style.opacity = eo(seg(t, 2.4, 3.0));
+    this.sello.style.opacity = eo(seg(t, 8.1, 8.9)) * 0.88;
+    TextFx.fadeFromRight(this.linea, t, 5.4, { stagger: 0.12, dur: 0.55, dx: 30 });
+    this.sub.style.opacity = eo(seg(t, 3.3, 3.9));
+    this.firma.style.opacity = eo(seg(t, 0.7, 1.3));
   },
 });

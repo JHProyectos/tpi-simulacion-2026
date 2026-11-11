@@ -27,9 +27,9 @@ kit.scene('pregunta', {
     const push = eio(seg(t, 0, 34));
     this.grilla.style.transform = 'scale(' + lerp(1.014, 1.03, push) + ')';
     this.plano.style.transform = 'scale(' + lerp(1.042, 1.08, push) + ') translateY(' + lerp(0, -26, push) + 'px)';
-    this.velo.style.opacity = eo(seg(t, 0, 2.8));
-    this.regla.style.transform = 'scaleX(' + eo(seg(t, 1.5, 2.8)) + ')';
-    this.rotulo.style.opacity = eo(seg(t, 1.9, 3.2));
-    TextFx.fadeFromRight(this.linea, t, 2.8, { stagger: 0.45, dur: 0.6, dx: 26 });
+    this.velo.style.opacity = eo(seg(t, 0, 2));
+    this.regla.style.transform = 'scaleX(' + eo(seg(t, 9.5, 10.6)) + ')';
+    this.rotulo.style.opacity = eo(seg(t, 9.6, 10.5));
+    TextFx.fadeFromRight(this.linea, t, 11.9, { stagger: 0.36, dur: 0.6, dx: 26 });
   },
 });

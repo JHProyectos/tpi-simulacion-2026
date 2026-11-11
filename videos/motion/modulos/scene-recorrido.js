@@ -36,19 +36,19 @@ kit.scene('recorrido', {
   render(t) {
     const push = eio(seg(t, 0, 29));
     this.foto.style.transform = 'scale(' + lerp(1.005, 1.052, push).toFixed(4) + ')';
-    const traza = eio(seg(t, 2.8, 9.6));
+    const traza = eio(seg(t, 13.4, 21.2));
     this.fila.style.strokeDashoffset = (this.largo * (1 - traza)).toFixed(1);
-    this.fila.style.opacity = eo(seg(t, 2.6, 3.8)) * 0.92;
+    this.fila.style.opacity = eo(seg(t, 13.2, 14.2)) * 0.92;
     // La persona sube por la fila y frena donde la fila termina.
-    const p = eio(seg(t, 4.4, 15.2));
+    const p = eio(seg(t, 13.5, 21.4));
     const i = Math.min(119, Math.floor(p * 120)), f = p * 120 - i;
     const a = this.puntos[i], b = this.puntos[i + 1];
     this.yo.setAttribute('transform', 'translate(' + lerp(a[0], b[0], f).toFixed(1) + ' ' + lerp(a[1], b[1], f).toFixed(1) + ')');
-    this.yo.style.opacity = eo(seg(t, 4, 5)) * (1 - eo(seg(t, 18.8, 20.8)));
-    const abre = eo(seg(t, 13.2, 14.8));
-    this.fin.style.opacity = abre * (0.6 + 0.3 * Math.sin((t - 13.2) * 2.4));
+    this.yo.style.opacity = eo(seg(t, 13.3, 14)) * (1 - eo(seg(t, 23, 25)));
+    const abre = eo(seg(t, 21.3, 22.3));
+    this.fin.style.opacity = abre * (0.6 + 0.3 * Math.sin((t - 21.3) * 2.4));
     this.fin.style.transform = 'scale(' + lerp(1.3, 1, abre).toFixed(3) + ')';
     this.fin.style.transformOrigin = FIN[0] + 'px ' + FIN[1] + 'px';
-    this.nota.style.opacity = eo(seg(t, 9.2, 10.8)) * 0.85;
+    this.nota.style.opacity = eo(seg(t, 2.4, 3.6)) * 0.85;
   },
 });

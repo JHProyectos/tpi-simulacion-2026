@@ -17,11 +17,12 @@ enlace, no los datos. Falta una sola frase, al final de la escena 1: ver
 | Verificación y validación | Parte B, al final | 159 s | 0:41 |
 
 **Las tres ya están animadas en sus films.** La Parte A pasa de 151 a 184 s
-(3:04) y la Parte B, de 121 a 200 s (3:20). Como «Las variables» se metió en el
-medio, todo lo que en la Parte B venía después de los 12 s se corrió 38
-segundos; los tiempos de `SONIDOS-PARTE-B.md` ya están corregidos.
+(3:04) y la Parte B, de 121 a 181 s (3:01): sumó 79 s de escenas nuevas y
+perdió 19 al cortar las cinco del medio a la medida de la voz. Los tiempos de
+`SONIDOS-PARTE-B.md` están recalculados sobre el film de ahora.
 
-Con esto los tres films pasan de 7:45 a unos 9:52. Para llegar a los 12
+Con esto los tres films pasan de 7:45 a 9:16, y las tres pistas de voces ya
+están armadas. Para llegar a los 12
 minutos el resto tiene que salir de los tramos de captura de FlexSim, que van
 en la edición y no en Motion.
 

@@ -74,49 +74,58 @@ Cierre de la escena 6: la validación. `scene-curvas.js` se usa tal cual, no tie
 - Las raciones por franja del modelo y de los registros reales, superpuestas.
 - Remate: «Correlación 0,95 · menos de 2 % de diferencia en el total».
 
-## La pista de voces: por qué todavía no está
+## La pista de voces
 
-Las Partes A y C ya tienen su pista armada con
-`analisis/armar_pista_voces.py`. La B **no**, porque sus escenas no están
-cortadas a la medida de la voz.
+`videos/audios/parte-b-voces.wav` tiene las nueve locuciones en su lugar: dura
+181 s justos, igual que el film. Mono, 48 kHz, PCM de 16 bits. La arma
+`analisis/armar_pista_voces.py`:
 
-Tres escenas pegan bien:
+```bash
+python analisis/armar_pista_voces.py parte-b
+```
 
 | Escena | Arranca | Dura | Audio | Dura el audio |
 | --- | --- | --- | --- | --- |
 | `render` | 0 s | 12 s | `jonatan/jonatan-e04.wav` | 10,6 s |
 | `variables` | 12 s | 38 s | `jonatan/jonatan-e11-distribuciones.wav` | 37,5 s |
 | `corrida` | 50 s | 27 s | `jonatan/jonatan-e05.wav` | 25,2 s |
-| `pruebas` | 159 s | 41 s | `jonatan/jonatan-e12-verificacion.wav` | 41,0 s |
+| `replicas` | 77 s | 10 s | `juan/juan-e06-replicas.wav` | 8,2 s |
+| `numeros` | 87 s | 15 s | `juan/juan-e06-numeros.wav` | 12,5 s |
+| `colas` | 102 s | 11 s | `juan/juan-e06-colas.wav` | 5,6 s |
+| `curvas` | 113 s | 15 s | `juan/juan-e06-curvas.wav` | 14,2 s |
+| `antes` | 128 s | 12 s | `juan/juan-e06-antes.wav` | 10,7 s |
+| `pruebas` | 140 s | 41 s | `jonatan/jonatan-e12-verificacion.wav` | 41,0 s |
 
-El problema son las cinco del medio. `juan-e06.ogg` dura **51,6 s** y tiene que
-cubrir `replicas`, `numeros`, `colas`, `curvas` y `antes`, que juntas duran
-**82 s**. Son 32 segundos de film sin voz.
+### Las cinco escenas del medio se cortaron a la voz
 
-Partido por frases, cada escena tiene la suya, y se ve dónde no cierra:
+La escena 6 del guion se grabó de un tirón: `juan-e06.ogg` dura 51,6 s y cubría
+cinco escenas que sumaban 82 s. Se partió por frases, una por escena, y las
+cinco escenas se achicaron a lo que dura su frase. El film pasó de 200 a 181 s.
 
-| Escena | Dura | Tramo de `juan-e06.ogg` | Dura | Sobra |
-| --- | --- | --- | --- | --- |
-| `replicas` | 12 s | 0,0 a 8,1 s | 8,1 s | 3,9 s |
-| `numeros` | 26 s | 8,2 a 20,4 s | 12,2 s | 13,8 s |
-| `colas` | 18 s | 21,0 a 26,4 s | 5,4 s | 12,6 s |
-| `curvas` | 12 s | 26,5 a 40,5 s | 14,0 s | **falta 2 s** |
-| `antes` | 14 s | 40,9 a 51,1 s | 10,2 s | 3,8 s |
+| Escena | Duraba | Dura | Tramo de `juan-e06.ogg` |
+| --- | --- | --- | --- |
+| `replicas` | 12 s | 10 s | 0,00 a 8,15 s |
+| `numeros` | 26 s | 15 s | 8,05 a 20,50 s |
+| `colas` | 18 s | 11 s | 20,85 a 26,45 s |
+| `curvas` | 12 s | 15 s | 26,35 a 40,55 s |
+| `antes` | 14 s | 12 s | 40,75 a 51,40 s |
 
-Hay tres salidas y es una decisión, no un detalle:
+`curvas` es la única que creció: su frase dura 14,2 s y la escena duraba 12.
 
-1. **Alargar `curvas` de 12 a 15 s.** Es el cambio más chico: entra todo y el
-   film pasa de 200 a 203 s. Queda igual mucho aire en `numeros` y `colas`.
-2. **Dejar `juan-e06.ogg` corrido desde los 77 s.** Termina en 128,6 s y
-   `curvas` y `antes` quedan mudas, aunque su contenido ya se dijo antes de
-   tiempo, sobre otras imágenes.
-3. **Cortar las escenas a la medida de la voz**, como en la Parte A. El film
-   bajaría de 200 a unos 155 s y habría que rehacer los tiempos de las cinco
-   escenas y del archivo de sonidos.
+**No alcanzaba con cambiar las duraciones.** Las cinco tenían la animación
+repartida a lo largo de lo que duraban antes, así que los tiempos internos de
+cada una se recalzaron contra las palabras. Lo más movido:
 
-El storyboard dice que el resto del bloque son capturas de FlexSim con la voz
-encima, que van en el editor y no en Motion, así que puede ser que el aire esté
-puesto a propósito. Sin saber eso, cualquiera de las tres es una apuesta.
+- En `numeros`, las seis tarjetas entraban cada 2,2 s desde el segundo 2,3;
+  ahora entran cada 1,7 s desde el 1,4, y el apagado que deja las dos colas
+  solas pasó del segundo 20,4 al 11,8.
+- En `colas`, las dos curvas se dibujaban en 4 s cada una y ahora en 3; el velo
+  y la frase de cierre pasaron del segundo 11,2 al 7,6.
+- En `antes`, las dos franjas crecían desde el segundo 1,5 y ahora desde el 5,0,
+  que es cuando la voz dice «entre 60 y 70 personas».
+
+`colas` es la que queda más holgada: la voz dura 5,6 s y la escena 11, porque
+dibujar las dos curvas y rematar con la frase no entra en menos.
 
 ## Lo que hay que resolver antes de grabar nada más
 

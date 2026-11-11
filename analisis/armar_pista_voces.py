@@ -43,6 +43,23 @@ PARTES = {
             ("ajuste", 151.0, "videos/audios/jonatan/jonatan-e10-ajuste.wav"),
         ],
     },
+    # La escena 6 del guion se grabo de un tirón: juan-e06.ogg cubre cinco
+    # escenas del film. Esta partido por frases en videos/audios/juan/, una por
+    # escena, con los cortes anotados en videos/motion/STORYBOARD-PARTE-B.md.
+    "parte-b": {
+        "largo": 181.0,
+        "tramos": [
+            ("render", 0.0, "videos/audios/jonatan/jonatan-e04.wav"),
+            ("variables", 12.0, "videos/audios/jonatan/jonatan-e11-distribuciones.wav"),
+            ("corrida", 50.0, "videos/audios/jonatan/jonatan-e05.wav"),
+            ("replicas", 77.0, "videos/audios/juan/juan-e06-replicas.wav"),
+            ("numeros", 87.0, "videos/audios/juan/juan-e06-numeros.wav"),
+            ("colas", 102.0, "videos/audios/juan/juan-e06-colas.wav"),
+            ("curvas", 113.0, "videos/audios/juan/juan-e06-curvas.wav"),
+            ("antes", 128.0, "videos/audios/juan/juan-e06-antes.wav"),
+            ("pruebas", 140.0, "videos/audios/jonatan/jonatan-e12-verificacion.wav"),
+        ],
+    },
     # La Parte C es la unica de las tres donde una locucion abarca dos escenas:
     # jonatan-e08.wav dura 45,3 s y cubre "comparar" y "pendiente", que juntas
     # duran 46 s. "cierre" no lleva voz.

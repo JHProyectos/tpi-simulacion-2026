@@ -10,9 +10,9 @@ kit.scene('abrir', {
       '.abrir-velo { position:absolute; left:0; bottom:0; width:80%; height:70%; background:radial-gradient(100% 100% at 0 100%, color-mix(in srgb, var(--ground) 97%, transparent) 54%, transparent) }' +
       '.abrir-words .line { font-size:82px }' +
       '.abrir-firma { margin-top:6px }' +
-      '.abrir-sello { position:absolute; right:112px; top:104px }');
+      '.abrir-sello { position:absolute; right:112px; top:196px }');
     this.vApertura = kit.video('apertura.mp4');
-    kit.stage.append(kit.h('<div class="ground">' +
+    kit.stage.append(kit.h('<div class="ground">' + W.logo(kit) +
       '<div class="abrir-marco"></div>' +
       '<div class="abrir-velo"></div><div class="edge"></div>' +
       '<div class="etiqueta abrir-sello">Modelo 3D del sal&oacute;n</div>' +

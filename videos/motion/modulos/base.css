@@ -17,3 +17,5 @@
 .foto { position:absolute; overflow:hidden; background:var(--panel) } .foto img { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; display:block }
 .marco { border:2px solid var(--borde); border-radius:12px }
 .ambiente { opacity:.3; filter:grayscale(.35) }
+.logo { position:absolute; right:36px; top:40px; width:88px; padding:10px; box-sizing:border-box; border-radius:10px; background:color-mix(in srgb, var(--ground) 78%, transparent); z-index:5 }
+.logo img { display:block; width:100%; height:auto }

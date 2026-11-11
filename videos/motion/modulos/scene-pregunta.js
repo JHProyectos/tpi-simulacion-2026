@@ -5,7 +5,7 @@ kit.scene('pregunta', {
     kit.css('.pregunta-plano { transform-origin:960px 520px }' +
       '.pregunta-words .line { font-size:64px; line-height:1.24; font-weight:600 }' +
       '.pregunta-regla { position:absolute; left:210px; top:286px; width:150px; height:6px; background:var(--marca); transform-origin:left center }');
-    kit.stage.append(kit.h('<div class="ground">' +
+    kit.stage.append(kit.h('<div class="ground">' + W.logo(kit) +
       W.foto(kit, 'amb-aerea.webp', 'ambiente', 'left:0; top:0; width:1920px; height:1080px') +
       '<svg class="art pregunta-grilla" viewBox="0 0 1920 1080">' + W.tramas('pregunta') + '</svg>' +
       '<svg class="art pregunta-plano" viewBox="0 0 1920 1080">' + '' + '</svg>' +

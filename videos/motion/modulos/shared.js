@@ -5,6 +5,10 @@ window.W = {
   foto(kit, nombre, cls, estilo) {
     return '<div class="foto ' + cls + '" style="' + estilo + '"><img src="' + kit.assets.url(nombre) + '" alt=""></div>';
   },
+  // El logo de la universidad, fijo arriba a la derecha en todas las escenas.
+  logo(kit) {
+    return '<div class="logo"><img src="' + kit.assets.url('logo-utn.png') + '" alt="UTN"></div>';
+  },
   // El recorrido de una persona: puerta, fila de caja, caja, fila de servicio, mostrador y salida al salon.
   RUTA: [[330, 1030], [330, 905], [1390, 905], [1560, 905], [1560, 350], [1180, 350], [860, 350], [860, 640]],
   _L: null,

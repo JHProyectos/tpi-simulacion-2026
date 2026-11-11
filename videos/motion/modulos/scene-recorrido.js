@@ -10,7 +10,7 @@ kit.scene('recorrido', {
     kit.css('.recorrido-foto { transform-origin:50% 46% }' +
       '.recorrido-fila { fill:none; stroke:var(--marca); stroke-width:9; stroke-linecap:round }' +
       '.recorrido-nota { position:absolute; right:104px; bottom:52px }');
-    kit.stage.append(kit.h('<div class="ground">' +
+    kit.stage.append(kit.h('<div class="ground">' + W.logo(kit) +
       W.foto(kit, 'fila-render.webp', 'recorrido-foto', 'left:0; top:63px; width:1920px; height:953px') +
       '<svg class="art recorrido-marcas" viewBox="0 0 1920 1080">' +
       '<path class="recorrido-fila" d="' + D_FILA + '"/>' +

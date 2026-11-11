@@ -26,7 +26,7 @@ kit.scene('ficha', {
     const filas = FILAS.map((f) => '<div class="ficha-fila"><span class="rotulo">' + f[1] + '</span>' +
       '<span class="ficha-col"><span class="ficha-valor">' + f[2] + '</span>' +
       (f[3] ? '<span class="' + (f[3] === 'A CONFIRMAR' ? 'pendiente' : 'ficha-nota') + '">' + f[3] + '</span>' : '') + '</span></div>').join('');
-    kit.stage.append(kit.h('<div class="ground">' +
+    kit.stage.append(kit.h('<div class="ground">' + W.logo(kit) +
       '<svg class="art ficha-grilla" viewBox="0 0 1920 1080">' + W.tramas('ficha') + '</svg>' +
       W.foto(kit, 'planta.webp', 'ficha-planta marco', 'left:150px; top:214px; width:760px; height:664px') +
       '<div class="edge"></div>' +

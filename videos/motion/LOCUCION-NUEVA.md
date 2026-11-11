@@ -10,13 +10,18 @@ primera versión eran 3:30 con las mismas ideas: lo que se fue es la prosa de
 enlace, no los datos. Falta una sola frase, al final de la escena 1: ver
 «Qué falta grabar» más abajo.
 
-| Escena nueva | Va en | Dura |
-| --- | --- | --- |
-| Bondad de ajuste de las llegadas | Parte A, después de la ficha | 0:33 |
-| Las distribuciones del modelo | Parte B, antes de la corrida | 0:37 |
-| Verificación, validación y réplicas | Parte B, al final | 0:41 |
+| Escena nueva | Va en | Arranca | Dura |
+| --- | --- | --- | --- |
+| Bondad de ajuste de las llegadas | Parte A, al final | 151 s | 0:33 |
+| Las variables del modelo | Parte B, después de los renders | 12 s | 0:38 |
+| Verificación y validación | Parte B, al final | 159 s | 0:41 |
 
-Con esto los tres films pasan de 7:45 a unos 9:50. Para llegar a los 12
+**Las tres ya están animadas en sus films.** La Parte A pasa de 151 a 184 s
+(3:04) y la Parte B, de 121 a 200 s (3:20). Como «Las variables» se metió en el
+medio, todo lo que en la Parte B venía después de los 12 s se corrió 38
+segundos; los tiempos de `SONIDOS-PARTE-B.md` ya están corregidos.
+
+Con esto los tres films pasan de 7:45 a unos 9:52. Para llegar a los 12
 minutos el resto tiene que salir de los tramos de captura de FlexSim, que van
 en la edición y no en Motion.
 

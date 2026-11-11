@@ -20,8 +20,14 @@ Sirve para saber cuál iba más fuerte que cuál, no como un valor en decibeles.
 | El recorrido | 16,0 s | 29 s |
 | La pregunta | 45,0 s | 34 s |
 | Ficha del modelo | 79,0 s | 72 s |
+| **Bondad de ajuste** | **151,0 s** | **33 s** |
 
-El film entero dura 151 s (2:31).
+El film entero dura 184 s (3:04).
+
+> La escena nueva va **al final**, así que ningún tiempo de los de abajo se
+> movió. Lo único que cambia es el cierre: la música terminaba en 146,4 s con
+> un fundido de 1,4 s, y ahora eso cae a media película. Lo suyo está más
+> abajo, en «Escena nueva».
 
 ## Efectos puntuales
 
@@ -99,6 +105,35 @@ de cada compás de ocho, o sea tres golpes cada 5,71 s, y termina en 146,4 s.
 
 El conjunto iba 8 dB por debajo del máximo, con un cierre de 1,4 s al final del
 film.
+
+## Escena nueva
+
+«Bondad de ajuste» se agregó después de vaciar el score, así que **nunca
+sonó**: lo de abajo es una propuesta, no un inventario. Los segundos son los de
+la locución nueva, medidos palabra por palabra, así que cada golpe cae donde la
+voz nombra la cosa.
+
+Locución: `videos/audios/jonatan/jonatan-e10-ajuste.wav`.
+
+| Segundo | Sonido | vel | Qué acompaña |
+| --- | --- | --- | --- |
+| 160,9 | tick | 20 | se dibuja la barra de las 12:00 |
+| 161,2 | tick | 20 | 12:30 |
+| 161,5 | tick | 20 | 13:00 |
+| 161,7 | tick | 20 | 13:30 |
+| 162,0 | tick | 20 | 14:00 |
+| 162,3 | tick | 20 | 14:30, la barra que casi no se ve |
+| 163,0 | revswell | 34 | entra la línea del reparto parejo (dura 1,0 s) |
+| 166,1 | pop | 38 | el chi-cuadrado calculado, 292,39 |
+| 168,4 | pop | 34 | el valor crítico, 11,07 |
+| 169,1 | chime | 48 | el sello «SE RECHAZA H₀», el golpe más fuerte de la escena |
+| 171,1 | ding | 36 | se enciende la primera franja, 304 raciones |
+| 173,8 | ding | 30 | se enciende la última, 5 |
+| 176,1 | tick | 24 | entra el pie, la tasa por franja de diez minutos |
+
+Si le ponés música, acá hace falta un acorde más: el pad terminaba con la
+ficha. Uno de 34,4 s desde 151,0 s cierra el film con el mismo criterio que los
+otros, y el fundido de 1,4 s pasa al final de todo, en 184,0 s.
 
 ## Lo que no está acá
 

@@ -2,7 +2,7 @@
 
 [TOC]
 
-El film dura **2:31** y cada escena dura lo que dura su locución. Los segundos salen de la transcripción palabra por palabra de los cuatro audios, hecha con Whisper, así que tienen un margen de unos 0,2 s. Los textos entran un poco después de la palabra, nunca antes: que aparezcan antes se lee como spoiler.
+El film dura **3:04** y cada escena dura lo que dura su locución. Los segundos salen de la transcripción palabra por palabra de los cuatro audios, hecha con Whisper, así que tienen un margen de unos 0,2 s. Los textos entran un poco después de la palabra, nunca antes: que aparezcan antes se lee como spoiler.
 
 ## Dónde va cada audio
 
@@ -12,8 +12,39 @@ El film dura **2:31** y cada escena dura lo que dura su locución. Los segundos 
 | `recorrido` | 0:16 | 29 s | `editados/juan_escena01.wav` | 27,7 s |
 | `pregunta` | 0:45 | 34 s | `editados/juan_escena02.wav` | 32,9 s |
 | `ficha` | 1:19 | 72 s | `jonatan/jonatan-e03.wav` | 70,8 s |
+| `ajuste` | 2:31 | 33 s | `jonatan/jonatan-e10-ajuste.wav` | 32,6 s |
 
 En el editor, cada audio arranca en el segundo de la columna «Empieza». Los sobrantes de uno o dos segundos al final de cada escena son aire para que la voz no quede pegada a la siguiente.
+
+## La pista ya armada
+
+`videos/audios/parte-a-voces.wav` tiene las cinco locuciones en su lugar: dura
+184 s justos, igual que el film, así que se monta sobre el video exportado sin
+correr nada. Es mono, 48 kHz, PCM de 16 bits.
+
+La arma `analisis/armar_pista_voces.py`, que es la única fuente de verdad de los
+tiempos. Si cambia una escena, se toca ahí y se corre de nuevo:
+
+```bash
+python analisis/armar_pista_voces.py parte-a
+```
+
+### Los volúmenes están emparejados
+
+Los originales venían muy desparejos entre las dos voces, hasta 7 dB de
+diferencia, y el audio nuevo además pasaba el techo:
+
+| Audio | Voz | Venía en | Pico |
+| --- | --- | --- | --- |
+| `jonatan-e00.wav` | Jonatan | −24,0 LUFS | −5,6 dB |
+| `juan_escena01.wav` | Juan | −16,9 LUFS | −1,5 dB |
+| `juan_escena02.wav` | Juan | −16,5 LUFS | −1,5 dB |
+| `jonatan-e03.wav` | Jonatan | −22,7 LUFS | −4,4 dB |
+| `jonatan-e10-ajuste.wav` | Jonatan | −17,5 LUFS | **+0,9 dB** |
+
+La pista lleva los cinco a **−16 LUFS** con el pico real en **−1,5 dB**, que
+deja lugar para la música encima. Los archivos originales no se tocaron: todo
+el emparejado pasa dentro del script.
 
 ## Qué aparece y cuándo
 
@@ -66,8 +97,22 @@ La pregunta tiene 23 palabras y Juan la dice en 8,2 segundos, así que entra una
 
 Los dos primeros renglones cambiaron de orden respecto de la versión anterior: Jonatan nombra la apertura de la caja antes que el horario en que empieza la fila.
 
-## Un hueco en el audio de la escena 3
+## Una retoma en el audio de la escena 3
 
-En `jonatan/jonatan-e03.wav` hay **5,3 segundos de silencio entre el segundo 26,8 y el 32,2**, en medio de la frase «las llegadas salen de… los registros reales de reservas». Por eso el renglón de las llegadas entra recién a los 33,3: si entrara antes, queda colgado durante el silencio.
+Lo que antes figuraba acá como «un hueco de 5,3 segundos» es en realidad **una
+retoma**. Transcribiendo el tramo aislado se escucha la frase dos veces:
 
-Ese hueco se puede apretar y recuperar unos 5 segundos, pero hay que rehacer la escena, porque todos los segundos de abajo de los 27 se corren.
+| Segundo de `jonatan-e03.wav` | Qué se escucha |
+| --- | --- |
+| 25,1 a 27,1 | «Después de la apertura, las llegadas salen…» y se corta |
+| 27,1 a 30,1 | aire, respiración, nada dicho |
+| 30,1 en adelante | «Después de la apertura, las llegadas salen de los registros reales de reservas, por franjas de 10 minutos y por tipo de cliente» |
+
+Por eso el renglón de las llegadas entra recién a los 33,3: si entrara antes,
+queda colgado sobre el arranque fallido.
+
+**Se puede sacar.** Cortando de 24,9 a 30,05 se van la frase repetida y el aire,
+y el audio pasa de 70,8 a 65,6 s. A cambio hay que rehacer la escena: todos los
+renglones de abajo de los 25 se corren 5,15 s (33,3 → 28,15; 38,7 → 33,55;
+43,4 → 38,25; 51,6 → 46,45; 53,9 → 48,75) y la escena puede bajar de 72 a 67 s.
+Está sin hacer.

@@ -74,6 +74,50 @@ Cierre de la escena 6: la validación. `scene-curvas.js` se usa tal cual, no tie
 - Las raciones por franja del modelo y de los registros reales, superpuestas.
 - Remate: «Correlación 0,95 · menos de 2 % de diferencia en el total».
 
+## La pista de voces: por qué todavía no está
+
+Las Partes A y C ya tienen su pista armada con
+`analisis/armar_pista_voces.py`. La B **no**, porque sus escenas no están
+cortadas a la medida de la voz.
+
+Tres escenas pegan bien:
+
+| Escena | Arranca | Dura | Audio | Dura el audio |
+| --- | --- | --- | --- | --- |
+| `render` | 0 s | 12 s | `jonatan/jonatan-e04.wav` | 10,6 s |
+| `variables` | 12 s | 38 s | `jonatan/jonatan-e11-distribuciones.wav` | 37,5 s |
+| `corrida` | 50 s | 27 s | `jonatan/jonatan-e05.wav` | 25,2 s |
+| `pruebas` | 159 s | 41 s | `jonatan/jonatan-e12-verificacion.wav` | 41,0 s |
+
+El problema son las cinco del medio. `juan-e06.ogg` dura **51,6 s** y tiene que
+cubrir `replicas`, `numeros`, `colas`, `curvas` y `antes`, que juntas duran
+**82 s**. Son 32 segundos de film sin voz.
+
+Partido por frases, cada escena tiene la suya, y se ve dónde no cierra:
+
+| Escena | Dura | Tramo de `juan-e06.ogg` | Dura | Sobra |
+| --- | --- | --- | --- | --- |
+| `replicas` | 12 s | 0,0 a 8,1 s | 8,1 s | 3,9 s |
+| `numeros` | 26 s | 8,2 a 20,4 s | 12,2 s | 13,8 s |
+| `colas` | 18 s | 21,0 a 26,4 s | 5,4 s | 12,6 s |
+| `curvas` | 12 s | 26,5 a 40,5 s | 14,0 s | **falta 2 s** |
+| `antes` | 14 s | 40,9 a 51,1 s | 10,2 s | 3,8 s |
+
+Hay tres salidas y es una decisión, no un detalle:
+
+1. **Alargar `curvas` de 12 a 15 s.** Es el cambio más chico: entra todo y el
+   film pasa de 200 a 203 s. Queda igual mucho aire en `numeros` y `colas`.
+2. **Dejar `juan-e06.ogg` corrido desde los 77 s.** Termina en 128,6 s y
+   `curvas` y `antes` quedan mudas, aunque su contenido ya se dijo antes de
+   tiempo, sobre otras imágenes.
+3. **Cortar las escenas a la medida de la voz**, como en la Parte A. El film
+   bajaría de 200 a unos 155 s y habría que rehacer los tiempos de las cinco
+   escenas y del archivo de sonidos.
+
+El storyboard dice que el resto del bloque son capturas de FlexSim con la voz
+encima, que van en el editor y no en Motion, así que puede ser que el aire esté
+puesto a propósito. Sin saber eso, cualquiera de las tres es una apuesta.
+
 ## Lo que hay que resolver antes de grabar nada más
 
 En el audio de la escena 6, Juan dice **73 %** de ocupación de la caja donde los datos dan **63 %**. Está marcado en `videos/audios/TRANSCRIPCION.md`. O se regraba esa frase, o la placa muestra un número que la voz contradice. No se arregla editando el audio.

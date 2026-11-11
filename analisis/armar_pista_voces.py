@@ -43,6 +43,23 @@ PARTES = {
             ("ajuste", 151.0, "videos/audios/jonatan/jonatan-e10-ajuste.wav"),
         ],
     },
+    # La Parte C es la unica de las tres donde una locucion abarca dos escenas:
+    # jonatan-e08.wav dura 45,3 s y cubre "comparar" y "pendiente", que juntas
+    # duran 46 s. "cierre" no lleva voz.
+    "parte-c": {
+        "largo": 191.0,
+        "tramos": [
+            ("cambios", 0.0, "videos/audios/juan-e07-a.ogg"),
+            ("e1", 20.0, "videos/audios/jonatan/jonatan-e07-e1.wav"),
+            ("e2", 38.0, "videos/audios/juan-e07-b.ogg"),
+            ("e3", 51.0, "videos/audios/jonatan/jonatan-e07-e3.wav"),
+            ("e4", 67.0, "videos/audios/juan-e07-c.ogg"),
+            ("e5", 78.0, "videos/audios/jonatan/jonatan-e07-e5.wav"),
+            ("comparar", 94.0, "videos/audios/jonatan/jonatan-e08.wav"),
+            ("respuesta", 140.0, "videos/audios/juan-e09.ogg"),
+            ("limites", 166.0, "videos/audios/jonatan/jonatan-e09.wav"),
+        ],
+    },
 }
 
 

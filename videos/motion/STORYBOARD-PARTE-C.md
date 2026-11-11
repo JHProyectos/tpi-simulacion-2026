@@ -125,6 +125,39 @@ El cierre de Jonatan, que es el que da honestidad al trabajo. Dos renglones sobr
 
 `scene-cierre.js` tal cual, que ya tiene los nombres y «Simulación · 2026».
 
+## La pista de voces
+
+`videos/audios/parte-c-voces.wav` tiene las nueve locuciones en su lugar: dura
+191 s justos, igual que el film, así que se monta sobre el video exportado sin
+correr nada. Mono, 48 kHz, PCM de 16 bits. La arma
+`analisis/armar_pista_voces.py`, que es la única fuente de verdad de los tiempos:
+
+```bash
+python analisis/armar_pista_voces.py parte-c
+```
+
+| Escena | Arranca | Audio | Dura el audio |
+| --- | --- | --- | --- |
+| `cambios` | 0 s | `juan-e07-a.ogg` | 9,4 s |
+| `e1` | 20 s | `jonatan/jonatan-e07-e1.wav` | 16,6 s |
+| `e2` | 38 s | `juan-e07-b.ogg` | 11,6 s |
+| `e3` | 51 s | `jonatan/jonatan-e07-e3.wav` | 15,2 s |
+| `e4` | 67 s | `juan-e07-c.ogg` | 10,3 s |
+| `e5` | 78 s | `jonatan/jonatan-e07-e5.wav` | 15,1 s |
+| `comparar` | 94 s | `jonatan/jonatan-e08.wav` | 45,3 s |
+| `respuesta` | 140 s | `juan-e09.ogg` | 25,2 s |
+| `limites` | 166 s | `jonatan/jonatan-e09.wav` | 18,4 s |
+| `cierre` | 185 s | — | sin voz |
+
+`jonatan-e08.wav` es la única locución que abarca dos escenas: arranca en
+`comparar` y sigue hasta pasada la mitad de `pendiente`, que es como está
+escrita.
+
+Las dos voces venían hasta 5 dB desparejas entre sí (Juan entre −18,2 y −19,4
+LUFS, Jonatan entre −22,3 y −23,2) y tres archivos de Juan pasaban o rozaban el
+techo. La pista lleva los nueve a **−16 LUFS** con el pico real en **−1,5 dB**.
+Los originales no se tocaron.
+
 ## Lo que falta resolver
 
 `flexsim/DATOS_VIDEO.md` marca una contradicción sin cerrar: la corrida validada da 7,7 min de espera y 131 personas de cola en el mostrador, y el Experimenter da 0,016 min y 4,8. El archivo pide revisar la tabla `TiemposServicio` de `comedor_unc_3.fsm`, fila 2, Scale 17,3, antes de cerrar el video.

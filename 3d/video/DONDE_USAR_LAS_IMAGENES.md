@@ -23,6 +23,7 @@ Las tomas se pasaron por IA (Nano Banana 2, 2K) para dar realismo, con la 01 com
 
 - `01_vista-general_ia`, `02_aerea_ia`, `04_fila-de-caja_ia`, `06_fila-de-servicio_ia`, `07a_mostrador-medio_ia`, `07b_mostrador-completo_ia`, `08_recorrido-cenital_ia`.
 - Se usan en las mismas escenas que la toma original (ver tabla).
+- `09_vista-flexsim_ia`: vista alta de todo el salón, con las dos salas del fondo y sin techo, armada a partir de la vista de FlexSim. Sirve en la escena 3 (escenario base) y al abrir la escena 4. El salón largo sigue hasta el borde de abajo de la imagen, como en la vista de FlexSim (no está cortado ni cerrado).
 - La IA inventa detalles que no están en el modelo (lámparas, grietas en la pared, campana y bandejas de acero). En la `07b` cambió bastante el mostrador: usarla sólo como ambiente, no como plano fiel.
 
 ## Escena por escena

@@ -793,8 +793,7 @@ log[r]["tSalida"] = token.tSalida;
 |---|---|
 | Espera en cada fila (media, máxima, por tipo) | `Salida_Personas`: `tInicioVal - tLlegada` y `tInicioServicio - tEntraServicio` |
 | Espera desde la apertura | `Salida_Personas` y `Salida_Dia.Apertura_s` |
-| Cola máxima en cada fila | `Salida_Dia.ColaCajaMax` y `Salida_Dia.ColaServicioMax` |
-| Tiempo total en el sistema | `Salida_Personas`: `tSalida - tLlegada` |
+| Cola máxima en cada fila | `Salida_Dia.ColaCajaMax` y `Salida_Dia.ColaServicioMax` || Tiempo total en el sistema | `Salida_Personas`: `tSalida - tLlegada` |
 | Utilización de la caja | Suma de `tFinVal - tInicioVal` sobre (puestos × tiempo abierto) |
 | Utilización del servicio | Suma de `tSalida - tInicioServicio` sobre (servidores × tiempo abierto) |
 | Tiempo con la caja bloqueada | `Salida_Personas`: `tEntraServicio - tFinVal` |
@@ -846,9 +845,29 @@ donde $s$ es el desvío entre réplicas de la corrida piloto de $n_0$ réplicas 
 
 ### Performance Measures
 
-**Toolbox > + > Statistics > Performance Measure Table**. Agregá una medida por indicador, con un nombre claro (por ejemplo, `TiempoTotal_min`). En cada una, dejá *Reference* en *None* y pegá el código en *Value*: corre al final de cada réplica y devuelve un número.
+El campo *Value* de la Performance Measure **no acepta código de varias líneas ni `return`** (da *syntax error* en la línea del `return`). Por eso cada medida se escribe como un **User Command** y el *Value* solo lo llama.
 
-**Tiempo total medio en el sistema (min):**
+**Cómo cargar cada medida (confirmado en FlexSim 2026):**
+
+1. **Toolbox > + > Modeling Logic > User Command**. Creá uno por medida, con el nombre de la tabla de abajo, sin parámetros y con retorno de tipo `double`†. Pegá en el cuerpo el código del bloque, tal cual, con el `return`.
+2. **Toolbox > + > Statistics > Performance Measure Table**. Agregá una medida por indicador, con un nombre claro (por ejemplo, `TiempoTotal_min`). Dejá *Reference* en *None* y en *Value* escribí solo la llamada, por ejemplo `TiempoTotalMin()`. Se evalúa al final de cada réplica y devuelve un número.
+
+| Medida (nombre en la tabla) | User Command | *Value* |
+|---|---|---|
+| `TiempoTotal_min` | `TiempoTotalMin` | `TiempoTotalMin()` |
+| `EsperaMaxCaja_min` | `EsperaMaxCajaMin` | `EsperaMaxCajaMin()` |
+| `EsperaServicio_min` | `EsperaServicioMin` | `EsperaServicioMin()` |
+| `CajaBloqueada_min` | `CajaBloqueadaMin` | `CajaBloqueadaMin()` |
+| `UtilizacionCaja_pct` | `UtilizacionCajaPct` | `UtilizacionCajaPct()` |
+| `ColaCajaMax` | *(directo)* | `Table("Salida_Dia")[1]["ColaCajaMax"]` |
+| `ColaServicioMax` | *(directo)* | `Table("Salida_Dia")[1]["ColaServicioMax"]` |
+| `PersonasDia` | *(directo)* | `Table("Salida_Personas").numRows - 1` |
+
+Las tres últimas son expresiones de una sola línea y van directo en *Value*, sin User Command. Si después de cambiar el código de un User Command el resultado no cambia, hacé **Reset** del modelo.
+
+El código de cada User Command es el siguiente.
+
+**`TiempoTotalMin`: tiempo total medio en el sistema (min):**
 
 ```c
 Table log = Table("Salida_Personas");
@@ -858,7 +877,7 @@ for (int r = 2; r <= log.numRows; r++)
 return suma / Math.max(log.numRows - 1, 1) / 60;
 ```
 
-**Espera máxima en la caja desde la apertura (min):**
+**`EsperaMaxCajaMin`: espera máxima en la caja desde la apertura (min):**
 
 ```c
 Table log = Table("Salida_Personas");
@@ -869,7 +888,7 @@ for (int r = 2; r <= log.numRows; r++)
 return maximo / 60;
 ```
 
-**Espera media en la fila de servicio (min):**
+**`EsperaServicioMin`: espera media en la fila de servicio (min):**
 
 ```c
 Table log = Table("Salida_Personas");
@@ -879,7 +898,7 @@ for (int r = 2; r <= log.numRows; r++)
 return suma / Math.max(log.numRows - 1, 1) / 60;
 ```
 
-**Tiempo total con la caja bloqueada (min):**
+**`CajaBloqueadaMin`: tiempo total con la caja bloqueada (min):**
 
 ```c
 Table log = Table("Salida_Personas");
@@ -889,7 +908,7 @@ for (int r = 2; r <= log.numRows; r++)
 return suma / 60;
 ```
 
-**Utilización de la caja (%):**
+**`UtilizacionCajaPct`: utilización de la caja (%):**
 
 ```c
 Table log = Table("Salida_Personas");
@@ -902,11 +921,11 @@ for (int r = 2; r <= log.numRows; r++) {
 	ocupado += log[r]["tFinVal"] - log[r]["tInicioVal"];
 	ultimo = Math.max(ultimo, log[r]["tFinVal"]);
 }
-double puestos = esc[e]["PuestosBase"] + esc[e]["PuestosExtra"] + esc[e]["FilasPorTipo"];
+double puestos = esc[e]["PuestosBase"] + esc[e]["PuestosExtra"];
 return 100 * ocupado / (puestos * (ultimo - apertura));
 ```
 
-**Directos de las tablas:** cola máxima en la caja `Table("Salida_Dia")[1]["ColaCajaMax"]`, cola máxima en el servicio `Table("Salida_Dia")[1]["ColaServicioMax"]` y personas del día `Table("Salida_Personas").numRows - 1`.
+**Directos de las tablas** (van en *Value* sin User Command, como en la tabla de arriba): cola máxima en la caja `Table("Salida_Dia")[1]["ColaCajaMax"]`, cola máxima en el servicio `Table("Salida_Dia")[1]["ColaServicioMax"]` y personas del día `Table("Salida_Personas").numRows - 1`.
 
 ### Configurar el Experimenter
 
